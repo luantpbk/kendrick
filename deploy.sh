@@ -26,12 +26,14 @@ echo "=> Cài đặt và build Frontend Web..."
 cd kendrickheller.com
 npm install --legacy-peer-deps
 npm run build
+pm2 restart frontend-web || pm2 start serve --name "frontend-web" -- -s build -l 3002
 cd ..
 
 echo "=> Cài đặt và build Frontend Admin..."
 cd admin.kenrickheller.com
 npm install --legacy-peer-deps
 npm run build
+pm2 restart frontend-admin || pm2 start serve --name "frontend-admin" -- -s build -l 3001
 cd ..
 
 echo "=== Triển khai hoàn tất! ==="
