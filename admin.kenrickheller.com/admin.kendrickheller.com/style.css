@@ -1,0 +1,105 @@
+html {
+  color: #11142d;
+  background-color: #fbfbfb;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #11142d;
+  text-align: left;
+  min-height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+button {
+  user-select: none;
+  font-family: 'Open Sans';
+}
+
+input {
+  font-family: 'Open Sans';
+}
+
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clock-desc {
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  margin-left: 5px;
+  display: none;
+}
+.clock-desc i {
+  color: #ffa900;
+  font-size: 22px;
+  margin-right: 5px;
+}
+
+.clock-time {
+  display: flex;
+  align-items: center;
+}
+
+.clock-time-frag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.clock-time-frag-number {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffa900;
+}
+
+.clock-time-separator {
+  font-weight: 700;
+  color: #ffffff;
+  opacity: 0.7;
+  font-size: 20px;
+  padding: 0 30px;
+}
+
+.clock-time-frag-desc {
+  color: #ffffff;
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .clock-time-frag {
+    width: 20px;
+  }
+  .clock-time-frag-number {
+    font-size: 16px;
+  }
+  .clock-time-separator {
+    padding: 0 15px;
+    font-size: 14px;
+  }
+  .clock-time-frag-desc {
+    font-size: 11px;
+  }
+}

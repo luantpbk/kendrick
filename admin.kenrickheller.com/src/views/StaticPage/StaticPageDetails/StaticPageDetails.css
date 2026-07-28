@@ -1,0 +1,19 @@
+.page-content {
+  overflow: auto;
+  padding: 0 10px;
+}
+
+.page-content-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.page-content-input {
+  margin: 5px 15px 5px 0;
+}
+
+.page-language {
+  margin: auto 0 auto auto;
+}

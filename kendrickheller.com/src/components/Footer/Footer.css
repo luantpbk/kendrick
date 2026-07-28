@@ -1,0 +1,78 @@
+.footer {
+  background-color: white;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  color: #212529;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+.footer-child {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.footer-child-title {
+  font-size: 20px;
+  font-weight: 615;
+  padding: 10px;
+  line-height: 21px;
+}
+.footer-child-value {
+  font-size: 16px;
+  font-weight: 475;
+  padding: 10px;
+}
+.footer-btn {
+  width: 100%;
+  height: 64px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  transition: 0.25s;
+}
+.footer-btn > a > div:nth-child(1) {
+  font-size: 40px;
+  margin-right: 15px;
+}
+.footer-btn a {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.footer-btn a:hover {
+  color: yellowgreen;
+}
+.footer-btn:hover {
+  color: yellowgreen;
+}
+.footer-btn.num0 {
+  background-color: #2b80dd;
+}
+.footer-btn.num1 {
+  background-color: #1a9891;
+}
+.footer-btn.num2 {
+  background-color: #ed9536;
+}
+.footer-btn.num3 {
+  background-color: #ed3636;
+}
+.footer-child-value a:hover {
+  color: #2b80dd;
+}
+.footer-child-value-link {
+  cursor: pointer;
+}
+.footer-child-value-link:hover {
+  text-decoration: underline;
+}

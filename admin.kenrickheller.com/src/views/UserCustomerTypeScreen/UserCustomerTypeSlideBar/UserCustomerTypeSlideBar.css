@@ -1,0 +1,39 @@
+.slide-bar-price-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+  flex-direction: column;
+}
+.slide-bar-sim-price-component {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  font-weight: 500;
+  padding: 2px;
+  height: fit-content;
+}
+.slide-bar-sim-price-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 225px;
+  margin: 0px 2px;
+  padding: 5px 10px;
+  background-color: lightgray;
+}
+.slide-bar-sim-price-price {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: lightgray;
+  margin: 0px 2px;
+}
+.slide-bar-sim-price-component.chan .slide-bar-sim-price-date {
+  background-color: white;
+}
+.slide-bar-sim-price-component.chan .slide-bar-sim-price-price {
+  background-color: white;
+}

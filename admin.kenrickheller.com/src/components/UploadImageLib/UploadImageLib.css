@@ -1,0 +1,9 @@
+.other-image-container {
+  background-color: white;
+  width: fit-content;
+  height: fit-content;
+  max-width: 90vw;
+  padding: 20px;
+  max-height: 90vh;
+  overflow: auto;
+}

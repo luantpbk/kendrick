@@ -1,0 +1,70 @@
+.action-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  z-index: inherit;
+  font-size: 15px;
+}
+.action-button:focus {
+  border: none;
+  outline: none;
+}
+.action-button:active {
+  transform: translateY(2px);
+}
+.action-button.info {
+  background-color: #318aec;
+  color: white;
+}
+.action-button.info:hover {
+  background-color: gray;
+}
+.action-button.info100 {
+  background-color: #e22d6c;
+  color: white;
+}
+.action-button.info100:hover {
+  background-color: gray;
+}
+.action-button.info200 {
+  background-color: #fc960f;
+}
+.action-button.info200:hover {
+  background-color: gray;
+}
+.action-button.info300 {
+  background-color: #28a745;
+}
+.action-button.info300:hover {
+  background-color: gray;
+}
+.action-button.info400 {
+  background-color: #ebe9e9;
+}
+.action-button.info400:hover {
+  background-color: gray;
+}
+.action-button.info500 {
+  background-color: #2e2e32;
+}
+.action-button.info500:hover {
+  background-color: gray;
+}
+.action-button.info600 {
+  background-color: #51ab55;
+  color: white;
+}
+.action-button.info600:hover {
+  background-color: gray;
+}
+.action-button.info700 {
+  background-color: #ea4643;
+  color: white;
+}
+.action-button.info700:hover {
+  background-color: gray;
+}

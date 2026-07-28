@@ -1,0 +1,29 @@
+.update-status-container {
+    background: white;
+}
+
+.update-status-row {
+    margin: 10px;
+}
+
+.btn-update-status {
+    width: 100%;
+    background-color: #256cb8;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: 500;
+    padding: 0 40px;
+}
+.btn-update-status:focus {
+    border: none;
+    outline: none;
+}
+.btn-update-status:active {
+    transform: translateY(1px);
+}
+
+.update-status-title{
+    padding-top: 5px;
+    text-align: center;
+}

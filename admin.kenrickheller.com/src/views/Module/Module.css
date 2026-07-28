@@ -1,0 +1,136 @@
+/*container*/
+.module-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.module-name-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  height: calc(100vh - 120px);
+  overflow: auto;
+}
+.module-name-left {
+  display: flex;
+  flex-direction: row;
+}
+.module-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 550px;
+  margin: 2px 0px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.module-name:hover {
+  background-color: gray;
+}
+.module-name-des {
+  font-weight: 500;
+  cursor: pointer;
+}
+.module-name:hover .module-name-name,
+.module-name:hover .module-name-des {
+  color: white;
+}
+.module-name.focus {
+  background-color: #0090ed;
+}
+.module-name.focus .module-name-name,
+.module-name.focus .module-name-des {
+  color: white;
+}
+.module-name-btn-container {
+  display: flex;
+  flex-direction: row;
+}
+.module-name-name,
+.module-name-des {
+  color: #0090ed;
+  cursor: pointer;
+  width: 180px;
+}
+.module-name-btn-edit {
+  margin: 0px 15px;
+  color: yellowgreen;
+  cursor: pointer;
+}
+.module-name-btn-delete {
+  color: #ed4d2d;
+  cursor: pointer;
+}
+.module-name-name.title,
+.module-name-des.title {
+  color: black !important;
+}
+
+/*detail*/
+.module-detail-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: calc(100vh - 125px);
+  padding: 5px 15px;
+}
+.module-detail-component {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 2px 0px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.module-detail-component.chan {
+  background-color: lightgray;
+}
+.module-detail-component:hover {
+  background-color: gray;
+  color: white;
+}
+.module-detail-component.title:hover {
+  background-color: white !important;
+  color: black !important;
+}
+
+.module-detail-component-id {
+  width: 100px;
+}
+.module-detail-component-name {
+  width: 400px;
+}
+.module-detail-component-des {
+  display: flex;
+  flex: 1;
+}
+.module-detail-component-edit {
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+  color: yellowgreen;
+}
+.module-detail-component-delete {
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+  color: #ed4d2d;
+}
+
+.add-funtion-container {
+  padding: 5px;
+}
+.add-funtion-btn {
+  background-color: #0090ed;
+  width: fit-content;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}

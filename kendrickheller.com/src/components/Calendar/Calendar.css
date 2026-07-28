@@ -1,0 +1,149 @@
+/*container*/
+.calendar-container {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/*icon*/
+.calendar-icon-container {
+  cursor: pointer;
+  color: #0090ed;
+  font-size: 20px;
+}
+.calendar-icon-container:hover {
+  color: #ed4d2d;
+}
+
+/*main*/
+.calendar-main {
+  display: none;
+}
+.calendar-main.show {
+  position: absolute;
+  display: flex;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid lightgray;
+  z-index: 1;
+}
+.calendar-main.show.top {
+  bottom: 25px;
+}
+.calendar-main.show.bot {
+  top: 25px;
+}
+.calendar-main.show.left {
+  left: 0;
+}
+.calendar-main.show.center {
+  left: -195px;
+}
+.calendar-main.show.right {
+  right: 0;
+}
+
+.date-line-calendar-component {
+  display: flex;
+  flex-direction: row;
+}
+.date-calendar-component {
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.date-calendar-component.red {
+  color: #ed4d2d;
+}
+.date-calendar-component.blur {
+  color: lightgray;
+}
+.date-calendar-component:hover {
+  background-color: lightgray;
+  color: white;
+}
+.date-calendar-component.no-hover {
+  background: none !important;
+  color: black !important;
+  cursor: default;
+}
+.date-calendar-component.no-hover.red {
+  color: #ed4d2d !important;
+}
+.date-calendar-component.selected {
+  background-color: #0090ed;
+  color: white;
+}
+.date-calendar-component.today {
+  border: 1px solid gray;
+}
+
+/*nav*/
+.calendar-nav {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+.calendar-month-input {
+  width: 25px;
+  text-align: center;
+  border: none;
+  font-weight: 600;
+}
+.calendar-year-input {
+  width: 50px;
+  text-align: center;
+  border: none;
+  font-weight: 600;
+}
+.calendar-nav-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.calendar-nav-icon {
+  margin: 0px 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.calendar-nav-icon:hover {
+  color: #ed4d2d;
+}
+
+@media all and (max-width: 991px) {
+  .calendar-main.show {
+    position: absolute;
+    display: flex;
+    background-color: white;
+    width: 245px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid lightgray;
+    z-index: 100;
+    font-size: 14px;
+  }
+  .date-calendar-component {
+    width: 35px;
+    height: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+}

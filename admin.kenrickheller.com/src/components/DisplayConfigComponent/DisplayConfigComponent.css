@@ -1,0 +1,57 @@
+.sim-price-detail-option.config {
+  width: 200px;
+  border-radius: 5px;
+}
+
+.dis-config-wrapper {
+  overflow: hidden;
+}
+
+/*input*/
+.add-product-order-input {
+  position: relative;
+  width: calc(100% -20px);
+  border: 2px solid lightgray;
+  border-radius: 3px 3px 3px 3px;
+  margin: 15px 10px 0px 10px;
+}
+.add-product-order-input > input {
+  width: 100%;
+  height: max(30px, min(calc((100vw - 991px) * 9999), 40px));
+  padding-left: 10px;
+  opacity: 0;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+}
+.add-product-order-input > input:focus {
+  outline: none;
+}
+.add-product-order-input.focus-input {
+  border-color: #009250;
+}
+.add-product-order-input-title {
+  position: absolute;
+  top: 5%;
+  left: 20px;
+  background-color: #fbfbfb;
+  translate: 1s;
+  color: #42494d;
+  font-size: 14px;
+  font-weight: 500;
+  color: lightgray;
+  transition: 0.5s;
+}
+.add-product-order-input.focus-input .add-product-order-input-title {
+  top: -50%;
+  color: #42494d;
+}
+.add-product-order-input.focus-input > input {
+  opacity: 1;
+}
+.add-product-order-input.validate-input > input {
+  opacity: 1;
+}
+.add-product-order-input.validate-input .add-product-order-input-title {
+  top: -50%;
+  color: #42494d;
+}

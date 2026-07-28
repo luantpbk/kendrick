@@ -1,0 +1,32 @@
+.realms-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  width: 100vw;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.realms-title {
+  display: flex;
+  text-decoration: none !important;
+  justify-content: center;
+  min-width: fit-content;
+  width: 20vw;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: lightgray;
+  padding: 10px 20px;
+  word-wrap: none;
+  cursor: pointer;
+  margin: 0 1px;
+}
+
+.realms-title:hover {
+  color: white;
+  background-color: gray;
+}
+.realms-title.focus {
+  color: white;
+  background-color: black;
+}

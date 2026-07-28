@@ -1,0 +1,62 @@
+.banner-wrapper {
+  width: 100%;
+  position: relative;
+}
+.banner-container {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+.banner-image {
+  width: 100%;
+  flex-shrink: 0;
+  height: calc(100vw / 4);
+  object-fit: cover;
+}
+
+.dot-banner-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translate(-50%);
+}
+.dot-banner {
+  width: 10px;
+  height: 10px;
+  background-color: lightgray;
+  border-radius: 50%;
+  bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.dot-banner.show {
+  background-color: red;
+}
+.banner-nav {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 35%;
+  top: 50%;
+  font-size: calc((100vw / 1366) * 15 + 15px);
+  color: white;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.banner-nav:hover {
+  font-size: calc((100vw / 1366) * 40);
+}
+.banner-nav.left {
+  left: 15px;
+  transform: translate(0, -50%);
+}
+.banner-nav.right {
+  right: 15px;
+  transform: translate(0, -50%);
+}

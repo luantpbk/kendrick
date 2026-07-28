@@ -1,0 +1,83 @@
+.order-requirement-container {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.order-requirement-info {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  width: calc(max(min(68vw, 680px), 48vw)  - 60px);
+  max-width: 100%;
+  justify-content: center;
+}
+
+.order-requirement-details {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0 30px;
+  width: calc(max(256px, 20vw) + 60px);
+  max-width: 100%;
+}
+
+.order-requirement-row {
+  position: relative;
+  padding: 4px 10px;
+}
+
+.i-tooltip {
+  position: absolute;
+}
+
+.guide {
+  top: 29px;
+  right: 13px;
+}
+
+.qr-scan {
+  top: 29px;
+  right: 33px;
+}
+
+.info-guide {
+  color: #009250;
+  font-size: 20px;
+}
+
+.qr-scan-icon {
+  color: #333dcb;
+  font-size: 20px;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 260px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  top: 20px;
+  right: inherit;
+  z-index: 1;
+  /* Position the tooltip */
+  position: absolute;
+}
+
+.i-tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.zalo-text {
+  padding-right: 65px;
+}
+
+.facebook-text {
+  padding-right: 35px;
+}

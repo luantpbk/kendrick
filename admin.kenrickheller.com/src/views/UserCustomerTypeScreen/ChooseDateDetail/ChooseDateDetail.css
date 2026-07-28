@@ -1,0 +1,23 @@
+.calendar-main.show.sim-price {
+  position: relative !important ;
+}
+.sim-price-calendar-container.sim-price {
+  height: 325px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.choose-detail-btn {
+  background-color: #0090ed;
+  width: fit-content;
+  color: white;
+  font-size: medium;
+  font-weight: 500;
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  align-self: center;
+  cursor: pointer;
+}

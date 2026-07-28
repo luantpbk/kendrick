@@ -1,0 +1,10 @@
+.add-category-container {
+  width: fit-content;
+  height: fit-content;
+  background-color: white;
+  padding: 10px;
+}
+
+.category-row {
+  margin-bottom: 10px;
+}

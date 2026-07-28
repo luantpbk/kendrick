@@ -1,0 +1,143 @@
+/*container*/
+.api-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.api-name-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  height: calc(100vh - 120px);
+  overflow: auto;
+}
+.api-name-left {
+  display: flex;
+  flex-direction: row;
+}
+.api-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 750px;
+  margin: 2px 0px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.api-name:hover {
+  background-color: gray;
+}
+.api-name-des {
+  font-weight: 500;
+  cursor: pointer;
+}
+.api-name:hover .api-name-name,
+.api-name:hover .api-name-des,
+.api-name:hover .api-name-action-type {
+  color: white;
+}
+.api-name.focus {
+  background-color: #0090ed;
+}
+.api-name.focus .api-name-name,
+.api-name.focus .api-name-des,
+.api-name.focus .api-name-action-type {
+  color: white;
+}
+.api-name-btn-container {
+  display: flex;
+  flex-direction: row;
+}
+.api-name-name,
+.api-name-des {
+  color: #0090ed;
+  cursor: pointer;
+  width: 100px;
+}
+.api-name-btn-edit {
+  margin: 0px 15px;
+  color: yellowgreen;
+  cursor: pointer;
+}
+.api-name-btn-delete {
+  color: #ed4d2d;
+  cursor: pointer;
+}
+.api-name-name.title,
+.api-name-des.title {
+  color: black !important;
+}
+.api-name-action-type {
+  display: flex;
+  width: 100px;
+  cursor: pointer;
+}
+
+/*detail*/
+.api-detail-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: calc(100vh - 125px);
+  padding: 5px 15px;
+}
+.api-detail-component {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 2px 0px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.api-detail-component.chan {
+  background-color: lightgray;
+}
+.api-detail-component:hover {
+  background-color: gray;
+  color: white;
+}
+.api-detail-component.title:hover {
+  background-color: white !important;
+  color: black !important;
+}
+
+.api-detail-component-id {
+  width: 100px;
+}
+.api-detail-component-name {
+  width: 400px;
+}
+.api-detail-component-des {
+  display: flex;
+  flex: 1;
+}
+.api-detail-component-edit {
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+  color: yellowgreen;
+}
+.api-detail-component-delete {
+  width: 50px;
+  text-align: center;
+  cursor: pointer;
+  color: #ed4d2d;
+}
+
+.add-funtion-container {
+  padding: 5px;
+}
+.add-funtion-btn {
+  background-color: #0090ed;
+  width: fit-content;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}

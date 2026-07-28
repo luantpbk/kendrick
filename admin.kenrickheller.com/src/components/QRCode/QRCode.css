@@ -1,0 +1,12 @@
+.qr-popup {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.qr-popup > img {
+  width: 100%;
+  object-fit: contain;
+}

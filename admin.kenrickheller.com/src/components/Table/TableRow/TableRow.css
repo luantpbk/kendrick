@@ -1,0 +1,69 @@
+
+.label-table {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+    font-size: smaller;
+}
+
+.color-red {
+    color: red;
+}
+
+.color-blue {
+    color: blue;
+}
+
+.table-row-component:hover > td{
+    background-color: #9da8b2;
+}
+
+.table-row-component.highlight {
+    background-color: #3087fa;
+}
+
+.table-row-component.highlight:hover > td {
+    background-color: #3087fa;
+}
+
+.table-row-component.even-row {
+    background-color: #e8e7e7;
+}
+.table-row-component.odd-row {
+    background-color: #d1cece;
+}
+
+.table-row-component > td {
+    border-right: 2px solid white;
+    border-left: 2px solid white;   
+    max-width: 500px;
+}
+
+
+/*end of color*/
+
+
+tr.table-row-component {
+    height: 25px;
+}
+
+/*check box*/
+.table-row-checkbox {
+    text-align: center;
+}
+.table-row-btn-check {
+    height: fit-content;
+    padding: 0 !important;
+}
+.table-row-btn-check > i {
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 !important;
+}
+.table-row-btn-check > i.check {
+    color: blue;
+}
+  

@@ -1,0 +1,28 @@
+.realm-import-excel_child.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.space-bar {
+  position: relative;
+  bottom: -10px;
+}
+
+.import-loading {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  padding: 5px 0;
+  background-color: white;
+}
+
+.import-loading i {
+  color: #3d4f71;
+  margin-left: 20px;
+  font-size: 60px;
+}
+
+.import-loading-text {
+  padding: 20px;
+}

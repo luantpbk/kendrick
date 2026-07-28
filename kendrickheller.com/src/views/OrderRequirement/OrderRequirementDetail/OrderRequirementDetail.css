@@ -1,0 +1,226 @@
+.order-requirement-detail-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  justify-content: center;
+  min-height: 80vh;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .order-cart-info {
+    width: 30vw;
+  }
+  .order-delivery-info {
+    width: 28vw;
+  }
+  .order-receiver-info {
+    width: 30vw;
+  }
+  .order-cart-info-header-middle.hidden {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1023px) {
+  .order-cart-info {
+    width: 44vw;
+  }
+  .order-delivery-info {
+    width: 44vw;
+  }
+  .order-receiver-info {
+    width: 90vw;
+    padding: 0 2vw;
+  }
+  .order-cart-info-header-middle.hidden {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .order-cart-info {
+    width: 90vw;
+  }
+  .order-delivery-info {
+    width: 90vw;
+  }
+  .order-receiver-info {
+    width: 90vw;
+  }
+}
+
+.order-cart-info {
+  background-color: rgb(246, 246, 246);
+  box-shadow: lightgray 0px 0px 4px 1px;
+  margin: 5px 0;
+  padding: 0 min(2vw, 30px);
+}
+
+.order-cart-info .collapse {
+  display: none;
+}
+
+.order-receiver-info > label {
+  flex-wrap: wrap;
+}
+
+.order-cart-info .uncollapse {
+  padding-top: 20px;
+}
+
+.order-cart-info-header {
+  display: flex;
+  flex-direction: row;
+  font-size: larger;
+  font-weight: 500;
+  margin: auto 0;
+  padding: 15px 25px;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  justify-content: space-between;
+}
+
+.order-cart-info-header-middle {
+  vertical-align: middle;
+  margin: auto 0 auto 10px;
+}
+
+.order-receiver-time-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.order-delivery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
+.order-receiver-info {
+  padding-left: 20px;
+}
+
+.order-delivery-info {
+  padding-left: 20px;
+}
+
+.order-delivery-title {
+  font-size: medium;
+  padding: 0 5px;
+  width: fit-content;
+}
+
+.order-priority-delivery-time {
+  border: 1px solid #dddcdc;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.order-note-checkout {
+  width: 100%;
+  margin: 10px 0;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.order-money-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: gray;
+  font-style: italic;
+  padding: 0 calc(min(2vw, 30px) + 10px);
+}
+
+.order-total-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: large;
+  font-style: italic;
+  color: rgb(104, 104, 104);
+  padding: 0 calc(min(2vw, 30px) + 10px);
+}
+
+.order-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.note-component {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.note-line {
+  flex: auto;
+  height: 1px;
+  background-color: lightgray;
+  margin: auto;
+}
+.note-datetime {
+  background: lightgray;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: small;
+}
+.my-note-item {
+  background: lightseagreen;
+  width: fit-content;
+  padding: 5px 15px;
+  border-radius: 20px;
+  align-self: flex-start;
+  margin: 10px 0;
+}
+.note-item {
+  display: flex;
+  flex-direction: row-reverse;
+  align-self: flex-end;
+  margin: 10px 0;
+}
+.note-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  object-fit: cover;
+  box-shadow: lightgray 0px 0px 2px 1px;
+  margin-left: 10px;
+}
+
+.note-detail {
+  background: rgb(94, 94, 94);
+  width: fit-content;
+  padding: 5px 15px;
+  border-radius: 15px;
+  text-align: end;
+  color: white;
+}
+
+.order-receiver-time-option {
+  width: 150px;
+  height: fit-content;
+  background: #605e5e;
+  padding: 3px 0px 3px 6px;
+  color: white;
+  margin: auto 0;
+}
+
+.paypal-container {
+  margin: 10px 0;
+}

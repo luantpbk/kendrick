@@ -1,0 +1,117 @@
+/*menu nav*/
+.menu-nav {
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #212123;
+  color: white;
+  font-size: 13px;
+  height: 100%;
+  transition: 0.5s;
+  box-shadow: 5px 0px 10px lightgray;
+  border-radius: 0px 5px 5px 0px;
+  z-index: 150;
+}
+.menu-nav-container {
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.menu-nav-container::-webkit-scrollbar {
+  width: 0 !important;
+  display: none;
+}
+.btn-close-nav {
+  border-radius: 5px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  z-index: 1;
+  cursor: pointer;
+  background-color: #212123;
+  transform: rotate(180deg);
+}
+.menu-nav.responsive.mini-size {
+  position: fixed;
+  left: 0px;
+  transform: translateX(-300px);
+}
+.menu-nav.responsive.mini-size.on-mini-size {
+  transform: translateX(0px);
+}
+.menu-nav::-webkit-scrollbar {
+  width: 0 !important;
+  display: none;
+}
+.menu-nav-body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.menu-nav-logo {
+  position: relative;
+  padding-right: 10px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid white;
+}
+.nav-logo {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+  margin: 10px;
+  background-color: white;
+}
+.nav-logo div {
+  width: 100%;
+  height: 100%;
+}
+.nav-logo img {
+  width: 100%;
+  object-fit: cover;
+}
+
+/*button mini size*/
+.btn-mini-size.mini-size {
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  background-color: #212123;
+  color: white;
+  font-size: 35px;
+  width: 45px;
+  height: 40px;
+  border-radius: 5px;
+  left: 0px;
+  bottom: 0px;
+  cursor: pointer;
+}
+.btn-mini-size.mini-size.on-mini-size {
+  display: none;
+}
+
+/*btn back*/
+.btn-back-lv-1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}

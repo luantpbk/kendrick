@@ -1,0 +1,46 @@
+.od-requirement-pre-container {
+  margin: 5px 0px;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid lightgray;
+  background-color: white;
+}
+.od-requirement-pre-container.even {
+  background-color: lightgray;
+  border: 1px solid gray;
+}
+
+/*img*/
+.od-pre-img {
+  width: 150px;
+  height: 80px;
+  cursor: pointer;
+}
+.od-pre-img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.pr-od-pre-fullsize-img {
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  opacity: 1;
+  background-color: black;
+  z-index: 150;
+}
+.pr-od-pre-fullsize-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.od-pre-sell {
+  cursor: pointer;
+  color: blue;
+}

@@ -1,0 +1,18 @@
+.checkbox-parent {
+  position: relative;
+  text-align: center;
+  font-weight: 500;
+  background-color: lightgray;
+  cursor: pointer;
+}
+.checkbox-parent:active {
+  transform: translateY(2px);
+}
+.checkbox-child {
+  position: relative;
+  display: none;
+  background-color: #ebe9e9;
+}
+.checkbox-child.show {
+  display: block;
+}

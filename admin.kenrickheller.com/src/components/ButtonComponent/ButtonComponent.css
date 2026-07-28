@@ -1,0 +1,21 @@
+.button-component-content {
+  vertical-align: middle;
+  margin: 5px;
+}
+
+.button-component {
+  background-color: #256cb8;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: 500;
+  padding: 0 40px;
+  width: 100%;
+}
+.button-component:focus {
+  border: none;
+  outline: none;
+}
+.button-component:active {
+  transform: translateY(1px);
+}

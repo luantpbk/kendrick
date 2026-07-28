@@ -1,0 +1,31 @@
+.user-detail-container {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-detail-btn-container {
+  padding: 10px;
+}
+
+/*btn*/
+.btn-add-user {
+  background-color: #0090ed;
+  padding: 5px 10px;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid gray;
+}
+.btn-edit-user {
+  background-color: red;
+  padding: 5px 10px;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+}

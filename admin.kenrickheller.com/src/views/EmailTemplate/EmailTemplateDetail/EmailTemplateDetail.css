@@ -1,0 +1,103 @@
+.email-template-detail-param-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.email-template-detail-param-container input {
+  width: 90%;
+}
+
+/*simple param*/
+.simple-param-container {
+  display: flex;
+  flex: 5;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  border: 1px solid gray;
+  padding: 0px 0px 10px 0px;
+  margin: 0px 5px;
+}
+.simple-param {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.simple-param-component {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin: 1px 2px;
+}
+.simple-param-component.title {
+  text-transform: uppercase;
+  background-color: lightgray;
+}
+
+/*table param*/
+.table-param-container {
+  display: flex;
+  flex: 7;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  border: 1px solid gray;
+  padding: 0px 0px 10px 0px;
+  margin: 0px 5px;
+}
+.table-param {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 2px 0px;
+}
+.table-param-detail {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+}
+.table-param-detail-component {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.table-param-component {
+  display: flex;
+  flex: 1;
+  margin: 1px 2px;
+  align-items: center;
+  justify-content: center;
+}
+.table-param-component.title {
+  text-transform: uppercase;
+  background-color: lightgray;
+}
+.table-param.le .table-param-component {
+  background-color: lightgray;
+}
+
+/*delete btn*/
+.email-template-btn-component {
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: gray;
+}
+.email-template-btn-component:hover {
+  color: red;
+}
+
+/*function btn*/
+.email-template-add-btn {
+  background-color: #0090ed;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  margin: 10px 10px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}

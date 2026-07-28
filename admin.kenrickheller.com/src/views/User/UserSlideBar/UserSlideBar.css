@@ -1,0 +1,63 @@
+.slide-bar-detail-container.user {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+.slide-bar-user-btn {
+  color: white;
+  padding: 5px 12px;
+  border-radius: 5px;
+  background-color: #0090ed;
+  cursor: pointer;
+}
+.slide-bar-user-btn:active {
+  transform: translateY(2px);
+}
+
+.slide-bar-role-container {
+  width: 100%;
+}
+.slide-bar-role-component {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px 0px;
+  font-weight: 500;
+  padding: 5px;
+  border-radius: 5px;
+  color: #0090ed;
+}
+.slide-bar-role-component.chan {
+  background-color: lightgray;
+}
+.slide-bar-role-name {
+  display: flex;
+  flex: 1;
+}
+.slide-bar-role-btn-delete {
+  color: #ed4d2d;
+  cursor: pointer;
+}
+.slide-bar-role-component.btn-component {
+  justify-content: space-evenly;
+  background-color: white;
+}
+.slide-bar-role-option {
+  width: 50%;
+  height: 35px;
+  border-radius: 5px 5px 5px 0px;
+  font-weight: 500;
+}
+.slide-bar-role-option > option {
+  font-weight: 500;
+}
+.slide-bar-add-role-btn {
+  background-color: #0090ed;
+  font-weight: 500;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid gray;
+}

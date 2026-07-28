@@ -1,0 +1,52 @@
+/*Normal input*/
+.input-input-component {
+  padding-right: 15px;
+  padding-left: 15px;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.input-input-component::placeholder {
+  font-style: oblique;
+  color: gray;
+}
+input.input-input-component:disabled {
+  color: black;
+  background-color: transparent;
+}
+.input-input-component.right {
+  text-align: right;
+}
+.input-input-component.center {
+  text-align: center;
+}
+.input-input-component.left {
+  text-align: left;
+}
+.input-input-component.hightlight {
+  background-color: greenyellow;
+}
+
+/*Text area*/
+.input-text-area-component {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin: 0 !important;
+}
+textarea.input-text-area-component:disabled {
+  color: black;
+  background-color: transparent;
+}
+textarea.input-text-area-component.right {
+  text-align: right;
+}
+textarea.input-text-area-component.left {
+  text-align: left;
+}
+textarea.input-text-area-component.center {
+  text-align: center;
+}

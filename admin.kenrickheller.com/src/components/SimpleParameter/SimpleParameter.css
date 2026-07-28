@@ -1,0 +1,29 @@
+
+/*simple param*/
+.simple-param-container {
+    display: flex;
+    flex: 5;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    border: 1px solid gray;
+    padding: 0px 0px 10px 0px;
+    margin: 0px 5px;
+    overflow: auto;
+  }
+  .simple-param {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .simple-param-component {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin: 1px 2px;
+  }
+  .simple-param-component.title {
+    text-transform: uppercase;
+    background-color: lightgray;
+  }

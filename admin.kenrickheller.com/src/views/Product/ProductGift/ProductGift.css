@@ -1,0 +1,90 @@
+.product-gift-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ebe9e9;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.product-gift-container input {
+  background-color: white;
+  border: 1px solid gray;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.product-gift-left {
+  height: 100%;
+  width: 70%;
+}
+.product-gift-left-title {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+}
+.product-gift-left-title > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 14%;
+  border: 1px solid lightgray;
+}
+.product-gift-left-value {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: calc(100% - 60px);
+}
+.product-gift-left-value::-webkit-scrollbar {
+  width: 0 !important;
+  display: none;
+}
+.product-gift-config-container {
+  display: flex;
+  flex-direction: row;
+}
+.product-gift-config-container > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 14%;
+  overflow: hidden;
+  border: 1px solid lightgray;
+  word-wrap: initial;
+}
+.edit-product-gift-config {
+  cursor: pointer;
+  background-color: #2b80dd;
+}
+.delete-product-gift-config {
+  cursor: pointer;
+  background-color: #ffc107;
+}
+
+.display-option-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.add-product-gift-config {
+  width: fit-content;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #2b80dd;
+  cursor: pointer;
+}
+.save-product-gift-config {
+  width: fit-content;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #dc3545;
+  cursor: pointer;
+}

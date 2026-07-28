@@ -1,0 +1,35 @@
+.calendar-input {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.calendar-input.error {
+  margin-bottom: 5px !important;
+  border-bottom: 1px solid #ed4d2d !important;
+}
+.calendar-input > i {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.4);
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.calendar-input > label {
+  border: none;
+  display: flex;
+  background-color: transparent;
+  width: fit-content;
+  margin: 0px 10px;
+}
+
+.calendar-form-error-text {
+  color: #ed4d2d;
+  font-size: 13px;
+  line-height: 1;
+  margin-bottom: 5px;
+  padding: 0px 5px;
+}

@@ -1,0 +1,14 @@
+.order-requirement-content {
+  width: calc(90vw - 3px);
+  padding-right: 10px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.refresh-loading {
+  justify-content: center;
+  width: calc(90vw - 6px);
+  text-align: center;
+  align-self: center;
+}

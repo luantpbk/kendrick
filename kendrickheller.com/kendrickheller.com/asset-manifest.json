@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.40d7c37f.css",
+    "main.js": "/static/js/main.11fb21ee.js",
+    "static/media/img-dk-mobile.png": "/static/media/img-dk-mobile.4b62a09062398534f217.png",
+    "static/media/tracking.png": "/static/media/tracking.70394263bef2acc57c62.png",
+    "static/media/login-img.png": "/static/media/login-img.50fbd3fdf9f35f559e05.png",
+    "static/media/notification-img.png": "/static/media/notification-img.9f2551a9273a598c6e8c.png",
+    "static/media/news_icon.png": "/static/media/news_icon.ece929acedf0a161b73c.png",
+    "static/media/empty-list.png": "/static/media/empty-list.ca57fb7da50ee6941934.png",
+    "static/media/tai_ung_dung.png": "/static/media/tai_ung_dung.16dfa5832b61d75c9940.png",
+    "static/media/tin_tuc.png": "/static/media/tin_tuc.e07f64b94ea72dae62cc.png",
+    "static/media/icon-loading.gif": "/static/media/icon-loading.e1658f1b84de3a1fe498.gif",
+    "static/media/internet_icon.png": "/static/media/internet_icon.d788305d041b88e9a738.png",
+    "static/media/tracking_icon.png": "/static/media/tracking_icon.542b972604ae78abca34.png",
+    "static/media/van_chuyen.png": "/static/media/van_chuyen.d595dac938e0b7e49154.png",
+    "static/media/noimage.png": "/static/media/noimage.6a1d8e502f73b11a07c5.png",
+    "index.html": "/index.html",
+    "static/media/icon_star_list2.png": "/static/media/icon_star_list2.77d4fe510292f964f4f0.png",
+    "static/media/getFetch.cjs": "/static/media/getFetch.c4cca45e22bc1b2c7d0d.cjs",
+    "main.40d7c37f.css.map": "/static/css/main.40d7c37f.css.map",
+    "main.11fb21ee.js.map": "/static/js/main.11fb21ee.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.40d7c37f.css",
+    "static/js/main.11fb21ee.js"
+  ]
+}

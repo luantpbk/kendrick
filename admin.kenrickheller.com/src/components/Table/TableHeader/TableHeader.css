@@ -1,0 +1,9 @@
+.table-header-component > th {
+  border-right: 2px solid white;
+  border-left: 2px solid white;
+  background-color: #5d7c9f;
+  color: white;
+  font-size: smaller;
+  font-weight: 600;
+  padding: 5px 0 5px 0;
+}

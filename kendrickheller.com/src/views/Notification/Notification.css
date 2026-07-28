@@ -1,0 +1,95 @@
+.noti-component {
+  background-color: #daebfd;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 2px 0;
+  border-radius: 10px;
+  padding: 2px;
+  cursor: pointer;
+}
+.noti-component.read {
+  background-color: rgb(240, 239, 239);
+}
+
+/*avatar*/
+.noti-avt {
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  margin: 5px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.noti-avt img {
+  width: 100%;
+  height: 100%;
+}
+
+/*value*/
+.noti-value {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 5px;
+}
+.noti-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.noti-main {
+  display: block;
+  display: -webkit-box;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 14px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.noti-tick {
+  margin-left: 5px;
+  margin-right: 5px;
+  color: lightgray;
+}
+.noti-tick.blue {
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #0090ed;
+}
+
+.noti-tick-all-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+.noti-tick-all {
+  width: fit-content;
+  color: #0090ed;
+  margin-right: 5px;
+}
+
+/*btn*/
+.noti-btn-con {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.noti-btn.blue {
+  background-color: #0090ed;
+  color: white;
+  margin: 5px;
+  border-radius: 5px;
+}

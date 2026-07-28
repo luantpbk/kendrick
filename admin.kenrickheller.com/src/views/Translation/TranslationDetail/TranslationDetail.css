@@ -1,0 +1,9 @@
+.translation-detail-container {
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 20px 10px 20px;
+  background-color: white;
+}
+.translation-detail-row {
+  margin: 10px auto 5px auto;
+}

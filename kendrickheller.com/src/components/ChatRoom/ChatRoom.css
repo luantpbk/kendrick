@@ -1,0 +1,236 @@
+.chat-content {
+  overflow: auto;
+  flex: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: rgb(37, 37, 37);
+  padding: 5px 0;
+}
+
+.chat-content::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+  background-color: rgb(49, 49, 49);
+}
+
+/* Add a thumb */
+.chat-content::-webkit-scrollbar-thumb {
+  background: rgb(71, 71, 71);
+}
+
+.chat-content::-webkit-scrollbar-thumb:hover {
+  background: rgb(169, 168, 168);
+}
+
+.chat-box-title {
+  background: rgb(28, 28, 28);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.media img {
+  border-radius: 20px;
+}
+.dot {
+  font-weight: bold;
+}
+.messenge-form {
+  background-color: rgb(28, 28, 28);
+  display: flex;
+  flex-direction: row;
+}
+.form-control {
+  background-color: rgb(62, 62, 62);
+  border: none;
+  resize: none;
+  border-radius: 20px;
+  margin: 5px 0;
+}
+.sent-btn {
+  color: white;
+  cursor: pointer;
+  margin: auto 10px;
+}
+.form-control:focus {
+  box-shadow: none;
+  background-color: transparent;
+  color: lightgray;
+}
+.form-control::placeholder {
+  color: lightgray;
+}
+.sent-message {
+  align-self: flex-end;
+  margin: 5px;
+}
+.sent-message span {
+  background-color: rgb(94, 94, 94);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+}
+
+.receiver-mesage {
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}
+.message-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  margin-right: 5px;
+}
+.receiver-mesage span {
+  border: none;
+  background: lightseagreen;
+  border-radius: 15px;
+  padding: 5px 15px;
+}
+.image-message {
+  width: 200px;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.15);
+  align-self: center;
+  object-fit: contain;
+  margin: 0 5px;
+}
+.consulation-message {
+  margin: 0 5px;
+  padding: 2px;
+}
+
+.receiver-mesage .consulation-message {
+  background-color: lightseagreen;
+  border-top-right-radius: 20px;
+  color: black;
+}
+
+.sent-message .consulation-message {
+  background-color: rgb(94, 94, 94);
+  border-top-left-radius: 20px;
+  color: white;
+}
+.consulation-message label {
+  padding: 0 5px 0 15px;
+}
+.consulation-product {
+  display: flex;
+}
+.consulation-product.sent {
+  background-color: black;
+  flex-direction: row;
+}
+.consulation-product.receiver {
+  background-color: white;
+  flex-direction: row-reverse;
+}
+.consulation-product label {
+  padding: 0px 10px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.consulation-product-name {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.consulation-product-description {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  line-height: 1.3em;
+  max-height: 3.9em;
+}
+.consulation-product img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+.btn-icon {
+  cursor: pointer;
+  margin: 5px;
+}
+
+.avatar-collapse {
+  width: 100%;
+  cursor: pointer;
+}
+
+.room-name {
+  width: 80%;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chat-connect {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.chat-connect span {
+  font-size: small;
+  margin: auto 5px;
+  color: gray;
+}
+.connecting {
+  background: rgba(0, 132, 255, 0.2);
+}
+.disconnect {
+  background: rgba(214, 72, 72, 0.2);
+}
+.upload-image {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(16, 252, 205, 0.462);
+  color: white;
+  padding: 0 10px;
+  margin-top: 5px;
+}
+.upload-image span {
+  padding-left: 10px;
+}
+
+.suggestion-product {
+  background-color: rgb(94, 94, 94);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.suggestion-product i {
+  position: absolute;
+  color: red;
+  top: 5px;
+  right: 5px;
+}
+.suggestion-product img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: auto;
+}
+.suggestion-product label {
+  padding: 0px 10px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.suggestion-product-name {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.suggestion-product-description {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  line-height: 1.3em;
+  max-height: 3.9em;
+}

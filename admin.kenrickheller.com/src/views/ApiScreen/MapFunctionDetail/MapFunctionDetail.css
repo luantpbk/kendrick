@@ -1,0 +1,4 @@
+.user-detai-input.map-function > form {
+  display: flex;
+  flex-direction: column;
+}

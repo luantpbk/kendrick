@@ -1,0 +1,28 @@
+.company-info-container {
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    padding: 10px;
+}
+
+.company-info-row {
+    margin-bottom: 10px;
+}
+
+.btn-add-company-info {
+    background-color: #256cb8;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: 500;
+    width: 100%;
+    margin: 5px auto 5px auto;
+}
+
+.btn-add-company-info:focus {
+    border: none;
+    outline: none;
+}
+.btn-add-company-info:active {
+    transform: translateY(1px);
+}

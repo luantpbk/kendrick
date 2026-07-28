@@ -1,0 +1,24 @@
+.email-list-slide-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #fbfbfb;
+  height: 100%;
+  margin: 0;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.email-list-title {
+  width: 100%;
+  font-weight: 600;
+  font-size: max(13px, min(calc((100vw - 991px) * 9999), 18px));
+  text-align: left;
+  padding: 5px 10px;
+}
+
+.email-list-value {
+  width: 100%;
+}

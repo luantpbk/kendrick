@@ -1,0 +1,68 @@
+.tracking-container {
+  text-align: center;
+  background-color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/*header title*/
+.tracking-title {
+  font-size: calc((100vw / 1366) * 4 + 14px);
+  font-weight: 650;
+  padding: 16px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  text-align: left;
+}
+
+/*input*/
+.tracking-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.tracking-input {
+  font-size: calc((100vw / 1366) * 4 + 13px);
+  height: calc((100vw / 1366) * 4 + 30px);
+  margin: 5px;
+  width: 50%;
+}
+.tracking-btn {
+  cursor: pointer;
+  height: calc((100vw / 1366) * 4 + 30px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #2b80dd;
+  color: white;
+  margin: 5px;
+  padding: 5px 10px;
+  font-size: calc((100vw / 1366) * 4 + 13px);
+  transition: 0.5s;
+  border-radius: 5px;
+}
+.tracking-btn:active {
+  opacity: 0.2;
+}
+
+.trackingId-noData {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media all and (max-width: 991px) {
+  .trackingId-noData {
+    font-size: 15px;
+  }
+}
+
+/*img*/
+.tracking_no-code_img {
+  width: 100%;
+  object-fit: contain;
+  max-width: 500px;
+  align-self: center;
+}

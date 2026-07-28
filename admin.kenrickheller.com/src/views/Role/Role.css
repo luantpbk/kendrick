@@ -1,0 +1,154 @@
+/*container*/
+.role-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.role-name-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  height: calc(100vh - 120px);
+  overflow: auto;
+}
+.role-name-left {
+  display: flex;
+  flex-direction: row;
+}
+.role-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 550px;
+  margin: 2px 0px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.role-name:hover {
+  background-color: gray;
+}
+.role-name-des {
+  font-weight: 500;
+  cursor: pointer;
+}
+.role-name:hover .role-name-name,
+.role-name:hover .role-name-des {
+  color: white;
+}
+.role-name.focus {
+  background-color: #0090ed;
+}
+.role-name.focus .role-name-name,
+.role-name.focus .role-name-des {
+  color: white;
+}
+.role-name-btn-container {
+  display: flex;
+  flex-direction: row;
+}
+.role-name-name {
+  color: #0090ed;
+  cursor: pointer;
+  width: 180px;
+}
+.role-name-des {
+  color: #0090ed;
+  cursor: pointer;
+}
+.role-name-btn-edit {
+  margin: 0px 15px;
+  color: yellowgreen;
+  cursor: pointer;
+}
+.role-name-btn-delete {
+  color: #ed4d2d;
+  cursor: pointer;
+}
+.role-name-name.title,
+.role-name-des.title {
+  color: black !important;
+}
+
+/*detail*/
+.role-detail-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: calc(100vh - 125px);
+  padding: 5px 15px;
+}
+.role-detail-tab {
+  display: flex;
+  flex-direction: row;
+}
+.role-detail-tab-component {
+  display: flex;
+  flex: 1;
+  background-color: white;
+  padding: 10px;
+  font-weight: 600;
+  font-size: medium;
+  justify-content: center;
+  cursor: pointer;
+}
+.role-detail-tab-component:hover {
+  background-color: lightgray;
+  color: white;
+}
+.role-detail-tab-component.focus {
+  background-color: #0090ed;
+  color: white;
+}
+
+/*detail component*/
+.role-detail-function-component {
+  display: flex;
+  font-weight: 500;
+  padding: 5px;
+}
+.role-detail-function-component-first {
+  display: flex;
+  flex: 2;
+  justify-content: start;
+  margin: 1px;
+  padding: 5px 10px;
+}
+.role-detail-function-component-first.title {
+  background-color: lightgray;
+}
+.role-detail-function-component-enum {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  margin: 1px;
+  padding: 5px;
+}
+.role-detail-function-component-enum.title {
+  background-color: lightgray;
+}
+
+.role-detail-tick {
+  border: 1px solid gray;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.role-detail-tick.focus {
+  background-color: #0090ed;
+  color: white;
+}
+.role-detail-btn-edit {
+  background-color: #0090ed;
+  color: white;
+  font-weight: 600;
+  font-size: medium;
+  padding: 3px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid gray;
+}

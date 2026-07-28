@@ -1,0 +1,27 @@
+.copy-display-container {
+  background-color: white;
+  padding: 10px;
+}
+
+.copy-display-row {
+  margin: 10px auto 5px auto;
+}
+
+.btn-copy-config {
+  background-color: #256cb8;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: 500;
+  width: 100%;
+  margin: 5px auto 5px auto;
+}
+
+.btn-copy-config:focus {
+  border: none;
+  outline: none;
+}
+
+.btn-copy-config:active {
+  transform: translateY(1px);
+}

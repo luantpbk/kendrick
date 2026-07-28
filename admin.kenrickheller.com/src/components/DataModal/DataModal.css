@@ -1,0 +1,12 @@
+
+.header-data-modal {
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  width: 100%;
+  padding: 8px;
+  background-color: #256cb8;
+  color: white;
+  font-weight: 500;
+}
+

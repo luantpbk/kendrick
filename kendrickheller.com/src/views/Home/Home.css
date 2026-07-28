@@ -1,0 +1,14 @@
+.banner-home-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.realm-description {
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  text-align: center;
+}

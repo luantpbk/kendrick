@@ -1,0 +1,10 @@
+.list-view-container {
+  padding: 5px;
+}
+.none-item-component {
+  margin: 5px;
+  border-radius: 10px;
+  background-color: #d1cece;
+  padding: 10px;
+  text-align: center;
+}

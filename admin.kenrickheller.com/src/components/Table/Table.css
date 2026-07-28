@@ -1,0 +1,29 @@
+div.table-container table {
+  font-weight: 450;
+  width: fit-content;
+  min-width: 100%;
+}
+col.table-column {
+  min-width: 50px;
+  max-width: 500px;
+}
+.table-wrapper {
+  width: fit-content;
+  min-width: 100%;
+}
+
+table td,
+table th {
+  max-width: 500px;
+  padding: 2px 5px 2px 5px;
+}
+div.table-container {
+  width: 100%;
+  overflow: auto;
+}
+
+.resize-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}

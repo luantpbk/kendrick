@@ -1,0 +1,50 @@
+.flag-icon {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 1.33333333em;
+  line-height: 1em;
+  margin: 0 2px;
+  cursor: pointer;
+}
+.flag-icon:hover {
+  opacity: 0.8 !important;
+}
+.flag-icon.deactive {
+  opacity: 0.5;
+}
+
+.flag-icon.active {
+  opacity: 1;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(255, 252, 14, 0.6);
+}
+
+.flag-icon-en {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/gb.svg);
+}
+.flag-icon-vn {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/vn.svg);
+}
+.flag-icon-jp {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/jp.svg);
+}
+.flag-icon-fr {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/fr.svg);
+}
+.flag-icon-de {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/de.svg);
+}
+.flag-icon-cn {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/cn.svg);
+}
+.flag-icon-it {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/it.svg);
+}
+.flag-icon-pt {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/pt.svg);
+}
+.flag-icon-et {
+  background-image: url(https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.0.0/flags/4x3/et.svg);
+}

@@ -1,0 +1,71 @@
+.slidebar-wrapper {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: grey 0px 0px 6px 1px;
+  overflow-y: auto;
+}
+
+@-webkit-keyframes showSlide {
+  from {
+    width: 0;
+  }
+  to {
+    width: min(90vw, max(380px, 50vw), 500px);
+  }
+}
+
+@keyframes showSlide {
+  from {
+    width: 0;
+  }
+  to {
+    width: min(90vw, max(380px, 50vw), 500px);
+  }
+}
+
+@-webkit-keyframes hiddenSlide {
+  from {
+    width: min(90vw, max(380px, 50vw), 500px);
+  }
+  to {
+    width: 0;
+  }
+}
+
+@keyframes hiddenSlide {
+  from {
+    width: min(90vw, max(380px, 50vw), 500px);
+  }
+  to {
+    width: 0;
+  }
+}
+
+.slidebar-wrapper.visible {
+  animation: showSlide 0.5s ease-in-out both;
+}
+
+.slidebar-wrapper.disable {
+  animation: hiddenSlide 0.5s ease-in-out both;
+}
+
+.slidebar-background {
+  background-color: #222222;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.slidebar-background.visible {
+  display: block;
+}
+
+.slidebar-background.disable {
+  display: none;
+}

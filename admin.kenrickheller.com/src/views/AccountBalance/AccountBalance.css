@@ -1,0 +1,147 @@
+.account-balance-container {
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 60px);
+}
+
+/*slide*/
+.account-balance-slide-container {
+  width: 300px;
+  border: 2px solid gray;
+  margin: 0px 10px;
+}
+.account-balance-slide-from-date {
+  padding: 5px 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 500;
+}
+.account-balance-slide-from-date.title {
+  font-size: 16px;
+  padding: 0px 5px;
+}
+.account-balance-slide-from-date-input {
+  width: 200px;
+  height: 30px;
+  border: 1px solid lightgray;
+  margin: 0px 10px 0px 0px;
+  padding: 0px 10px;
+  font-weight: 500;
+  color: gray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.account-balance-slide-from-date.input {
+  width: 100%;
+}
+.account-balance-slide-from-date.input input {
+  width: 100%;
+  height: 30px;
+  font-weight: 500;
+}
+
+/*user list*/
+.account-balance-slide-user-list {
+  margin: 0px 5px;
+  border: 1px solid lightgray;
+  max-height: 200px;
+  overflow: auto;
+}
+.account-balance-slide-user {
+  cursor: pointer;
+  padding: 2px 5px;
+  margin: 1px 0px;
+  font-weight: 500;
+}
+.account-balance-slide-user.le {
+  background-color: lightgray;
+}
+.account-balance-slide-user:hover {
+  background-color: #0090ed;
+  color: white;
+}
+
+/*main*/
+.account-balance-main-container {
+  display: flex;
+  flex: 1;
+  border: 2px solid gray;
+  margin: 0px 5px 0px 0px;
+  flex-direction: column;
+}
+.account-balance-main-component {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  width: 100%;
+}
+.account-balance-main-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+  padding: 5px 15px;
+  font-weight: 400;
+  font-size: medium;
+}
+
+/*TITLE*/
+.account-balance-title-component {
+  background-color: #0090ed;
+  color: white;
+  font-weight: 400;
+  font-size: 20px;
+  padding: 2px 15px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  box-shadow: 0px 2px 5px #bddcf1, 0px -2px 5px #bddcf1;
+}
+
+/*btn*/
+.account-balance-slide-from-date.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.account-balance-btn-show {
+  background-color: #0090ed;
+  color: white;
+  cursor: pointer;
+  padding: 3px 15px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+.account-balance-btn-show:hover {
+  background-color: #ed4d2d;
+}
+.account-balance-slide-from-date.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.account-balance-radio-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+  cursor: pointer;
+}
+.account-balance-radio-btn:hover {
+  color: red;
+}
+
+/*select*/
+.account-balance-select-component {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.value-email {
+  width: 100%;
+  text-align: right;
+}

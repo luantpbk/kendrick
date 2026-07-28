@@ -1,0 +1,959 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId       BigInt    @id @default(autoincrement()) @map("user_id")
+  password     String?   @db.VarChar(50)
+  loginName    String    @map("login_name") @db.VarChar(50)
+  groupId      Decimal?  @map("group_id") @db.Decimal(19, 2)
+  fullName     String    @map("full_name") @db.VarChar(255)
+  email        String    @db.VarChar(255)
+  telephone    String?   @db.VarChar(15)
+  birthday     DateTime? @db.Date
+  langId       String?   @map("lang_id") @db.VarChar(2)
+  mainAddress  String?   @map("main_address") @db.VarChar(2048)
+  facebookId   String?   @map("facebook_id") @db.VarChar(512)
+  googleId     String?   @map("google_id") @db.VarChar(512)
+  twitterId    String?   @map("twitter_id") @db.VarChar(512)
+  cmtnd        Int?
+  cccd         Int?
+  mobile       Int?
+  addUser      BigInt?   @map("add_user")
+  updUser      BigInt?   @map("upd_user")
+  addTime      DateTime? @map("add_time") @db.Timestamp(6)
+  updTime      DateTime? @map("upd_time") @db.Timestamp(6)
+  avata        Bytes?
+  sex          Int?
+  occupation   String?   @db.VarChar(512)
+  avataUrl     String?   @map("avata_url") @db.VarChar(512)
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  cover        String?   @db.VarChar(512)
+  activated    Int?
+  displayOrder Int?      @map("display_order")
+  refreshToken String?   @map("refresh_token") @db.VarChar
+  appleId      String?   @map("apple_id") @db.VarChar(512)
+
+  @@map("tbl_user")
+}
+
+model Role {
+  roleId       BigInt    @id @default(autoincrement()) @map("role_id")
+  roleName     String?   @map("role_name") @db.VarChar(512)
+  description  String?   @db.VarChar(512)
+  roleType     Int       @default(1) @map("role_type")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  displayOrder Int?      @map("display_order")
+
+  @@map("role")
+}
+
+model UserRole {
+  userId BigInt @map("user_id")
+  roleId BigInt @map("role_id")
+
+  @@id([userId, roleId])
+  @@map("user_role")
+}
+
+model SessionInfo {
+  sessionInfoId Decimal   @id @default(dbgenerated("nextval('session_info_id_seq'::regclass)")) @map("session_info_id") @db.Decimal(19, 2)
+  userId        Decimal?  @map("user_id") @db.Decimal(19, 2)
+  loginName     String?   @map("login_name") @db.VarChar
+  refreshToken  String?   @map("refresh_token") @db.VarChar
+  deleteFlg     Int?      @map("delete_flg")
+  createdAt     DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
+  updatedAt     DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+  displayOrder  Int?      @map("display_order")
+
+  @@map("session_info")
+}
+
+model Function {
+  functionId   BigInt    @id @default(autoincrement()) @map("function_id")
+  moduleId     BigInt    @map("module_id")
+  functionName String?   @map("function_name") @db.VarChar(512)
+  description  String?   @db.VarChar(512)
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  displayOrder Int?      @map("display_order")
+
+  @@map("function")
+}
+
+model RoleFunction {
+  roleId     BigInt @map("role_id")
+  functionId BigInt @map("function_id")
+  permision  Int
+
+  @@id([roleId, functionId])
+  @@map("role_function")
+}
+
+model ProductRealm {
+  productRealmId   BigInt    @id @default(autoincrement()) @map("product_realm_id")
+  productRealmCode String?   @map("product_realm_code") @db.VarChar(512)
+  productRealmName String?   @map("product_realm_name") @db.VarChar(512)
+  displayOrder     Int?      @map("display_order")
+  deleteFlg        Int?      @map("delete_flg")
+  createdAt        DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy        String?   @map("created_by") @db.VarChar(255)
+  updatedAt        DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy        String?   @map("updated_by") @db.VarChar(255)
+  isHidden         Boolean?  @map("is_hidden")
+  avatar           BigInt?
+  description      String?
+
+  @@map("product_realm")
+}
+
+model ProductCategory {
+  productCategoryId   BigInt    @id @default(autoincrement()) @map("product_category_id")
+  productRealmId      BigInt?   @map("product_realm_id")
+  productCategoryCode String?   @map("product_category_code") @db.VarChar(512)
+  productCategoryName String?   @map("product_category_name") @db.VarChar(512)
+  displayOrder        Int?      @map("display_order")
+  deleteFlg           Int?      @map("delete_flg")
+  createdAt           DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy           String?   @map("created_by") @db.VarChar(255)
+  updatedAt           DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy           String?   @map("updated_by") @db.VarChar(255)
+  avatar              BigInt?
+
+  @@map("product_category")
+}
+
+model Product {
+  productId         BigInt    @id @default(autoincrement()) @map("product_id")
+  productCategoryId BigInt?   @map("product_category_id")
+  productCode       String?   @map("product_code") @db.VarChar(512)
+  productName       String?   @map("product_name") @db.VarChar(512)
+  price             Decimal?  @db.Decimal(31, 16)
+  price2            Decimal?  @db.Decimal(31, 16)
+  description1      String?
+  description3      String?
+  isSerial          Int?      @map("is_serial")
+  displayOrder      Int?      @map("display_order")
+  deleteFlg         Int?      @map("delete_flg")
+  createdAt         DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
+  updatedAt         DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+  description2      String?   @db.VarChar(25)
+  avatar            BigInt?
+  description4      String?   @db.VarChar(512)
+  html1             String?   @db.VarChar(512)
+  html2             String?   @db.VarChar(512)
+  option1           String?   @db.VarChar(512)
+  option3           String?   @db.VarChar(512)
+  option2           String?   @db.VarChar(512)
+  introContent      String?   @map("intro_content")
+  discountPercent   Int?      @map("discount_percent")
+  isHiddenSerial    Boolean?  @map("is_hidden_serial")
+  stopSelling       Boolean?  @default(false) @map("stop_selling")
+  hot               Boolean?
+  packingWeight     Decimal?  @map("packing_weight") @db.Decimal(32, 16)
+  optionPrice       String?   @map("option_price")
+
+  @@map("product")
+}
+
+model Room {
+  roomId       String    @id @default(dbgenerated("uuid_generate_v4()")) @map("room_id") @db.Uuid
+  roomName     String?   @map("room_name") @db.VarChar(512)
+  roomType     Int?      @map("room_type")
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("room")
+}
+
+model RoomUser {
+  roomId    String    @map("room_id") @db.Uuid
+  userId    BigInt    @map("user_id")
+  status    Int
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@id([roomId, userId])
+  @@map("room_user")
+}
+
+model Message {
+  messageId    BigInt    @id @default(autoincrement()) @map("message_id")
+  roomId       String    @map("room_id") @db.Uuid
+  userId       BigInt    @map("user_id")
+  messageType  Int?      @map("message_type")
+  messageValue String?   @map("message_value")
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("message")
+}
+
+model AccountBalance {
+  userId       BigInt    @id @map("user_id")
+  moneyAmount  Decimal?  @map("money_amount") @db.Decimal(32, 16)
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("account_balance")
+}
+
+model AccountHistory {
+  accountHistoryId  BigInt    @id @default(autoincrement()) @map("account_history_id")
+  userId            BigInt?   @map("user_id")
+  accountActionType Int?      @map("account_action_type")
+  moneyAmount       Decimal?  @map("money_amount") @db.Decimal(32, 16)
+  note              String?
+  displayOrder      Int?      @map("display_order")
+  deleteFlg         Int?      @map("delete_flg")
+  createdAt         DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
+  updatedAt         DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+  data              String?
+
+  @@map("account_history")
+}
+
+model Answer {
+  answerId     BigInt    @id @default(autoincrement()) @map("answer_id")
+  answerValue  String?   @map("answer_value")
+  questionId   BigInt?   @map("question_id")
+  parentId     BigInt?   @map("parent_id")
+  likeNumber   Int?      @map("like_number")
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  images       String?
+
+  @@map("answer")
+}
+
+model AnswerLike {
+  answerId BigInt @map("answer_id")
+  userId   BigInt @map("user_id")
+
+  @@id([answerId, userId])
+  @@map("answer_like")
+}
+
+model Api {
+  apiId        BigInt    @id @default(autoincrement()) @map("api_id")
+  router       String?   @db.VarChar(512)
+  methodId     Int       @map("method_id")
+  actionTypeId Int       @map("action_type_id")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  displayOrder Int?      @map("display_order")
+
+  @@map("api")
+}
+
+model ApiFunction {
+  apiId      BigInt @map("api_id")
+  functionId BigInt @map("function_id")
+
+  @@id([apiId, functionId])
+  @@map("api_function")
+}
+
+model AudioBook {
+  audioBookId       BigInt    @id @default(autoincrement()) @map("audio_book_id")
+  audioBookSeriesId BigInt    @map("audio_book_series_id")
+  audioBookTitle    String?   @map("audio_book_title") @db.VarChar(512)
+  description       String?
+  image             String?
+  displayOrder      Int?      @map("display_order")
+  deleteFlg         Int?      @map("delete_flg")
+  createdAt         DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
+  updatedAt         DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("audio_book")
+}
+
+model AudioBookSeries {
+  audioBookSeriesId    BigInt                   @id @default(autoincrement()) @map("audio_book_series_id")
+  audioBookSeriesTitle String?                  @map("audio_book_series_title") @db.VarChar(512)
+  description          String?
+  image                String?
+  displayOrder         Int?                     @map("display_order")
+  deleteFlg            Int?                     @map("delete_flg")
+  createdAt            DateTime?                @map("created_at") @db.Timestamp(6)
+  createdBy            String?                  @map("created_by") @db.VarChar(255)
+  updatedAt            DateTime?                @map("updated_at") @db.Timestamp(6)
+  updatedBy            String?                  @map("updated_by") @db.VarChar(255)
+  audioBookSeriesTsv   Unsupported("tsvector")? @map("audio_book_series_tsv")
+
+  @@map("audio_book_series")
+}
+
+model AudioBookSeriesLike {
+  audioBookSeriesId BigInt @map("audio_book_series_id")
+  userId            BigInt @map("user_id")
+
+  @@id([audioBookSeriesId, userId])
+  @@map("audio_book_series_like")
+}
+
+model AudioChapter {
+  audioChapterId    BigInt    @id @default(autoincrement()) @map("audio_chapter_id")
+  audioBookId       BigInt    @map("audio_book_id")
+  audioChapterTitle String?   @map("audio_chapter_title") @db.VarChar(512)
+  url               String?
+  displayOrder      Int?      @map("display_order")
+  deleteFlg         Int?      @map("delete_flg")
+  createdAt         DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
+  updatedAt         DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("audio_chapter")
+}
+
+model Comment {
+  commentId    BigInt    @id @default(autoincrement()) @map("comment_id")
+  commentValue String?   @map("comment_value")
+  newId        BigInt?   @map("new_id")
+  parentId     BigInt?   @map("parent_id")
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("comment")
+}
+
+model CompanyInfo {
+  companyInfoId    BigInt    @id @default(autoincrement()) @map("company_info_id")
+  companyInfoKey   String?   @map("company_info_key") @db.VarChar(512)
+  companyInfoTitle String?   @map("company_info_title") @db.VarChar(512)
+  companyInfoValue String?   @map("company_info_value")
+  href             String?
+  displayOrder     Int?      @map("display_order")
+  deleteFlg        Int?      @map("delete_flg")
+  createdAt        DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy        String?   @map("created_by") @db.VarChar(255)
+  updatedAt        DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy        String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("company_info")
+}
+
+model Country {
+  countryId    BigInt    @id @default(autoincrement()) @map("country_id")
+  countryName  String?   @map("country_name") @db.VarChar(512)
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("country")
+}
+
+model CustomerType {
+  customerTypeId    BigInt    @id @default(autoincrement()) @map("customer_type_id")
+  customerTypeCode  String?   @map("customer_type_code") @db.VarChar(10)
+  customerTypeTitle String?   @map("customer_type_title")
+  displayOrder      Int?      @map("display_order")
+  deleteFlg         Int?      @map("delete_flg")
+  createdAt         DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
+  updatedAt         DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+  feePercent        Decimal?  @map("fee_percent") @db.Decimal(32, 16)
+  salesTarget       Decimal?  @map("sales_target") @db.Decimal(32, 16)
+  discountPercent   Decimal?  @map("discount_percent") @db.Decimal(32, 16)
+
+  @@map("customer_type")
+}
+
+model Email {
+  emailId         BigInt    @id @default(autoincrement()) @map("email_id")
+  emailTemplateId BigInt?   @map("email_template_id")
+  emailTitle      String?   @map("email_title") @db.VarChar(512)
+  emailValue      String?   @map("email_value")
+  receiver        String?
+  description     String?
+  displayOrder    Int?      @map("display_order")
+  deleteFlg       Int?      @map("delete_flg")
+  createdAt       DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy       String?   @map("created_by") @db.VarChar(255)
+  updatedAt       DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy       String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("email")
+}
+
+model EmailTemplate {
+  emailTemplateId      BigInt    @id @default(autoincrement()) @map("email_template_id")
+  emailTemplateKey     String    @map("email_template_key") @db.VarChar(50)
+  emailTemplateTitle   String?   @map("email_template_title") @db.VarChar(512)
+  emailTemplateValue   String?   @map("email_template_value")
+  emailSimpleParameter String?   @map("email_simple_parameter")
+  emailTableParameter  String?   @map("email_table_parameter")
+  description          String?
+  displayOrder         Int?      @map("display_order")
+  deleteFlg            Int?      @map("delete_flg")
+  createdAt            DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy            String?   @map("created_by") @db.VarChar(255)
+  updatedAt            DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy            String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("email_template")
+}
+
+model File {
+  fileId       BigInt    @id @default(autoincrement()) @map("file_id")
+  fileName     String?   @map("file_name") @db.VarChar(255)
+  fileTypeId   Int       @map("file_type_id")
+  objectType   Int?      @map("object_type")
+  objectId     BigInt?   @map("object_id")
+  systemName   String?   @map("system_name") @db.VarChar(255)
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  displayOrder Int?      @map("display_order")
+
+  @@map("file")
+}
+
+model FirebaseToken {
+  firebaseTokenId Decimal   @id @default(dbgenerated("nextval('firebase_token_id_seq'::regclass)")) @map("firebase_token_id") @db.Decimal(19, 2)
+  userName        String?   @map("user_name") @db.VarChar(255)
+  deviceId        String?   @map("device_id") @db.VarChar(255)
+  firebaseToken   String?   @map("firebase_token") @db.VarChar(255)
+  deleteFlg       Int?      @map("delete_flg")
+  createdAt       DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy       String?   @map("created_by") @db.VarChar(255)
+  updatedAt       DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy       String?   @map("updated_by") @db.VarChar(255)
+  displayOrder    Int?      @map("display_order")
+
+  @@map("firebase_token")
+}
+
+model GuidePage {
+  guidePageId    BigInt    @id @default(autoincrement()) @map("guide_page_id")
+  guidePageKey   String?   @map("guide_page_key") @db.VarChar(512)
+  guidePageTitle String?   @map("guide_page_title") @db.VarChar(512)
+  guidePageValue String?   @map("guide_page_value")
+  description    String?
+  displayOrder   Int?      @map("display_order")
+  deleteFlg      Int?      @map("delete_flg")
+  createdAt      DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy      String?   @map("created_by") @db.VarChar(255)
+  updatedAt      DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy      String?   @map("updated_by") @db.VarChar(255)
+  guideAvatar    String?   @map("guide_avatar")
+
+  @@map("guide_page")
+}
+
+model Inventory {
+  inventoryId   BigInt    @id @default(autoincrement()) @map("inventory_id")
+  productId     BigInt?   @map("product_id")
+  quantity      BigInt?
+  displayOrder  Int?      @map("display_order")
+  deleteFlg     Int?      @map("delete_flg")
+  createdAt     DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
+  updatedAt     DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+  inventoryType Int?      @map("inventory_type")
+  effectiveDate DateTime? @map("effective_date") @db.Timestamp(6)
+  note          String?
+  status        Int?
+  orderId       BigInt?   @map("order_id")
+  option        String?
+
+  @@map("inventory")
+}
+
+model Module {
+  moduleId     BigInt    @id @default(autoincrement()) @map("module_id")
+  moduleName   String?   @map("module_name") @db.VarChar(512)
+  description  String?   @db.VarChar(512)
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  displayOrder Int?      @map("display_order")
+
+  @@map("module")
+}
+
+model News {
+  newId        BigInt    @id(map: "new_pkey") @default(autoincrement()) @map("new_id")
+  newTitle     String?   @map("new_title") @db.VarChar(512)
+  newValue     String?   @map("new_value")
+  description  String?
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  newAvatar    String?   @map("new_avatar")
+
+  @@map("news")
+}
+
+model Note {
+  noteId       BigInt    @id(map: "note_key") @default(autoincrement()) @map("note_id")
+  userId       BigInt    @map("user_id")
+  functionId   BigInt    @map("function_id")
+  objectId     BigInt    @map("object_id")
+  noteContent  String?   @map("note_content")
+  displayOrder Int?      @map("display_order")
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("note")
+}
+
+model Notification {
+  notificationId         BigInt    @id @default(autoincrement()) @map("notification_id")
+  notificationTitle      String?   @map("notification_title") @db.VarChar(512)
+  vi                     String?
+  receiverId             Int       @map("receiver_id")
+  notificationTemplateId Int       @map("notification_template_id")
+  status                 Int
+  notificationData       String?   @map("notification_data")
+  displayOrder           Int?      @map("display_order")
+  deleteFlg              Int?      @map("delete_flg")
+  createdAt              DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy              String?   @map("created_by") @db.VarChar(255)
+  updatedAt              DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy              String?   @map("updated_by") @db.VarChar(255)
+  senderId               BigInt?   @map("sender_id")
+  en                     String?
+  jp                     String?
+  fr                     String?
+  de                     String?
+  cn                     String?
+  it                     String?
+  et                     String?
+  pt                     String?
+
+  @@map("notification")
+}
+
+model NotificationTemplate {
+  notificationTemplateId    BigInt    @id @default(autoincrement()) @map("notification_template_id")
+  notificationTemplateKey   String    @map("notification_template_key") @db.VarChar(50)
+  notificationTemplateTitle String?   @map("notification_template_title") @db.VarChar(512)
+  vi                        String?
+  notificationParameter     String?   @map("notification_parameter")
+  description               String?
+  displayOrder              Int?      @map("display_order")
+  deleteFlg                 Int?      @map("delete_flg")
+  createdAt                 DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy                 String?   @map("created_by") @db.VarChar(255)
+  updatedAt                 DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy                 String?   @map("updated_by") @db.VarChar(255)
+  en                        String?
+  jp                        String?
+  fr                        String?
+  de                        String?
+  cn                        String?
+  it                        String?
+  pt                        String?
+  et                        String?
+
+  @@map("notification_template")
+}
+
+model OrderRequirement {
+  orderRequirementId   BigInt    @id @default(autoincrement()) @map("order_requirement_id")
+  userId               BigInt?   @map("user_id")
+  receiverFullname     String?   @map("receiver_fullname") @db.VarChar(512)
+  receiverPhoneNumber  String?   @map("receiver_phone_number") @db.VarChar(512)
+  receiverAddress1     String?   @map("receiver_address1") @db.VarChar(512)
+  orderRequirementNote String?   @map("order_requirement_note")
+  paymentMethod        Int?      @map("payment_method")
+  displayOrder         Int?      @map("display_order")
+  deleteFlg            Int?      @map("delete_flg")
+  createdAt            DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy            String?   @map("created_by") @db.VarChar(255)
+  updatedAt            DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy            String?   @map("updated_by") @db.VarChar(255)
+  receiverZipCode      String?   @map("receiver_zip_code") @db.VarChar(10)
+  receiverAddress2     String?   @map("receiver_address2") @db.VarChar(500)
+  receiverAddress3     String?   @map("receiver_address3") @db.VarChar(500)
+  receiverAddress4     String?   @map("receiver_address4") @db.VarChar(500)
+  distance             Decimal?  @db.Decimal(32, 16)
+  shipFee              Decimal?  @map("ship_fee") @db.Decimal(32, 16)
+  receiverTime1        Int?      @map("receiver_time1")
+  receiverFacebook     String?   @map("receiver_facebook")
+  receiverZalo         String?   @map("receiver_zalo")
+  receiverDate1        DateTime? @map("receiver_date1") @db.Date
+  receiverTime2        Int?      @map("receiver_time2")
+  receiverDate2        DateTime? @map("receiver_date2") @db.Date
+  trackingCode         String?   @map("tracking_code") @db.VarChar(256)
+  progressStatus       Int?      @map("progress_status")
+  discount             Decimal?  @db.Decimal(32, 16)
+  paymentId            String?   @map("payment_id")
+
+  @@map("order_requirement")
+}
+
+model OrderRequirementDetail {
+  orderRequirementDetailId BigInt   @id @default(autoincrement()) @map("order_requirement_detail_id")
+  orderRequirementId       BigInt   @map("order_requirement_id")
+  productSerialId          BigInt?  @map("product_serial_id")
+  productId                BigInt?  @map("product_id")
+  quantity                 Int?
+  option                   String?
+  price                    Decimal? @db.Decimal(32, 16)
+
+  @@map("order_requirement_detail")
+}
+
+model Parameter {
+  parameterId    BigInt    @id @default(autoincrement()) @map("parameter_id")
+  parameterKey   String?   @map("parameter_key") @db.VarChar(25)
+  parameterValue String    @map("parameter_value")
+  effectiveDate  DateTime? @map("effective_date") @db.Timestamp(6)
+  displayOrder   Int?      @map("display_order")
+  deleteFlg      Int?      @map("delete_flg")
+  createdAt      DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy      String?   @map("created_by") @db.VarChar(255)
+  updatedAt      DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy      String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("parameter")
+}
+
+model PrintedTemplate {
+  printedTemplateId      BigInt    @id @default(autoincrement()) @map("printed_template_id")
+  printedTemplateKey     String    @map("printed_template_key") @db.VarChar(50)
+  printedTemplateTitle   String?   @map("printed_template_title") @db.VarChar(512)
+  printedTemplateValue   String?   @map("printed_template_value")
+  printedSimpleParameter String?   @map("printed_simple_parameter")
+  printedTableParameter  String?   @map("printed_table_parameter")
+  description            String?
+  displayOrder           Int?      @map("display_order")
+  deleteFlg              Int?      @map("delete_flg")
+  createdAt              DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy              String?   @map("created_by") @db.VarChar(255)
+  updatedAt              DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy              String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("printed_template")
+}
+
+model ProductCategoryAttribute {
+  productCategoryId         BigInt  @map("product_category_id")
+  attributeTitle            String? @map("attribute_title") @db.VarChar(512)
+  attributeName             String  @map("attribute_name") @db.VarChar(512)
+  attributeType             Int?    @map("attribute_type")
+  isShowProduct             Int?    @map("is_show_product")
+  isShowProductSerial       Int?    @map("is_show_product_serial")
+  isShowProductSerialDetail Int?    @map("is_show_product_serial_detail")
+  displayOrder              Int?    @map("display_order")
+
+  @@id([productCategoryId, attributeName])
+  @@map("product_category_attribute")
+}
+
+model ProductGift {
+  productGiftId    BigInt    @id @default(autoincrement()) @map("product_gift_id")
+  productId        BigInt?   @map("product_id")
+  productGiftValue String?   @map("product_gift_value")
+  displayOrder     Int?      @map("display_order")
+  deleteFlg        Int?      @map("delete_flg")
+  createdAt        DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy        String?   @map("created_by") @db.VarChar(255)
+  updatedAt        DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy        String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("product_gift")
+}
+
+model ProductSerial {
+  productSerialId        BigInt    @id @default(autoincrement()) @map("product_serial_id")
+  productId              BigInt?   @map("product_id")
+  serial                 String?   @db.VarChar(512)
+  price                  Decimal?  @db.Decimal(31, 16)
+  monthlySubscriptionFee Decimal?  @map("monthly_subscription_fee") @db.Decimal(31, 16)
+  specifications         String?
+  description            String?
+  displayOrder           Int?      @map("display_order")
+  deleteFlg              Int?      @map("delete_flg")
+  createdAt              DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy              String?   @map("created_by") @db.VarChar(255)
+  updatedAt              DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy              String?   @map("updated_by") @db.VarChar(255)
+  status                 Int?
+  effectiveDate          DateTime? @map("effective_date") @db.Timestamp(6)
+  expirationDate         DateTime? @map("expiration_date") @db.Timestamp(6)
+  phoneNumber            String?   @map("phone_number") @db.VarChar(25)
+  avatar                 BigInt?
+  cpu                    String?   @db.VarChar(512)
+  ram                    String?   @db.VarChar(512)
+  ssd                    String?   @db.VarChar(512)
+  hdd                    String?   @db.VarChar(512)
+  display                String?   @db.VarChar(512)
+  gpu                    String?   @db.VarChar(512)
+
+  @@map("product_serial")
+}
+
+model ProductSerialUser {
+  productSerialId BigInt @id @map("product_serial_id")
+  userId          BigInt @map("user_id")
+
+  @@map("product_serial_user")
+}
+
+model PurchaseAccount {
+  purchaseAccountId BigInt    @id @default(autoincrement()) @map("purchase_account_id")
+  userId            BigInt    @map("user_id")
+  purchasePage      String?   @map("purchase_page") @db.VarChar(512)
+  accountName       String?   @map("account_name") @db.VarChar(512)
+  accountPassword   String?   @map("account_password") @db.VarChar(512)
+  description       String?
+  note              String?
+  displayOrder      Int?      @map("display_order")
+  deleteFlg         Int?      @map("delete_flg")
+  createdAt         DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
+  updatedAt         DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("purchase_account")
+}
+
+model Question {
+  questionId    BigInt                   @id @default(autoincrement()) @map("question_id")
+  questionTitle String?                  @map("question_title") @db.VarChar(512)
+  questionValue String?                  @map("question_value")
+  likeNumber    Int?                     @map("like_number")
+  displayOrder  Int?                     @map("display_order")
+  deleteFlg     Int?                     @map("delete_flg")
+  createdAt     DateTime?                @map("created_at") @db.Timestamp(6)
+  createdBy     String?                  @map("created_by") @db.VarChar(255)
+  updatedAt     DateTime?                @map("updated_at") @db.Timestamp(6)
+  updatedBy     String?                  @map("updated_by") @db.VarChar(255)
+  questionTsv   Unsupported("tsvector")? @map("question_tsv")
+  images        String?
+
+  @@map("question")
+}
+
+model QuestionLike {
+  questionId BigInt @map("question_id")
+  userId     BigInt @map("user_id")
+
+  @@id([questionId, userId])
+  @@map("question_like")
+}
+
+model ReceiverInfo {
+  receiverInfoId BigInt    @id @default(autoincrement()) @map("receiver_info_id")
+  userId         BigInt    @map("user_id")
+  fullname       String?   @db.VarChar(512)
+  phoneNumber    String?   @map("phone_number") @db.VarChar(512)
+  zipCode        String?   @map("zip_code") @db.VarChar(10)
+  address1       String?   @db.VarChar(512)
+  address2       String?   @db.VarChar(500)
+  address3       String?   @db.VarChar(500)
+  address4       String?   @db.VarChar(500)
+  facebook       String?
+  zalo           String?
+  defaultFlg     Int?      @map("default_flg")
+  displayOrder   Int?      @map("display_order")
+  deleteFlg      Int?      @map("delete_flg")
+  createdAt      DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy      String?   @map("created_by") @db.VarChar(255)
+  updatedAt      DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy      String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("receiver_info")
+}
+
+model RegisterUser {
+  userId       BigInt    @id @default(autoincrement()) @map("user_id")
+  password     String    @db.VarChar(50)
+  loginName    String    @map("login_name") @db.VarChar(50)
+  groupId      Decimal?  @map("group_id") @db.Decimal(19, 2)
+  fullName     String    @map("full_name") @db.VarChar(255)
+  email        String    @db.VarChar(255)
+  telephone    String?   @db.VarChar(15)
+  birthday     DateTime? @db.Date
+  langId       String?   @map("lang_id") @db.VarChar(2)
+  mainAddress  String?   @map("main_address") @db.VarChar(2048)
+  facebookId   String?   @map("facebook_id") @db.VarChar(512)
+  googleId     String?   @map("google_id") @db.VarChar(512)
+  twitterId    String?   @map("twitter_id") @db.VarChar(512)
+  cmtnd        Int?
+  cccd         Int?
+  mobile       Int?
+  addUser      BigInt?   @map("add_user")
+  updUser      BigInt?   @map("upd_user")
+  addTime      DateTime? @map("add_time") @db.Timestamp(6)
+  updTime      DateTime? @map("upd_time") @db.Timestamp(6)
+  avata        Bytes?
+  sex          Int?
+  occupation   String?   @db.VarChar(512)
+  avataUrl     String?   @map("avata_url") @db.VarChar(512)
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  cover        String?   @db.VarChar(512)
+  displayOrder Int?      @map("display_order")
+  appleId      String?   @map("apple_id") @db.VarChar(512)
+
+  @@map("register_user")
+}
+
+model Service {
+  serviceId     BigInt    @id @default(autoincrement()) @map("service_id")
+  serviceCode   String?   @map("service_code") @db.VarChar(512)
+  serviceName   String?   @map("service_name") @db.VarChar(512)
+  staticPageKey String?   @map("static_page_key") @db.VarChar(512)
+  displayOrder  Int?      @map("display_order")
+  deleteFlg     Int?      @map("delete_flg")
+  createdAt     DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
+  updatedAt     DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("service")
+}
+
+model StaticPage {
+  staticPageId    BigInt    @id @default(autoincrement()) @map("static_page_id")
+  staticPageKey   String?   @map("static_page_key") @db.VarChar(512)
+  staticPageTitle String?   @map("static_page_title") @db.VarChar(512)
+  vi              String?
+  description     String?
+  displayOrder    Int?      @map("display_order")
+  deleteFlg       Int?      @map("delete_flg")
+  createdAt       DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy       String?   @map("created_by") @db.VarChar(255)
+  updatedAt       DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy       String?   @map("updated_by") @db.VarChar(255)
+  en              String?
+  jp              String?
+  fr              String?
+  de              String?
+  cn              String?
+  it              String?
+  pt              String?
+  et              String?
+
+  @@map("static_page")
+}
+
+model StockQuantity {
+  productId           BigInt   @id @map("product_id")
+  stockRemainQuantity Decimal? @map("stock_remain_quantity") @db.Decimal(32, 16)
+  soldQuantity        Decimal? @map("sold_quantity") @db.Decimal(32, 16)
+  optionRemain        String?  @map("option_remain")
+
+  @@map("stock_quantity")
+}
+
+model Translation {
+  translationId BigInt    @id(map: "translation_key") @default(autoincrement()) @map("translation_id")
+  code          String
+  vi            String
+  en            String?
+  displayOrder  Int?      @map("display_order")
+  deleteFlg     Int?      @map("delete_flg")
+  createdAt     DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
+  updatedAt     DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+  jp            String?
+  cn            String?
+  fr            String?
+  de            String?
+  it            String?
+  pt            String?
+  et            String?
+
+  @@map("translation")
+}
+
+model UserCustomerType {
+  userCustomerTypeId BigInt    @id @default(autoincrement()) @map("user_customer_type_id")
+  customerTypeId     BigInt    @map("customer_type_id")
+  userId             BigInt    @map("user_id")
+  effectiveDate      DateTime? @map("effective_date") @db.Timestamp(6)
+  displayOrder       Int?      @map("display_order")
+  deleteFlg          Int?      @map("delete_flg")
+  createdAt          DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy          String?   @map("created_by") @db.VarChar(255)
+  updatedAt          DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy          String?   @map("updated_by") @db.VarChar(255)
+  businessType       Int?      @map("business_type")
+
+  @@map("user_customer_type")
+}
+
+model UserOtp {
+  userOtpId    BigInt    @id @default(autoincrement()) @map("user_otp_id")
+  userId       BigInt    @map("user_id")
+  otp          String?   @db.Char(6)
+  deleteFlg    Int?      @map("delete_flg")
+  createdAt    DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamp(6)
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  displayOrder Int?      @map("display_order")
+
+  @@map("user_otp")
+}

@@ -1,0 +1,102 @@
+.contact-web-con {
+  display: none;
+}
+.contact-web-con.show {
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  max-width: 80vw;
+  max-height: 60vh;
+  background-color: white;
+  position: absolute;
+  top: 45px;
+  right: -40px;
+  border-radius: 5px;
+  border: 1px solid rgb(231, 228, 228);
+  font-weight: 500;
+  font-size: small;
+  padding-left: 4px;
+  z-index: 1;
+}
+
+.contact-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  font-size: 15px;
+}
+.contact-component {
+  background-color: rgb(240, 239, 239);
+  width: 330px;
+  max-width: calc(80vw - 10px);
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/*avatar*/
+.contact-avt {
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  margin: 3px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+.contact-avt img {
+  width: 70px;
+  height: 70px;
+}
+
+/*value*/
+.contact-content {
+  width: 300px;
+  margin-left: 5px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.contact-title {
+  width: 100%;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.contact-value {
+  width: 100%;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.contact-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contact-search {
+  margin: 10px 5px 5px 0px;
+  border-radius: 5px;
+  border: 1px solid rgb(231, 228, 228);
+}
+
+.contact-search-icon {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: gray;
+}

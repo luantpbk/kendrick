@@ -1,0 +1,171 @@
+/*Banner details*/
+.details-img-title {
+  font-weight: 500;
+  font-size: 25px;
+  margin: 15px;
+}
+.banner-details-img {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: inherit;
+}
+.banner-thumb-img-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
+  height: fit-content;
+  filter: opacity(0.5);
+}
+.banner-thumb-img-child.focus-img {
+  filter: opacity(1);
+  background-color: #a5a5a5;
+  border: 1px solid black;
+}
+.banner-thumb-img-child img {
+  width: 100%;
+  height: 80%;
+  object-fit: contain;
+}
+.banner-fullsize-img {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  z-index: inherit;
+}
+.banner-img-child {
+  position: relative;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  width: 75vw;
+  height: 25vw;
+  transition: 0.5s;
+}
+.banner-img-child.center img {
+  object-fit: contain;
+  cursor: pointer;
+  opacity: 1;
+}
+.banner-img-child.center > div:nth-child(2) {
+  width: 100%;
+  height: 100%;
+}
+.banner-img-child.center.full-size .btn-delete-banner-image {
+  display: none;
+}
+.banner-img-child.center .btn-zoom-out-banner-image {
+  display: none;
+}
+.banner-img-child.center.full-size .btn-zoom-out-banner-image {
+  display: block;
+}
+.banner-img-child:hover {
+  border: 1px solid black;
+}
+.banner-img-child img {
+  opacity: 0.3;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.banner-img-child.full-size {
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  opacity: 1;
+  background-color: black;
+  z-index: 150;
+}
+.banner-img-child.full-size img {
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+}
+/*btn*/
+.btn-delete-banner-image {
+  top: 15px;
+  right: 15px;
+  color: gray;
+  position: absolute;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.btn-delete-banner-image:hover {
+  background-color: rgb(128, 128, 128, 0.5);
+  color: red;
+}
+.btn-nav-banner-image {
+  z-index: 15;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  position: absolute;
+  top: calc(50% - 13px);
+  cursor: pointer;
+  transform: scale(1.75);
+  transition: 0.5s;
+  opacity: 0.7;
+}
+.btn-nav-banner-image:hover {
+  background-color: rgb(128, 128, 128, 0.5);
+  opacity: 1;
+}
+.btn-nav-banner-image.next {
+  right: 15%;
+}
+.btn-nav-banner-image.back {
+  left: 15%;
+}
+.btn-zoom-out-banner-image {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: 0.5s;
+  color: red;
+}
+.banner-img-child.full-size .btn-zoom-out-banner-image {
+  display: flex;
+  transform: scale(2);
+  color: white;
+}
+.banner-img-child.full-size .btn-zoom-out-banner-image:hover {
+  color: red;
+}
+/*End of banner image*
+
+/*Upload banner image*/
+.custom-image-upload {
+  color: #348eed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transform: scale(1.25);
+  transition: 0.5s;
+}
+.custom-image-upload:hover {
+  color: red;
+}

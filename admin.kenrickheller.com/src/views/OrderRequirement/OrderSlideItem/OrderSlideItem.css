@@ -1,0 +1,14 @@
+.order-slide-item-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+}
+.order-slide-item-title {
+  font-weight: 500;
+  cursor: pointer;
+}
+.order-slide-item-title:hover {
+  color: red;
+}
