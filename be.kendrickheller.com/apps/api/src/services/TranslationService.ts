@@ -63,15 +63,13 @@ export class TranslationService {
         
         if (newTexts.length === 0) return [];
 
-        const supportedLangs = ['en', 'jp', 'cn', 'fr', 'de', 'it', 'pt', 'et'];
+        const supportedLangs = ['vi', 'en', 'jp', 'cn', 'fr', 'de', 'it', 'pt', 'et'];
         const results = [];
 
         for (const text of newTexts) {
             try {
-                // We assume the source is 'vi' or auto-detect
                 const translationRecord: any = {
                     code: text,
-                    vi: text,
                     displayOrder: 1,
                     deleteFlg: 0
                 };
