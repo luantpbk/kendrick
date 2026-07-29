@@ -76,7 +76,7 @@ export const usePutProductCategory = () => {
       displayOrder: number,
     ) => {
       return fetch({
-        url: `pgcore/rest-api/product-category`,
+        url: `pgcore/rest-api/product-category/${productCategoryId}`,
         method: 'put',
         data: {
           productCategoryId,

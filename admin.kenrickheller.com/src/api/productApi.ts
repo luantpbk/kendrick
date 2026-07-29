@@ -82,7 +82,7 @@ export const usePutProduct = () => {
   return useCallback(
     (product: ProductType) => {
       return fetch({
-        url: 'pgcore/rest-api/product',
+        url: `pgcore/rest-api/product/${product.productId}`,
         method: 'put',
         data: product,
       }) as Promise<ProductType>;
