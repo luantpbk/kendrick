@@ -114,13 +114,11 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
       <div className="image-library-footer">
         <ButtonComponent 
           title="HỦY BỎ" 
-          type="outline" 
           onClick={onDismiss} 
         />
-        <ButtonComponent 
-          title="CHỌN ẢNH NÀY" 
-          disabled={!selectedImage} 
-          onClick={handleConfirm} 
+        <ButtonComponent
+          title="CHỌN ẢNH NÀY"
+          onClick={handleConfirm}
         />
       </div>
     </div>
