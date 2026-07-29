@@ -132,6 +132,20 @@ export const useAddProductImage = () => {
   );
 };
 
+export const useAddProductImageFromLibrary = () => {
+  const fetch = useFetch(false, false);
+  return useCallback(
+    (id: number, fileId: number) => {
+      return fetch({
+        url: `pgcore/rest-api/product/image-from-library/${id}`,
+        method: 'post',
+        data: { fileId },
+      }) as Promise<ImageType>;
+    },
+    [fetch],
+  );
+};
+
 export const useDeleteProduct = () => {
   const fetch = useFetch();
   return useCallback(

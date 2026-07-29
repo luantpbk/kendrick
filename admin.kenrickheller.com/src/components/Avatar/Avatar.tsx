@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useAddPopup } from 'src/state/application/hooks';
 import styled from 'styled-components';
+import useModal from 'src/hooks/useModal';
+import ImageLibraryModal from '../ImageLibraryModal/ImageLibraryModal';
+import { ImageType } from 'src/api/models';
 
 interface AvatarProps {
   blur?: () => void;
@@ -9,6 +12,7 @@ interface AvatarProps {
   fileError?: string;
   thumbAvatar: string;
   avatar: string;
+  onChooseFromLibrary?: (image: ImageType) => void;
 }
 
 const Avatar = (props: AvatarProps) => {
@@ -17,11 +21,13 @@ const Avatar = (props: AvatarProps) => {
     change,
     fileError,
     thumbAvatar,
-    avatar
+    avatar,
+    onChooseFromLibrary
   } = props;
 
   const [isFullAvatar, setFullAvatar] = useState(false);
   const addPopup = useAddPopup();
+  const imageLibraryModal = useModal(ImageLibraryModal);
 
   const onChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
@@ -57,8 +63,18 @@ const Avatar = (props: AvatarProps) => {
           title={'Chọn File'}
           id="upload-file"
         />
-        <i className="fas fa-camera-retro"></i>
+        <i className="fas fa-camera-retro" title="Tải ảnh lên"></i>
       </StyledUpload>
+      {onChooseFromLibrary && (
+        <StyledLibraryUpload onClick={() => {
+          imageLibraryModal.handlePresent({
+            onDismiss: imageLibraryModal.handleDismiss,
+            onSelect: onChooseFromLibrary
+          })
+        }}>
+          <span className="material-icons" title="Chọn từ thư viện">photo_library</span>
+        </StyledLibraryUpload>
+      )}
 
         
         {fileError? <StyledError>{fileError}</StyledError> : null}
@@ -128,8 +144,27 @@ const StyledUpload = styled.label`
   color: #348eed;
   position: absolute;
   bottom: 0px;
-  transform: translate(460%, 40%);
+  transform: translate(250%, 40%);
   cursor: pointer;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+`;
+
+const StyledLibraryUpload = styled.div`
+  color: #348eed;
+  position: absolute;
+  bottom: 0px;
+  transform: translate(650%, 40%);
+  cursor: pointer;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledInput = styled.input`

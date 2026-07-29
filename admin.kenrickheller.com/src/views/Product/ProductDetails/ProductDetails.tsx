@@ -23,6 +23,7 @@ import {
   usePutProduct,
   useUpdateProductAvatar,
   useAddProductImage,
+  useAddProductImageFromLibrary,
   useDeleteProductImage,
 } from 'src/api/productApi';
 import { useGetProductRealm } from 'src/api/productRealmApi';
@@ -98,6 +99,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
 
   const updateProductAvatar = useUpdateProductAvatar();
   const addProductImage = useAddProductImage();
+  const addImageFromLibrary = useAddProductImageFromLibrary();
   const deleteProductImage = useDeleteProductImage();
   const getProductCategoryDisplayOption = useGetProductCategoryDisplayOption();
   const getProductCategoryById = useGetProductCategoryById();
@@ -278,8 +280,8 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
   };
 
   //Upload image
-  const onAddImage = (file: File) => {
-    if (file) {
+  const onAddImage = (file: File | ImageType) => {
+    if (file instanceof File) {
       if (!productId) {
         setImageFiles([...imageFiles, file]);
       } else {
@@ -290,6 +292,28 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
               txn: {
                 success: true,
                 summary: 'Tải ảnh thành công',
+              },
+            });
+          })
+          .catch((error) => {
+            addPopup({
+              error: { message: error.errorMessage, title: 'Đã có lỗi xảy ra!' },
+            });
+          });
+      }
+    } else {
+      if (!productId) {
+        addPopup({
+          error: { message: 'Vui lòng lưu sản phẩm (Tạo mới) trước khi có thể chọn ảnh từ thư viện vào thư viện ảnh phụ', title: 'Chưa thể thêm ảnh' },
+        });
+      } else {
+        addImageFromLibrary(productId, file.fileId)
+          .then((res) => {
+            setImages([...images, res]);
+            addPopup({
+              txn: {
+                success: true,
+                summary: 'Thêm ảnh từ thư viện thành công',
               },
             });
           })

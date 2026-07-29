@@ -5,6 +5,7 @@ import useModal from 'src/hooks/useModal';
 import { useAddPopup } from 'src/state/application/hooks';
 import styled from 'styled-components';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import ImageLibraryModal from '../ImageLibraryModal/ImageLibraryModal';
 import Input from '../Input';
 import './ImageUpload.css';
 
@@ -26,6 +27,7 @@ const ImageUpload = (props: ImageUploadProps) => {
 
   const addPopup = useAddPopup();
   const confirmModal = useModal(ConfirmModal);
+  const imageLibraryModal = useModal(ImageLibraryModal);
 
   const onDeleteImage = () => {
     const listToDo: EventButton[] = [
@@ -201,6 +203,22 @@ const ImageUpload = (props: ImageUploadProps) => {
           <span className="material-icons image-upload-label">cloud_upload</span>
           <span className="image-upload-label">THÊM ẢNH</span>
         </label>
+        <div className="btn-image-upload" onClick={() => {
+          imageLibraryModal.handlePresent({
+            onDismiss: imageLibraryModal.handleDismiss,
+            onSelect: (image: ImageType) => {
+              if (onChoose) {
+                onChoose(image);
+              } else {
+                // If it's a generic upload
+                addImage(image as any); // Let's mock passing ImageType as File, wait, addImage takes a File. We need to handle ImageType or add another prop for library image added.
+              }
+            }
+          })
+        }}>
+          <span className="material-icons image-upload-label">photo_library</span>
+          <span className="image-upload-label">CHỌN TỪ THƯ VIỆN</span>
+        </div>
         {onChoose? <div className="btn-image-upload" onClick={() => {
           onChoose(images[imageIndex] as ImageType)
           if(postProcess) postProcess();
