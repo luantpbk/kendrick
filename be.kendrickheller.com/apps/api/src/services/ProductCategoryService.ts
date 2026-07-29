@@ -63,19 +63,25 @@ export class ProductCategoryService {
 
     public static async createCategory(data: any) {
         return prisma.productCategory.create({
-            data: {
-                ...data
-            }
+            data: this.sanitizeCategoryData(data)
         });
     }
 
     public static async updateCategory(id: number, data: any) {
         return prisma.productCategory.update({
             where: { productCategoryId: id },
-            data: {
-                ...data
-            }
+            data: this.sanitizeCategoryData(data)
         });
+    }
+
+    private static sanitizeCategoryData(data: any) {
+        const sanitized = { ...data };
+        delete sanitized.productRealm;
+        delete sanitized.images;
+        delete sanitized.avatar;
+        delete sanitized.thumbAvatar;
+        
+        return sanitized;
     }
 
     public static async deleteCategory(id: number) {

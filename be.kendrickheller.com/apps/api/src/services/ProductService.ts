@@ -129,15 +129,34 @@ export class ProductService {
 
     public static async createProduct(data: any) {
         return prisma.product.create({
-            data: { ...data }
+            data: this.sanitizeProductData(data)
         });
     }
 
     public static async updateProduct(id: number, data: any) {
         return prisma.product.update({
             where: { productId: id },
-            data: { ...data }
+            data: this.sanitizeProductData(data)
         });
+    }
+
+    private static sanitizeProductData(data: any) {
+        const sanitized = { ...data };
+        delete sanitized.productCategoryName;
+        delete sanitized.avatarId;
+        delete sanitized.thumbAvatar;
+        delete sanitized.images;
+        delete sanitized.productGifts;
+        delete sanitized.productSerials;
+        
+        if (sanitized.avatar) {
+            const avatarNum = Number(sanitized.avatar);
+            if (!isNaN(avatarNum)) {
+                sanitized.avatar = avatarNum;
+            }
+        }
+        
+        return sanitized;
     }
 
     public static async deleteProduct(id: number) {
