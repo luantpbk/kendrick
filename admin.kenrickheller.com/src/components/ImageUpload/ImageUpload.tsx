@@ -207,12 +207,8 @@ const ImageUpload = (props: ImageUploadProps) => {
           imageLibraryModal.handlePresent({
             onDismiss: imageLibraryModal.handleDismiss,
             onSelect: (image: ImageType) => {
-              if (onChoose) {
-                onChoose(image);
-              } else {
-                // If it's a generic upload
-                addImage(image as any); // Let's mock passing ImageType as File, wait, addImage takes a File. We need to handle ImageType or add another prop for library image added.
-              }
+                // Add the selected image from library to the image list
+                addImage(image as any);
             }
           })
         }}>
