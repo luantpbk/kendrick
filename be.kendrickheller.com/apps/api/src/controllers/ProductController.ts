@@ -126,7 +126,7 @@ export class ProductController {
             if (productId > 0) {
                 await prisma.product.update({
                     where: { productId },
-                    data: { avatar: file.fileId.toString() }
+                    data: { avatar: BigInt(file.fileId) }
                 });
             }
 

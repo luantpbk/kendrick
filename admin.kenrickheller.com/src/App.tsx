@@ -13,6 +13,7 @@ import HeaderBar from './contexts/HeaderBar';
 import SlideBarProvider from './contexts/SlideBar';
 import AppRouters from './contexts/AppRouters';
 import ModalsProvider from './contexts/Modals';
+import { TranslationProvider } from './contexts/TranslationContext/TranslationContext';
 
 const App: React.FC = () => {
   React.useEffect(() => {
@@ -58,16 +59,18 @@ const App: React.FC = () => {
         <SmartCardProvider>
           <SlideBarProvider>
             <ModalsProvider>
-              <Popups />
-              <FCMNotification />
-              <BrowserRouter>
-                <AppWrapper>
-                  <HeaderBar />
-                  <Menu />
-                  <AppRouters />
-                </AppWrapper>
-              </BrowserRouter>
-              <Chat key={'chat-component'} />
+              <TranslationProvider>
+                <Popups />
+                <FCMNotification />
+                <BrowserRouter>
+                  <AppWrapper>
+                    <HeaderBar />
+                    <Menu />
+                    <AppRouters />
+                  </AppWrapper>
+                </BrowserRouter>
+                <Chat key={'chat-component'} />
+              </TranslationProvider>
             </ModalsProvider>
           </SlideBarProvider>
         </SmartCardProvider>

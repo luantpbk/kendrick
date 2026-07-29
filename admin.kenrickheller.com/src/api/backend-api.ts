@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import useProfile from 'src/hooks/useProfile';
 import { useRemoveProfileInfo, useSetProfileInfo } from 'src/state/application/hooks';
 import { useConfiguration } from '../contexts/ConfigProvider/ConfigProvider';
+import { useTranslationPrompt } from '../contexts/TranslationContext/TranslationContext';
 import { ChangePasswordResult, ChannelTypeInfo, NfcInfo, ProfileInfo } from './models';
 
 export type ApiRequestOption = {
@@ -32,6 +33,15 @@ export const useFetch = (
   const profile = useProfile();
   const removeProfileInfo = useRemoveProfileInfo();
   const setProfileInfo = useSetProfileInfo();
+  
+  let showPrompt: (data: any) => void;
+  try {
+    const context = useTranslationPrompt();
+    showPrompt = context.showPrompt;
+  } catch (e) {
+    // If not within provider, default to no-op
+    showPrompt = () => {};
+  }
 
   const fetch = useCallback(
     async <T = any>(config: AxiosRequestConfig) => {
@@ -61,7 +71,15 @@ export const useFetch = (
       const request = async (config: AxiosRequestConfig) => {
         return instance
           .request(config)
-          .then((res) => res.data)
+          .then((res) => {
+            if ((config.method === 'post' || config.method === 'put') && res.data && typeof res.data === 'object') {
+              // Ignore login/auth endpoints
+              if (!config.url?.includes('login') && !config.url?.includes('renew-token') && !config.url?.includes('auto-translate')) {
+                showPrompt(res.data);
+              }
+            }
+            return res.data;
+          })
           .catch(async (e) => {
             if (e.response && e.response.status == 401) {
               const newToken = await renewToken();
@@ -120,6 +138,7 @@ export const useFetch = (
       setProfileInfo,
       removeProfileInfo,
       file,
+      showPrompt,
     ],
   );
 

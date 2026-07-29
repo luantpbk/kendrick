@@ -68,4 +68,30 @@ export class TranslationController {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
     }
+
+    public static async generate(req: Request, res: Response) {
+        try {
+            await TranslationService.generateI18nFile();
+            res.json(true);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
+
+    public static async autoTranslate(req: Request, res: Response) {
+        try {
+            const { texts } = req.body;
+            if (!Array.isArray(texts)) {
+                return res.status(400).json(new ErrorResponseDto(undefined, 'texts must be an array of strings'));
+            }
+            const results = await TranslationService.autoTranslate(texts);
+            
+            const itemsResponse = JSON.parse(JSON.stringify(results, (key, value) =>
+                typeof value === 'bigint' ? value.toString() : value
+            ));
+            res.json(itemsResponse);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
 }
