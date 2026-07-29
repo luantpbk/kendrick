@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useGetImages, useAddImage } from 'src/api/fileApi';
 import { ImageType } from 'src/api/models';
 import ButtonComponent from '../ButtonComponent';
-import Loader from '../Loader/Loader';
+import Loading from '../Loading';
 import { useAddPopup } from 'src/state/application/hooks';
 import './ImageLibraryModal.css';
 
@@ -84,7 +84,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
       <div className="image-library-content">
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%', gridColumn: '1 / -1', padding: '40px' }}>
-            <Loader />
+            <Loading />
           </div>
         ) : images.length === 0 ? (
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%', gridColumn: '1 / -1', color: '#888' }}>
