@@ -1,4 +1,5 @@
 import { prisma } from '@kendrickheller/core';
+import { FileHelper } from '../utils/FileHelper';
 
 export class FileService {
     public static async getImages() {
@@ -13,17 +14,12 @@ export class FileService {
         });
         
         return files.map(file => {
-            const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
-            const url = baseUrl + '/' + file.systemName;
+            const dto = FileHelper.mapToFileDto(file);
             return {
-                fileId: file.fileId ? Number(file.fileId) : 0,
-                fileTypeId: file.fileTypeId,
-                fileName: file.fileName || '',
-                fileUrl: url,
-                thumbUrl: url,
-                url: url
+                ...dto,
+                url: dto?.fileUrl
             };
-        });
+        }).filter(f => f !== null);
     }
 
     public static async uploadImage(fileData: any) {
@@ -38,15 +34,10 @@ export class FileService {
             }
         });
         
-        const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
-        const url = baseUrl + '/' + file.systemName;
+        const dto = FileHelper.mapToFileDto(file);
         return {
-            fileId: file.fileId ? Number(file.fileId) : 0,
-            fileTypeId: file.fileTypeId,
-            fileName: file.fileName || '',
-            fileUrl: url,
-            thumbUrl: url,
-            url: url
+            ...dto,
+            url: dto?.fileUrl
         };
     }
 }
