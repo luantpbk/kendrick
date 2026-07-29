@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { prisma } from '@kendrickheller/core';
 import { NewsService } from '../services/NewsService';
 import { ErrorResponseDto } from '@kendrickheller/core';
 

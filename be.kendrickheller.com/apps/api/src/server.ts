@@ -25,7 +25,6 @@ import { AdvertisingBannerController } from './controllers/AdvertisingBannerCont
 import { AudioBookController } from './controllers/AudioBookController';
 import { AudioBookSeriesController } from './controllers/AudioBookSeriesController';
 import { AudioChapterController } from './controllers/AudioChapterController';
-import { OrderController } from './controllers/OrderController';
 import { FileController } from './controllers/FileController';
 import { BannerController } from './controllers/BannerController';
 import { CompanyImageController } from './controllers/CompanyImageController';

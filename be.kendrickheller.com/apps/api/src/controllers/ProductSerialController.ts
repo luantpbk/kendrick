@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { prisma } from '@kendrickheller/core';
 import { ProductSerialService } from '../services/ProductSerialService';
 
 export class ProductSerialController {

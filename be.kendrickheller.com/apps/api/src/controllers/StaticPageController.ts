@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StaticPageService } from '../services/StaticPageService';
-import { ErrorResponseDto } from '@kendrickheller/core';
+import { prisma, ErrorResponseDto } from '@kendrickheller/core';
 
 export class StaticPageController {
     public static async getAll(req: Request, res: Response) {
