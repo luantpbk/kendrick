@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useGetImages, useAddImage } from 'src/api/fileApi';
 import { ImageType } from 'src/api/models';
-import ButtonComponent from '../ButtonComponent';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import Loading from '../Loading';
 import { useAddPopup } from 'src/state/application/hooks';
 import './ImageLibraryModal.css';
