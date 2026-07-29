@@ -13,7 +13,8 @@ export class FileService {
         });
         
         return files.map(file => {
-            const url = process.env.FILE_URL + '/' + file.systemName;
+            const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
+            const url = baseUrl + '/' + file.systemName;
             return {
                 fileId: file.fileId ? Number(file.fileId) : 0,
                 fileTypeId: file.fileTypeId,
@@ -37,7 +38,8 @@ export class FileService {
             }
         });
         
-        const url = process.env.FILE_URL + '/' + file.systemName;
+        const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
+        const url = baseUrl + '/' + file.systemName;
         return {
             fileId: file.fileId ? Number(file.fileId) : 0,
             fileTypeId: file.fileTypeId,

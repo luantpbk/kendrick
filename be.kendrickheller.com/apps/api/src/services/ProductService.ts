@@ -120,7 +120,9 @@ export class ProductService {
             }
         });
         
-        const url = process.env.FILE_URL + '/' + file.systemName;
+        const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
+        const url = baseUrl + '/' + file.systemName;
+        
         return {
             fileId: file.fileId ? Number(file.fileId) : 0,
             fileTypeId: file.fileTypeId,
@@ -146,7 +148,8 @@ export class ProductService {
             }
         });
         
-        const url = process.env.FILE_URL + '/' + newFile.systemName;
+        const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
+        const url = baseUrl + '/' + newFile.systemName;
         return {
             fileId: newFile.fileId ? Number(newFile.fileId) : 0,
             fileTypeId: newFile.fileTypeId,
