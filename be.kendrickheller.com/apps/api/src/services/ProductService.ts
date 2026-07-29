@@ -198,6 +198,14 @@ export class ProductService {
         delete sanitized.productGifts;
         delete sanitized.productSerials;
         
+        if (sanitized.productId === null || sanitized.productId === undefined) {
+            delete sanitized.productId;
+        }
+
+        if (sanitized.productCategoryId !== undefined && sanitized.productCategoryId !== null) {
+            sanitized.productCategoryId = Number(sanitized.productCategoryId);
+        }
+
         if (sanitized.avatar !== undefined && sanitized.avatar !== null) {
             const avatarNum = Number(sanitized.avatar);
             if (!isNaN(avatarNum)) {
@@ -218,6 +226,9 @@ export class ProductService {
         }
         if (sanitized.price !== undefined && sanitized.price !== null) {
             sanitized.price = Number(sanitized.price);
+        }
+        if (sanitized.price2 !== undefined && sanitized.price2 !== null) {
+            sanitized.price2 = Number(sanitized.price2);
         }
         
         return sanitized;

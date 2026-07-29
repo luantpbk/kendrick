@@ -151,8 +151,8 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
       ) {
         const body = {
           ...product,
-          productId: productId,
-          productCategoryId: productCategoryId,
+          productId: productId ? productId : undefined,
+          productCategoryId: productCategoryId ? Number(productCategoryId) : undefined,
           productCode: productCode,
           productName: productName,
           introContent: introContent,
