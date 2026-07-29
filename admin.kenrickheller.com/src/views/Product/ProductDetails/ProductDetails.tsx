@@ -84,6 +84,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
 
   const [attributes, setAttributes] = useState<ProductCategoryAttributeType[]>([]);
   const [hasOption, setHasOption] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(!!productId);
   //End of state
   const qrReaderModal = useModal(QRCodeReader);
   const htmlModal = useModal(HtmlCode);
@@ -160,7 +161,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
           isHiddenSerial: true,
           stopSelling: stopSelling,
           hot: hot,
-          price: price,
+          price: price !== undefined && price !== null && price.toString() !== '' ? Number(price) : undefined,
           optionPrice: optionPrice,
         };
         const isAdd = !productId;
@@ -355,13 +356,15 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
     getRealm()
       .then((res) => {
         setRealms(res);
+        if (!productId) setIsLoading(false);
       })
       .catch((error) => {
         addPopup({
           error: { message: error.errorMessage, title: 'Đã có lỗi xảy ra!' },
         });
+        if (!productId) setIsLoading(false);
       });
-  }, [addPopup, getRealm]);
+  }, [addPopup, getRealm, productId]);
 
   useEffect(() => {
     if (productRealmId) {
@@ -400,8 +403,12 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
           setHot(res.hot);
           setStopSelling(res.stopSelling);
           setOptionPrice(res.optionPrice);
+          if (!res.productCategoryId) {
+            setIsLoading(false);
+          }
         })
         .catch((error) => {
+          setIsLoading(false);
           addPopup({
             error: { message: error.errorMessage, title: 'Đã có lỗi xảy ra!' },
           });
@@ -419,7 +426,8 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
       getProductCategoryDisplayOption(productCategoryId).then((data) => {
         setAttributes(data);
         setHasOption(data.some((a) => a.attribute.attributeType == EnumDataType.Option));
-      });
+        setIsLoading(false);
+      }).catch(() => setIsLoading(false));
     }
   }, [getProductCategoryDisplayOption, productCategoryId]);
 
@@ -447,6 +455,12 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
           isPaging={false}
         />
       )}
+      {isLoading ? (
+        <div style={{ padding: 20, textAlign: 'center', height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          Đang tải dữ liệu...
+        </div>
+      ) : (
+      <>
       <label className="product-title">THÔNG TIN SẢN PHẨM</label>
       <div className="product-detail-info">
         <Avatar change={onChangeAvatar} thumbAvatar={thumbAvatar} avatar={avatar} />
@@ -669,6 +683,8 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
           });
         }}
       />
+      </>
+      )}
     </StyledProductDetailContainer>
   );
 };

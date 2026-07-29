@@ -216,6 +216,9 @@ export class ProductService {
         if (sanitized.isSerial !== undefined && sanitized.isSerial !== null) {
             sanitized.isSerial = Number(sanitized.isSerial);
         }
+        if (sanitized.price !== undefined && sanitized.price !== null) {
+            sanitized.price = Number(sanitized.price);
+        }
         
         return sanitized;
     }
