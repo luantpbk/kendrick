@@ -6,6 +6,7 @@ export class FileService {
         const files = await prisma.file.findMany({
             where: {
                 fileTypeId: 1,
+                objectType: { in: [8, null] },
                 deleteFlg: 0
             },
             orderBy: {
@@ -28,7 +29,7 @@ export class FileService {
                 fileName: fileData.originalname,
                 systemName: fileData.filename,
                 fileTypeId: 1, // Image
-                objectType: null, // Generic image
+                objectType: 8, // EnumImageType.Other
                 objectId: null,
                 deleteFlg: 0
             }
