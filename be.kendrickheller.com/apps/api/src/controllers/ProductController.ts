@@ -111,16 +111,24 @@ export class ProductController {
         try {
             if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));
             
+            const productId = req.params.id ? Number(req.params.id) : 0;
             const file = await prisma.file.create({
                 data: {
                     fileName: req.file.originalname,
                     systemName: req.file.filename,
                     fileTypeId: 1,
                     objectType: 2,
-                    objectId: req.params.id ? Number(req.params.id) : 0,
+                    objectId: productId,
                     deleteFlg: 0
                 }
             });
+
+            if (productId > 0) {
+                await prisma.product.update({
+                    where: { productId },
+                    data: { avatar: file.fileId.toString() }
+                });
+            }
 
             res.json({ 
                 fileId: Number(file.fileId), 

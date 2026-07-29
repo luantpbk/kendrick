@@ -260,10 +260,11 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
       } else {
         uploadAvatar(productId, file)
           .then((res) => {
+            setProduct((prev: any) => ({ ...prev, avatar: res.fileId.toString() }));
             addPopup({
               txn: {
                 success: true,
-                summary: 'Tải ảnh thành công',
+                summary: 'Tải ảnh thành công, vui lòng nhấn LƯU để cập nhật',
               },
             });
           })
@@ -632,6 +633,17 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
         images={productId ? images : imageFiles}
         onDelete={onDeleteProductImage}
         addImage={onAddImage}
+        onChoose={(image: ImageType) => {
+          setAvatar(image.fileUrl);
+          setThumbAvatar(image.thumbUrl);
+          setProduct((prev: any) => ({ ...prev, avatar: image.fileId.toString() }));
+          addPopup({
+            txn: {
+              success: true,
+              summary: 'Đã chọn ảnh làm đại diện, vui lòng nhấn LƯU để lưu thay đổi',
+            },
+          });
+        }}
       />
     </StyledProductDetailContainer>
   );
