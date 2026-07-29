@@ -169,7 +169,49 @@ export class ProductController {
         }
     }
 
+    public static async addImageFromLibrary(req: Request, res: Response) {
+        try {
+            const productId = req.params.id ? Number(req.params.id) : 0;
+            const { fileId } = req.body;
+            
+            const existingFile = await prisma.file.findUnique({ where: { fileId: BigInt(fileId) } });
+            if (!existingFile) return res.status(404).json(new ErrorResponseDto(undefined, "File not found"));
+
+            const newFile = await prisma.file.create({
+                data: {
+                    fileName: existingFile.fileName,
+                    systemName: existingFile.systemName,
+                    fileTypeId: 1,
+                    objectType: 2,
+                    objectId: productId,
+                    deleteFlg: 0
+                }
+            });
+
+            res.json({ 
+                fileId: Number(newFile.fileId), 
+                fileName: newFile.fileName, 
+                fileUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${newFile.systemName}`,
+                thumbUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${newFile.systemName}`,
+                url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${newFile.systemName}` 
+            });
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
+
     public static async deleteImage(req: Request, res: Response) {
-        res.json(true);
+        try {
+            const fileId = req.params.fileId;
+            if (fileId) {
+                await prisma.file.update({
+                    where: { fileId: BigInt(fileId) },
+                    data: { deleteFlg: 1 }
+                });
+            }
+            res.json(true);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
     }
 }

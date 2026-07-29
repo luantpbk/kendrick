@@ -43,6 +43,13 @@ export class NewsController {
 
     public static async deleteImage(req: Request, res: Response) {
         try {
+            const fileId = req.params.fileId;
+            if (fileId) {
+                await prisma.file.update({
+                    where: { fileId: BigInt(fileId) },
+                    data: { deleteFlg: 1 }
+                });
+            }
             res.json(true);
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));

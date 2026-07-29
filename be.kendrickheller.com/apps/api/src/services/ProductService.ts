@@ -108,6 +108,55 @@ export class ProductService {
         };
     }
 
+    public static async addImage(productId: number, fileData: any) {
+        const file = await prisma.file.create({
+            data: {
+                fileName: fileData.originalname,
+                systemName: fileData.filename,
+                fileTypeId: 1, // Image
+                objectType: 2, // Product
+                objectId: productId,
+                deleteFlg: 0
+            }
+        });
+        
+        const url = process.env.FILE_URL + '/' + file.systemName;
+        return {
+            fileId: file.fileId ? Number(file.fileId) : 0,
+            fileTypeId: file.fileTypeId,
+            fileName: file.fileName || '',
+            fileUrl: url,
+            thumbUrl: url,
+            url: url
+        };
+    }
+
+    public static async addImageFromLibrary(productId: number, fileId: number) {
+        const existingFile = await prisma.file.findUnique({ where: { fileId: BigInt(fileId) } });
+        if (!existingFile) throw new Error("File not found");
+
+        const newFile = await prisma.file.create({
+            data: {
+                fileName: existingFile.fileName,
+                systemName: existingFile.systemName,
+                fileTypeId: 1, // Image
+                objectType: 2, // Product
+                objectId: productId,
+                deleteFlg: 0
+            }
+        });
+        
+        const url = process.env.FILE_URL + '/' + newFile.systemName;
+        return {
+            fileId: newFile.fileId ? Number(newFile.fileId) : 0,
+            fileTypeId: newFile.fileTypeId,
+            fileName: newFile.fileName || '',
+            fileUrl: url,
+            thumbUrl: url,
+            url: url
+        };
+    }
+
     public static async getProductsByIds(ids: number[]) {
         const data = await prisma.product.findMany({
             where: {

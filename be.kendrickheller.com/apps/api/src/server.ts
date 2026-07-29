@@ -25,6 +25,8 @@ import { AdvertisingBannerController } from './controllers/AdvertisingBannerCont
 import { AudioBookController } from './controllers/AudioBookController';
 import { AudioBookSeriesController } from './controllers/AudioBookSeriesController';
 import { AudioChapterController } from './controllers/AudioChapterController';
+import { OrderController } from './controllers/OrderController';
+import { FileController } from './controllers/FileController';
 import { BannerController } from './controllers/BannerController';
 import { CompanyImageController } from './controllers/CompanyImageController';
 import { CompanyInfoController } from './controllers/CompanyInfoController';
@@ -118,6 +120,7 @@ pgcoreRouter.put('/product/:id', authMiddleware, requireRole(['ADMIN']), Product
 pgcoreRouter.delete('/product/:id', authMiddleware, requireRole(['ADMIN']), ProductController.deleteProduct);
 pgcoreRouter.post('/product/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), ProductController.uploadAvatar);
 pgcoreRouter.post('/product/image/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), ProductController.addImage);
+pgcoreRouter.post('/product/image-from-library/:id', authMiddleware, requireRole(['ADMIN']), ProductController.addImageFromLibrary);
 pgcoreRouter.delete('/product/:id/image/:fileId', authMiddleware, requireRole(['ADMIN']), ProductController.deleteImage);
 
 // ProductSerial
@@ -297,6 +300,8 @@ pgcoreRouter.put('/order-requirement/:id', authMiddleware, requireRole(['ADMIN']
 pgcoreRouter.delete('/order-requirement/:id', authMiddleware, requireRole(['ADMIN']), OrderRequirementController.deleteOrderRequirement);
 
 // Parameter
+pgcoreRouter.post('/file/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), FileController.uploadImage);
+pgcoreRouter.get('/file/image', authMiddleware, requireRole(['ADMIN']), FileController.getImages);
 pgcoreRouter.get('/parameter', ParameterController.getParameters);
 pgcoreRouter.get('/parameter/:id', ParameterController.getParameterById);
 pgcoreRouter.post('/parameter', authMiddleware, requireRole(['ADMIN']), ParameterController.createParameter);
