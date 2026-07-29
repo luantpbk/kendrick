@@ -531,7 +531,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
             title="Giá tiền (¥)"
             disabled={isDisable}
             value={price}
-            onChange={(val) => setPrice(val === '' ? undefined : Number(val))}
+            onChange={(val) => setPrice((val as any) === '' ? undefined : Number(val))}
             type="number"
           />
         </div>
@@ -541,7 +541,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
             title="Giảm giá (%)"
             disabled={isDisable}
             value={discountPercent}
-            onChange={(val) => setDiscountPercent(val === '' ? undefined : Number(val))}
+            onChange={(val) => setDiscountPercent((val as any) === '' ? undefined : Number(val))}
           />
         </div>
         <div className="product-detail-row">
@@ -550,7 +550,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
             title="Thứ tự"
             disabled={isDisable}
             value={displayOrder}
-            onChange={(val) => setDisplayOrder(val === '' ? undefined : Number(val))}
+            onChange={(val) => setDisplayOrder((val as any) === '' ? undefined : Number(val))}
           />
         </div>
         {attributes
