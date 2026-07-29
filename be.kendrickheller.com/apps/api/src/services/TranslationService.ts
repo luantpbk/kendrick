@@ -108,7 +108,9 @@ export class TranslationService {
         });
 
         const supportedLangs = ['vi', 'en', 'jp', 'cn', 'fr', 'de', 'it', 'pt', 'et'];
-        const uploadsDir = path.join(__dirname, '../../uploads/i18n');
+        const uploadsDir = process.env.UPLOAD_DIR 
+            ? path.join(process.env.UPLOAD_DIR, 'i18n') 
+            : path.join(process.cwd(), 'uploads/i18n');
         
         if (!fs.existsSync(uploadsDir)) {
             fs.mkdirSync(uploadsDir, { recursive: true });
