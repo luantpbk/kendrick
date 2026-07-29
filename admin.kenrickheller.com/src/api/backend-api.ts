@@ -23,6 +23,8 @@ export type ApiRequestOption = {
 
 const instance = axios.create({});
 
+const defaultShowPrompt = () => {};
+
 export const useFetch = (
   anonymous?: boolean,
   file?: boolean,
@@ -34,13 +36,12 @@ export const useFetch = (
   const removeProfileInfo = useRemoveProfileInfo();
   const setProfileInfo = useSetProfileInfo();
   
-  let showPrompt: (data: any) => void;
+  let showPrompt: (data: any) => void = defaultShowPrompt;
   try {
     const context = useTranslationPrompt();
     showPrompt = context.showPrompt;
   } catch (e) {
     // If not within provider, default to no-op
-    showPrompt = () => {};
   }
 
   const fetch = useCallback(

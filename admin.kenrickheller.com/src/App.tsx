@@ -58,8 +58,8 @@ const App: React.FC = () => {
       <Provider store={store}>
         <SmartCardProvider>
           <SlideBarProvider>
-            <ModalsProvider>
-              <TranslationProvider>
+            <TranslationProvider>
+              <ModalsProvider>
                 <Popups />
                 <FCMNotification />
                 <BrowserRouter>
@@ -70,8 +70,8 @@ const App: React.FC = () => {
                   </AppWrapper>
                 </BrowserRouter>
                 <Chat key={'chat-component'} />
-              </TranslationProvider>
-            </ModalsProvider>
+              </ModalsProvider>
+            </TranslationProvider>
           </SlideBarProvider>
         </SmartCardProvider>
       </Provider>

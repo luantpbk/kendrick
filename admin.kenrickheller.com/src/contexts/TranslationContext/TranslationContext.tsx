@@ -21,8 +21,10 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setScanData(null);
   }, []);
 
+  const contextValue = React.useMemo(() => ({ showPrompt }), [showPrompt]);
+
   return (
-    <TranslationContext.Provider value={{ showPrompt }}>
+    <TranslationContext.Provider value={contextValue}>
       {children}
       {isOpen && (
         <TranslationPromptModal data={scanData} isOpen={isOpen} onClose={closePrompt} />
