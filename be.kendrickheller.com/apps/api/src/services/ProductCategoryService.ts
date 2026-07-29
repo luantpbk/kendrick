@@ -1,4 +1,5 @@
 import { prisma } from '@kendrickheller/core';
+import { AutoMapper } from '../utils/AutoMapper';
 import { FileHelper } from '../utils/FileHelper';
 import { EnumImageType } from '../common/EnumImageType';
 
@@ -62,26 +63,18 @@ export class ProductCategoryService {
     }
 
     public static async createCategory(data: any) {
+        const sanitized = AutoMapper.mapToPrisma('ProductCategory', data, true);
         return prisma.productCategory.create({
-            data: this.sanitizeCategoryData(data)
+            data: sanitized
         });
     }
 
     public static async updateCategory(id: number, data: any) {
+        const sanitized = AutoMapper.mapToPrisma('ProductCategory', data, false);
         return prisma.productCategory.update({
             where: { productCategoryId: id },
-            data: this.sanitizeCategoryData(data)
+            data: sanitized
         });
-    }
-
-    private static sanitizeCategoryData(data: any) {
-        const sanitized = { ...data };
-        delete sanitized.productRealm;
-        delete sanitized.images;
-        delete sanitized.avatar;
-        delete sanitized.thumbAvatar;
-        
-        return sanitized;
     }
 
     public static async deleteCategory(id: number) {

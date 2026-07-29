@@ -1,4 +1,5 @@
 import { prisma } from '@kendrickheller/core';
+import { AutoMapper } from '../utils/AutoMapper';
 import { FileHelper } from '../utils/FileHelper';
 import { EnumImageType } from '../common/EnumImageType';
 
@@ -180,63 +181,18 @@ export class ProductService {
     }
 
     public static async createProduct(data: any) {
-        const sanitized = this.sanitizeProductData(data);
-        sanitized.deleteFlg = 0;
+        const sanitized = AutoMapper.mapToPrisma('Product', data, true);
         return prisma.product.create({
             data: sanitized
         });
     }
 
     public static async updateProduct(id: number, data: any) {
+        const sanitized = AutoMapper.mapToPrisma('Product', data, false);
         return prisma.product.update({
             where: { productId: id },
-            data: this.sanitizeProductData(data)
+            data: sanitized
         });
-    }
-
-    private static sanitizeProductData(data: any) {
-        const sanitized = { ...data };
-        delete sanitized.productCategoryName;
-        delete sanitized.avatarId;
-        delete sanitized.thumbAvatar;
-        delete sanitized.images;
-        delete sanitized.productGifts;
-        delete sanitized.productSerials;
-        
-        if (sanitized.productId === null || sanitized.productId === undefined) {
-            delete sanitized.productId;
-        }
-
-        if (sanitized.productCategoryId !== undefined && sanitized.productCategoryId !== null) {
-            sanitized.productCategoryId = Number(sanitized.productCategoryId);
-        }
-
-        if (sanitized.avatar !== undefined && sanitized.avatar !== null) {
-            const avatarNum = Number(sanitized.avatar);
-            if (!isNaN(avatarNum)) {
-                sanitized.avatar = BigInt(avatarNum);
-            } else {
-                delete sanitized.avatar;
-            }
-        }
-
-        if (sanitized.displayOrder !== undefined && sanitized.displayOrder !== null) {
-            sanitized.displayOrder = Number(sanitized.displayOrder);
-        }
-        if (sanitized.discountPercent !== undefined && sanitized.discountPercent !== null) {
-            sanitized.discountPercent = Number(sanitized.discountPercent);
-        }
-        if (sanitized.isSerial !== undefined && sanitized.isSerial !== null) {
-            sanitized.isSerial = Number(sanitized.isSerial);
-        }
-        if (sanitized.price !== undefined && sanitized.price !== null) {
-            sanitized.price = Number(sanitized.price);
-        }
-        if (sanitized.price2 !== undefined && sanitized.price2 !== null) {
-            sanitized.price2 = Number(sanitized.price2);
-        }
-        
-        return sanitized;
     }
 
     public static async deleteProduct(id: number) {
