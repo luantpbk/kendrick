@@ -35,7 +35,7 @@ export class NewsController {
     public static async uploadImage(req: Request, res: Response) {
         try {
             if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `/uploads/${req.file.filename}` });
+            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }

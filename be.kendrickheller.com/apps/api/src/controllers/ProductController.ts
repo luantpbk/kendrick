@@ -125,9 +125,9 @@ export class ProductController {
             res.json({ 
                 fileId: Number(file.fileId), 
                 fileName: file.fileName, 
-                fileUrl: `/uploads/${file.systemName}`,
-                thumbUrl: `/uploads/${file.systemName}`,
-                url: `/uploads/${file.systemName}` 
+                fileUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
+                thumbUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
+                url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}` 
             });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
@@ -152,9 +152,9 @@ export class ProductController {
             res.json({ 
                 fileId: Number(file.fileId), 
                 fileName: file.fileName, 
-                fileUrl: `/uploads/${file.systemName}`,
-                thumbUrl: `/uploads/${file.systemName}`,
-                url: `/uploads/${file.systemName}` 
+                fileUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
+                thumbUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
+                url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}` 
             });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));

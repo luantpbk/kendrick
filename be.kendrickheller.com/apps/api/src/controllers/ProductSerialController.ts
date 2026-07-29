@@ -143,7 +143,7 @@ export class ProductSerialController {
     public static async uploadAvatar(req: Request, res: Response) {
         try {
             if (!req.file) return res.status(400).json({ errorMessage: 'No file uploaded' });
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `/uploads/${req.file.filename}` });
+            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
         } catch (error: any) {
             res.status(500).json({ errorMessage: error.message });
         }
@@ -152,7 +152,7 @@ export class ProductSerialController {
     public static async addImage(req: Request, res: Response) {
         try {
             if (!req.file) return res.status(400).json({ errorMessage: 'No file uploaded' });
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `/uploads/${req.file.filename}` });
+            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
         } catch (error: any) {
             res.status(500).json({ errorMessage: error.message });
         }

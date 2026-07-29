@@ -50,7 +50,7 @@ export class StaticPageController {
             // Assume file is saved by multer middleware
             if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));
             // Return a dummy image response for now
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `/uploads/${req.file.filename}` });
+            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }

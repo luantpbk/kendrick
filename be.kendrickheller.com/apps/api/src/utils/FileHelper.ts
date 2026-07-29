@@ -10,7 +10,7 @@ export class FileHelper {
         if (!file || !file.systemName) return null;
         
         if (file.systemName.startsWith('file-')) {
-            const localUrl = `/uploads/${file.systemName}`;
+            const localUrl = `${FILE_URL}/${file.systemName}`;
             return {
                 ...file,
                 fileId: Number(file.fileId),
