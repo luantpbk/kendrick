@@ -62,10 +62,9 @@ const Input = <T extends string | ReadonlyArray<string> | number | undefined>(
         disabled={disabled}
         placeholder={placeholder}
         width={width}
-        spellCheck={false}
         onChange={(event) => onChange((event.target as HTMLTextAreaElement).value as T)}
         padding={inputPadding}
-        value={value || ''}
+        value={value !== undefined && value !== null ? value : ''}
         type={type}
         onBlur={onBlur}
         ref={scanInput}
