@@ -48,7 +48,7 @@ export const usePutTranslation = () => {
   return useCallback(
     (data: TranslationType) => {
       return fetch({
-        url: `pgcore/rest-api/translation`,
+        url: `pgcore/rest-api/translation/${data.translationId}`,
         method: 'put',
         data: data,
       }) as Promise<TranslationType>;

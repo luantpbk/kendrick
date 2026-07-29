@@ -50,6 +50,8 @@ const TranslationDetail: React.FC<ITranslationDetail> = (props) => {
           setDe(data.de);
           setCn(data.cn);
           setIt(data.it);
+          setPt(data.pt);
+          setEt(data.et);
           setDisplayOrder(data.displayOrder);
         })
         .catch((error) => {
