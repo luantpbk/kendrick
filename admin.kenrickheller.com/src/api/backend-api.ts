@@ -74,8 +74,8 @@ export const useFetch = (
           .request(config)
           .then((res) => {
             if ((config.method === 'post' || config.method === 'put') && res.data && typeof res.data === 'object') {
-              // Ignore login/auth endpoints
-              if (!config.url?.includes('login') && !config.url?.includes('renew-token') && !config.url?.includes('auto-translate')) {
+              // Ignore login/auth endpoints and translation endpoints
+              if (!config.url?.includes('login') && !config.url?.includes('renew-token') && !config.url?.includes('auto-translate') && !config.url?.includes('translation')) {
                 showPrompt(res.data);
               }
             }
