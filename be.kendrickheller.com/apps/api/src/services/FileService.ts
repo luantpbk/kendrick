@@ -1,4 +1,4 @@
-import { prisma } from '@puganigravio/core';
+import { prisma } from '@kendrickheller/core';
 
 export class FileService {
     public static async getImages() {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { FileService } from '../services/FileService';
-import { ErrorResponseDto } from '@puganigravio/core';
+import { ErrorResponseDto } from '@kendrickheller/core';
 
 export class FileController {
     public static async getImages(req: Request, res: Response) {
