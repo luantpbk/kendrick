@@ -157,6 +157,16 @@ export class ProductService {
                 delete sanitized.avatar;
             }
         }
+
+        if (sanitized.displayOrder !== undefined && sanitized.displayOrder !== null) {
+            sanitized.displayOrder = Number(sanitized.displayOrder);
+        }
+        if (sanitized.discountPercent !== undefined && sanitized.discountPercent !== null) {
+            sanitized.discountPercent = Number(sanitized.discountPercent);
+        }
+        if (sanitized.isSerial !== undefined && sanitized.isSerial !== null) {
+            sanitized.isSerial = Number(sanitized.isSerial);
+        }
         
         return sanitized;
     }
