@@ -177,8 +177,10 @@ export class ProductService {
     }
 
     public static async createProduct(data: any) {
+        const sanitized = this.sanitizeProductData(data);
+        sanitized.deleteFlg = 0;
         return prisma.product.create({
-            data: this.sanitizeProductData(data)
+            data: sanitized
         });
     }
 
