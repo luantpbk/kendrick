@@ -149,10 +149,12 @@ export class ProductService {
         delete sanitized.productGifts;
         delete sanitized.productSerials;
         
-        if (sanitized.avatar) {
+        if (sanitized.avatar !== undefined && sanitized.avatar !== null) {
             const avatarNum = Number(sanitized.avatar);
             if (!isNaN(avatarNum)) {
-                sanitized.avatar = avatarNum;
+                sanitized.avatar = BigInt(avatarNum);
+            } else {
+                delete sanitized.avatar;
             }
         }
         
