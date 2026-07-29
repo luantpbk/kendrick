@@ -300,6 +300,7 @@ pgcoreRouter.delete('/order-requirement/:id', authMiddleware, requireRole(['ADMI
 
 // Parameter
 pgcoreRouter.post('/file/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), FileController.uploadImage);
+pgcoreRouter.post('/file/image/register-existing', authMiddleware, requireRole(['ADMIN']), FileController.registerExistingImage);
 pgcoreRouter.get('/file/image', authMiddleware, requireRole(['ADMIN']), FileController.getImages);
 pgcoreRouter.get('/parameter', ParameterController.getParameters);
 pgcoreRouter.get('/parameter/:id', ParameterController.getParameterById);

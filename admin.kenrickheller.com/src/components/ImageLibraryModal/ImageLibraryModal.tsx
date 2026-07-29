@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGetImages, useAddImage } from 'src/api/fileApi';
+import { useGetImages, useAddImage, useRegisterExistingImage } from 'src/api/fileApi';
 import { ImageType } from 'src/api/models';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import Loading from '../Loading';
@@ -16,9 +16,11 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
   const [images, setImages] = useState<ImageType[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const getImages = useGetImages();
   const addImage = useAddImage();
+  const registerExistingImage = useRegisterExistingImage();
   const addPopup = useAddPopup();
 
   const fetchImages = async () => {
@@ -61,10 +63,25 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedImage) {
-      onSelect(selectedImage);
-      onDismiss();
+      if (selectedImage.fileId === -1) {
+        try {
+          setIsRegistering(true);
+          const newImage = await registerExistingImage((selectedImage as any).systemName || selectedImage.fileName);
+          if (newImage) {
+            onSelect(newImage);
+            onDismiss();
+          }
+        } catch (e) {
+          addPopup({ error: { message: 'Đăng ký ảnh thất bại', title: 'Lỗi' } });
+        } finally {
+          setIsRegistering(false);
+        }
+      } else {
+        onSelect(selectedImage);
+        onDismiss();
+      }
     }
   };
 
@@ -91,11 +108,13 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
             Chưa có hình ảnh nào trong thư viện.
           </div>
         ) : (
-          images.map((img) => {
-            const isSelected = selectedImage?.fileId === img.fileId;
+          images.map((img, index) => {
+            const isSelected = selectedImage?.fileId === -1 
+                ? (selectedImage as any)?.systemName === (img as any).systemName 
+                : selectedImage?.fileId === img.fileId;
             return (
               <div 
-                key={img.fileId} 
+                key={img.fileId === -1 ? `virt-${index}` : img.fileId} 
                 className={`library-image-item ${isSelected ? 'selected' : ''}`}
                 onClick={() => setSelectedImage(img)}
               >
@@ -117,7 +136,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
           onClick={onDismiss} 
         />
         <ButtonComponent
-          title="CHỌN ẢNH NÀY"
+          title={isRegistering ? "ĐANG TẠO..." : "CHỌN ẢNH NÀY"}
           onClick={handleConfirm}
         />
       </div>

@@ -4,6 +4,26 @@ import fs from 'fs';
 import path from 'path';
 
 export class FileService {
+    private static scanImagesDir(dir: string, fileList: string[] = []) {
+        if (!fs.existsSync(dir)) return fileList;
+        const files = fs.readdirSync(dir);
+        for (const file of files) {
+            const filePath = path.join(dir, file);
+            const stat = fs.statSync(filePath);
+            if (stat.isDirectory()) {
+                if (file !== 'thumb') { // Exclude thumbnails
+                    this.scanImagesDir(filePath, fileList);
+                }
+            } else {
+                const ext = path.extname(file).toLowerCase();
+                if (['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext)) {
+                    fileList.push(filePath);
+                }
+            }
+        }
+        return fileList;
+    }
+
     public static async getImages() {
         const files = await prisma.file.findMany({
             where: {
@@ -16,31 +36,93 @@ export class FileService {
         });
 
         const uploadsDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
-
-        return files.map(file => {
-            const dto = FileHelper.mapToFileDto(file);
-            return {
-                ...dto,
-                url: dto?.fileUrl
-            };
-        }).filter(f => {
-            if (!f) return false;
+        
+        // Scan physical files
+        const physicalFiles = this.scanImagesDir(uploadsDir);
+        
+        const result = [];
+        for (const physicalPath of physicalFiles) {
+            const relativePath = path.relative(uploadsDir, physicalPath).replace(/\\/g, '/');
+            const basename = path.basename(physicalPath);
             
-            // Check if file exists on disk
-            let localPath = '';
-            if (f.systemName && f.systemName.startsWith('file-')) {
-                localPath = path.join(uploadsDir, f.systemName);
-            } else if (f.fileUrl) {
-                try {
-                    const urlParts = new URL(f.fileUrl);
-                    localPath = path.join(uploadsDir, urlParts.pathname);
-                } catch (e) {
-                    return false;
+            // Find in DB
+            const dbFile = files.find(f => {
+                if (f.systemName && f.systemName.startsWith('file-')) {
+                    return f.systemName === relativePath;
                 }
-            }
+                return f.systemName === basename;
+            });
             
-            return localPath && fs.existsSync(localPath);
+            if (dbFile) {
+                const dto = FileHelper.mapToFileDto(dbFile);
+                if (dto) {
+                    result.push({
+                        ...dto,
+                        url: dto.fileUrl
+                    });
+                }
+            } else {
+                // Not in DB, virtual File
+                const fileUrl = `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${relativePath}`;
+                result.push({
+                    fileId: -1, 
+                    fileTypeId: 1,
+                    fileName: basename,
+                    systemName: relativePath, 
+                    fileUrl: fileUrl,
+                    thumbUrl: fileUrl,
+                    url: fileUrl
+                });
+            }
+        }
+        
+        return result.sort((a, b) => b.fileId - a.fileId);
+    }
+
+    public static async registerExistingImage(systemName: string) {
+        const basename = path.basename(systemName);
+        let objectType = 8;
+        const map: Record<string, number> = {
+            'product_realm_image': 0,
+            'product_category_image': 1,
+            'product_image': 2,
+            'product_serial_image': 3,
+            'banner': 4,
+            'company_image': 5,
+            'logo': 6,
+            'advertising_banner': 7,
+            'other': 8
+        };
+        for (const [folder, type] of Object.entries(map)) {
+            if (systemName.includes(`/${folder}/`) || systemName.includes(`\\${folder}\\`)) {
+                objectType = type;
+                break;
+            }
+        }
+        
+        // Ensure we don't duplicate if called multiple times concurrently
+        let file = await prisma.file.findFirst({
+            where: { systemName: basename, deleteFlg: 0 }
         });
+
+        if (!file) {
+            file = await prisma.file.create({
+                data: {
+                    fileName: basename,
+                    systemName: basename,
+                    fileTypeId: 1,
+                    objectType: objectType,
+                    objectId: null,
+                    deleteFlg: 0
+                }
+            });
+        }
+        
+        const dto = FileHelper.mapToFileDto(file);
+        return {
+            ...dto,
+            url: dto?.fileUrl
+        };
     }
 
     public static async uploadImage(fileData: any) {

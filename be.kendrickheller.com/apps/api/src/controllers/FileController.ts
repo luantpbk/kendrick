@@ -23,4 +23,17 @@ export class FileController {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
     }
+
+    public static async registerExistingImage(req: Request, res: Response) {
+        try {
+            const { systemName } = req.body;
+            if (!systemName) {
+                return res.status(400).json(new ErrorResponseDto(undefined, "Missing systemName parameter"));
+            }
+            const image = await FileService.registerExistingImage(systemName);
+            res.json(image);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
 }

@@ -47,6 +47,20 @@ export const useAddImage = () => {
   );
 };
 
+export const useRegisterExistingImage = () => {
+  const fetch = useFetch();
+  return useCallback(
+    (systemName: string) => {
+      return fetch({
+        url: `pgcore/rest-api/file/image/register-existing`,
+        method: 'post',
+        data: { systemName },
+      }) as Promise<ImageType>;
+    },
+    [fetch],
+  );
+};
+
 export const useDeleteImage = () => {
   const fetch = useFetch();
   return useCallback(
