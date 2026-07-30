@@ -13,7 +13,12 @@ export class AutoMapper {
      * @param data The raw incoming payload
      * @param isCreate Boolean indicating if this is a create operation (to apply create defaults)
      */
-    public static mapToPrisma<T = any>(modelName: string, data: any, isCreate: boolean = false): T {
+    public static mapToPrisma<T = any>(
+        modelName: string, 
+        data: any, 
+        isCreate: boolean = false,
+        options: { ignoredFields?: string[], customMapping?: Record<string, (val: any) => any> } = {}
+    ): T {
         if (!data || typeof data !== 'object') {
             return data;
         }
@@ -27,19 +32,30 @@ export class AutoMapper {
 
         const sanitized: any = {};
         const fields = model.fields;
+        
+        const ignoredFields = options.ignoredFields || [];
+        const customMapping = options.customMapping || {};
 
         for (const [key, value] of Object.entries(data)) {
+            // 1. Check if explicitly ignored
+            if (ignoredFields.includes(key)) {
+                continue;
+            }
+
+            // 2. Check for custom mapping function
+            if (customMapping[key]) {
+                sanitized[key] = customMapping[key](value);
+                continue;
+            }
+
             // Find the corresponding field in the schema
             const field = fields.find(f => f.name === key);
 
-            // 1. Filter out unknown fields (or relations if not an object array)
-            // If the field doesn't exist, we just ignore it (strip it out)
+            // 3. Filter out unknown fields (or relations if not an object array)
             if (!field) {
                 continue;
             }
 
-            // If it's a relation (kind = 'object'), we might want to keep it if it's explicitly formatted for Prisma nested writes.
-            // For simplicity, we just pass relation objects through as-is if they are objects.
             if (field.kind === 'object') {
                 if (value !== null && typeof value === 'object') {
                     sanitized[key] = value;
@@ -47,25 +63,20 @@ export class AutoMapper {
                 continue;
             }
 
-            // 2. Handle null/undefined values
-            // If value is NaN (which serialize to null in JSON, but just in case), handle it
+            // 4. Handle null/undefined values
             if (value === null || value === undefined || (typeof value === 'number' && isNaN(value))) {
-                // If it's an ID field with autoincrement, we MUST omit it completely so DB generates it
                 if (field.isId && field.hasDefaultValue) {
                     continue;
                 }
-                
-                // Otherwise, pass null through (unless it's required, Prisma will throw, which is correct)
                 sanitized[key] = null;
                 continue;
             }
 
-            // 3. Type casting based on Prisma schema type
+            // 5. Type casting based on Prisma schema type
             let parsedValue: any = value;
 
             if (field.type === 'Int' || field.type === 'Float' || field.type === 'Decimal') {
                 if (typeof value === 'string') {
-                    // Check for empty string
                     if (value.trim() === '') {
                         parsedValue = null;
                     } else {
@@ -73,7 +84,7 @@ export class AutoMapper {
                         if (!isNaN(parsed)) {
                             parsedValue = parsed;
                         } else {
-                            continue; // Ignore field if invalid number (like J2EE AutoMapper)
+                            continue; // Ignore field if invalid number
                         }
                     }
                 } else if (typeof value === 'boolean') {
@@ -81,14 +92,13 @@ export class AutoMapper {
                 }
             } else if (field.type === 'BigInt') {
                 if (typeof value === 'string' || typeof value === 'number') {
-                    // Check for empty string
                     if (typeof value === 'string' && value.trim() === '') {
                         parsedValue = null;
                     } else {
                         try {
                             parsedValue = BigInt(value);
                         } catch (e) {
-                            continue; // Ignore field if invalid BigInt (like J2EE AutoMapper)
+                            continue; // Ignore field if invalid BigInt
                         }
                     }
                 } else if (typeof value === 'boolean') {
@@ -109,31 +119,31 @@ export class AutoMapper {
                         if (!isNaN(date.getTime())) {
                             parsedValue = date;
                         } else {
-                            continue; // Ignore field if invalid Date (like J2EE AutoMapper)
+                            continue; // Ignore field if invalid Date
                         }
                     }
                 }
             } else if (field.type === 'String') {
-                if (typeof value !== 'string' && typeof value !== 'object') {
+                if (typeof value === 'object') {
+                    // Implicit custom mapping for Object to String (like optionPrice)
+                    parsedValue = JSON.stringify(value);
+                } else if (typeof value !== 'string') {
                     parsedValue = String(value);
                 }
             }
 
-            // If it was meant to be casted to a number but resulted in null because it was empty,
-            // and the field is required, we should let Prisma throw, or omit it. 
-            // Prisma expects omitted fields if it has a default. We will just set it to null.
             if (parsedValue === null && field.hasDefaultValue && isCreate) {
-                continue; // omit so it gets the default
+                continue; 
             }
 
             sanitized[key] = parsedValue;
         }
 
-        // 4. Default handles (like deleteFlg)
+        // 6. Default handles (like deleteFlg)
         if (isCreate) {
             const hasDeleteFlg = fields.some(f => f.name === 'deleteFlg');
             if (hasDeleteFlg && (sanitized.deleteFlg === undefined || sanitized.deleteFlg === null)) {
-                sanitized.deleteFlg = 0; // Default to 0
+                sanitized.deleteFlg = 0;
             }
         }
 
