@@ -297,6 +297,15 @@ const ProductDetail: React.FC = () => {
             <div className="product-detail-intro">
               {t("Status")}:&nbsp; <span style={{ color: '#2b80dd', fontWeight: 700 }}>{t("In stock")}</span>
             </div>
+            <div className="product-detail-top-child-container mt-4">
+              {product?.html1 ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: product.html1,
+                  }}
+                />
+              ) : null}
+            </div>
             {/* <div className="product-detail-top-child-container mt-4">
               {bodyCommit ? (
                 <div
