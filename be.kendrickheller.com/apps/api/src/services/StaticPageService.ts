@@ -27,8 +27,12 @@ export class StaticPageService {
     }
 
     public static async create(data: any) {
+        const sanitizedData = { ...data };
+        if (sanitizedData.staticPageId === null || sanitizedData.staticPageId === undefined) {
+            delete sanitizedData.staticPageId;
+        }
         return prisma.staticPage.create({
-            data: { ...data }
+            data: sanitizedData
         });
     }
 
