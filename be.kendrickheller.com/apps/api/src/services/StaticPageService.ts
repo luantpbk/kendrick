@@ -31,6 +31,10 @@ export class StaticPageService {
         if (sanitizedData.staticPageId === null || sanitizedData.staticPageId === undefined) {
             delete sanitizedData.staticPageId;
         }
+        sanitizedData.deleteFlg = 0;
+        if (sanitizedData.displayOrder !== undefined && sanitizedData.displayOrder !== null) {
+            sanitizedData.displayOrder = Number(sanitizedData.displayOrder);
+        }
         return prisma.staticPage.create({
             data: sanitizedData
         });
