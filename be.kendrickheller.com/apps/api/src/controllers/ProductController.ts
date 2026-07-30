@@ -107,6 +107,36 @@ export class ProductController {
         }
     }
 
+    public static async getProductGifts(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const gifts = await ProductService.getProductGifts(Number(id));
+            res.json(gifts);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
+
+    public static async updateProductGifts(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const gifts = await ProductService.updateProductGifts(Number(id), req.body);
+            res.json(gifts);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
+
+    public static async copyProductGifts(req: Request, res: Response) {
+        try {
+            const { toId, fromId } = req.params;
+            const gifts = await ProductService.copyProductGifts(Number(toId), Number(fromId));
+            res.json(gifts);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
+
     public static async uploadAvatar(req: Request, res: Response) {
         try {
             if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));

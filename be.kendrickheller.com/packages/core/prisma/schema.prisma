@@ -263,6 +263,19 @@ model Answer {
   @@map("answer")
 }
 
+model ProductGift {
+  productGiftId    BigInt  @id @default(autoincrement()) @map("product_gift_id")
+  productId        BigInt? @map("product_id")
+  productGiftValue String? @map("product_gift_value") @db.VarChar(512)
+  deleteFlg        Int?    @default(0) @map("delete_flg")
+  createdAt        DateTime? @map("created_at") @db.Timestamp(6)
+  createdBy        String?   @map("created_by") @db.VarChar(255)
+  updatedAt        DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  updatedBy        String?   @map("updated_by") @db.VarChar(255)
+
+  @@map("product_gift")
+}
+
 model AnswerLike {
   answerId BigInt @map("answer_id")
   userId   BigInt @map("user_id")

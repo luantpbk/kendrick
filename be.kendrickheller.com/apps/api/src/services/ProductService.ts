@@ -196,9 +196,46 @@ export class ProductService {
     }
 
     public static async deleteProduct(id: number) {
-        return prisma.product.update({
+        await prisma.product.update({
             where: { productId: id },
             data: { deleteFlg: 1 }
         });
+    }
+
+    public static async getProductGifts(productId: number) {
+        const gifts = await prisma.productGift.findMany({
+            where: { productId: productId, deleteFlg: 0 }
+        });
+        return gifts.map(g => ({
+            productGiftId: Number(g.productGiftId),
+            productId: Number(g.productId),
+            productGiftValue: g.productGiftValue
+        }));
+    }
+
+    public static async updateProductGifts(productId: number, gifts: any[]) {
+        // Delete all old gifts
+        await prisma.productGift.updateMany({
+            where: { productId: productId },
+            data: { deleteFlg: 1 }
+        });
+        
+        // Insert new gifts
+        if (gifts && gifts.length > 0) {
+            await prisma.productGift.createMany({
+                data: gifts.map(g => ({
+                    productId: productId,
+                    productGiftValue: g.productGiftValue,
+                    deleteFlg: 0
+                }))
+            });
+        }
+        
+        return this.getProductGifts(productId);
+    }
+
+    public static async copyProductGifts(toProductId: number, fromProductId: number) {
+        const sourceGifts = await this.getProductGifts(fromProductId);
+        return this.updateProductGifts(toProductId, sourceGifts);
     }
 }
