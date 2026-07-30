@@ -149,7 +149,7 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
         validateProductCode() &&
         validateProductName()
       ) {
-        const body = {
+        const body: any = {
           ...product,
           productId: productId ? productId : undefined,
           productCategoryId: productCategoryId ? Number(productCategoryId) : undefined,
