@@ -21,6 +21,8 @@ import { BASE_WEB_URL } from 'src/constants';
 import useModal from 'src/hooks/useModal';
 import OtherImageUpload from 'src/components/OtherImageUpload';
 import Language from 'src/components/Language';
+import ButtonComponent from 'src/components/ButtonComponent/ButtonComponent';
+import { useTranslateHtml } from 'src/api/translationApi';
 
 enum TabKey {
   Content,
@@ -58,6 +60,8 @@ const StaticPageDetails: React.FC = () => {
   const [displayOrder, setDisplayOrder] = useState<number>();
   const [language, setLanguage] = useState<string>('en');
   const [value, setValue] = useState<string>();
+  const [isTranslating, setIsTranslating] = useState<boolean>(false);
+  const translateHtml = useTranslateHtml();
 
   //State
   const [tab, setTab] = useState(TabKey.Content);
@@ -370,6 +374,44 @@ const StaticPageDetails: React.FC = () => {
               if (nValue == value) nValue += ' ';
               console.log(nValue);
               setValue(nValue);
+            }}
+          />
+          <ButtonComponent
+            title="TỰ ĐỘNG DỊCH"
+            loader={isTranslating}
+            onClick={() => {
+              const content =
+                tab == TabKey.SourceCode
+                  ? editorRef.current?.getValue()
+                  : tinyEditorRef.current?.getContent();
+              if (!content) return;
+              
+              setIsTranslating(true);
+              const targetLangs = ['vi', 'en', 'jp', 'cn', 'de', 'fr', 'it', 'pt', 'et'].filter(l => l !== language);
+              translateHtml(content, language, targetLangs)
+                .then((res) => {
+                  for (const lang of Object.keys(res)) {
+                    const translatedHtml = res[lang];
+                    if (translatedHtml) {
+                       switch (lang) {
+                         case 'vi': setVi(translatedHtml); break;
+                         case 'en': setEn(translatedHtml); break;
+                         case 'jp': setJp(translatedHtml); break;
+                         case 'cn': setCn(translatedHtml); break;
+                         case 'de': setDe(translatedHtml); break;
+                         case 'fr': setFr(translatedHtml); break;
+                         case 'it': setIt(translatedHtml); break;
+                         case 'pt': setPt(translatedHtml); break;
+                         case 'et': setEt(translatedHtml); break;
+                       }
+                    }
+                  }
+                  addPopup({ txn: { success: true, summary: 'Tự động dịch thành công' } });
+                })
+                .catch((err) => {
+                  addPopup({ error: { title: 'Lỗi', message: 'Dịch thất bại: ' + (err.message || 'Error') } });
+                })
+                .finally(() => setIsTranslating(false));
             }}
           />
         </div>
