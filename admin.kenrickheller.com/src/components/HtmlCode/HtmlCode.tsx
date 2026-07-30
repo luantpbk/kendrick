@@ -9,6 +9,7 @@ import useModal from 'src/hooks/useModal';
 import OtherImageUpload from 'src/components/OtherImageUpload';
 import Language from 'src/components/Language';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import { useTranslateHtml } from 'src/api/translationApi';
 
 enum TabKey {
   Content,
@@ -23,6 +24,8 @@ interface IHtmlCodeProps {
 const HtmlCode = (props: IHtmlCodeProps) => {
   const addPopup = useAddPopup();
   const removePopup = useRemovePopup();
+  const translateHtml = useTranslateHtml();
+  const [isTranslating, setIsTranslating] = useState(false);
 
   const imageModal = useModal(OtherImageUpload);
 
@@ -105,6 +108,40 @@ const HtmlCode = (props: IHtmlCodeProps) => {
               const nData = { ...data };
               nData[language] = content;
               props.onSave(nData);
+            }}
+          />
+          <ButtonComponent
+            title="TỰ ĐỘNG DỊCH"
+            loader={isTranslating}
+            onClick={() => {
+              const content =
+                tab == TabKey.SourceCode
+                  ? editorRef.current?.getValue()
+                  : tinyEditorRef.current?.getContent();
+              if (!content) return;
+              
+              setIsTranslating(true);
+              const targetLangs = ['vi', 'en', 'jp', 'cn', 'de', 'fr', 'it', 'pt', 'et'].filter(l => l !== language);
+              translateHtml(content, language, targetLangs)
+                .then((res) => {
+                  const nData = { ...data };
+                  nData[language] = content;
+                  for (const lang of Object.keys(res)) {
+                    if (res[lang]) nData[lang] = res[lang];
+                  }
+                  setData(nData);
+                  addPopup({
+                    txn: { success: true, summary: 'Tự động dịch thành công' },
+                  });
+                })
+                .catch((err) => {
+                  addPopup({
+                    error: { title: 'Lỗi', message: 'Dịch thất bại: ' + err.message },
+                  });
+                })
+                .finally(() => {
+                  setIsTranslating(false);
+                });
             }}
           />
           <Tabs activeTab={tab} tabs={tabs} />

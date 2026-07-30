@@ -79,3 +79,17 @@ export const useGenerateFile = () => {
     }) as Promise<boolean>;
   }, [fetch]);
 };
+
+export const useTranslateHtml = () => {
+  const fetch = useFetch();
+  return useCallback(
+    (text: string, from: string, langs: string[]) => {
+      return fetch({
+        url: `pgcore/rest-api/translation/translate-html`,
+        method: 'post',
+        data: { text, from, langs },
+      }) as Promise<{ [lang: string]: string }>;
+    },
+    [fetch],
+  );
+};

@@ -132,4 +132,25 @@ export class TranslationService {
 
         return true;
     }
+
+    public static async translateHtml(text: string, from: string, targetLangs: string[]) {
+        if (!text) return {};
+
+        const results: { [lang: string]: string } = {};
+        
+        for (const lang of targetLangs) {
+            if (lang === from) continue;
+            try {
+                // Ensure target lang mapping is correct for Google Translate
+                const targetLang = lang === 'cn' ? 'zh-CN' : lang === 'jp' ? 'ja' : lang;
+                const res = await translate(text, { from, to: targetLang });
+                results[lang] = res.text;
+            } catch (e) {
+                console.error(`Failed to translate HTML to ${lang}`, e);
+                results[lang] = text; // fallback to original
+            }
+        }
+        
+        return results;
+    }
 }

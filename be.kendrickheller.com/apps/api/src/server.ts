@@ -362,6 +362,7 @@ pgcoreRouter.delete('/static-page/:id', authMiddleware, requireRole(['ADMIN']), 
 // Translation
 pgcoreRouter.get('/translation/generate', TranslationController.generate);
 pgcoreRouter.post('/translation/auto-translate', authMiddleware, requireRole(['ADMIN']), TranslationController.autoTranslate);
+pgcoreRouter.post('/translation/translate-html', authMiddleware, requireRole(['ADMIN']), TranslationController.translateHtml);
 pgcoreRouter.get('/translation', TranslationController.getAll);
 pgcoreRouter.get('/translation/:id', TranslationController.getById);
 pgcoreRouter.post('/translation', authMiddleware, requireRole(['ADMIN']), TranslationController.create);

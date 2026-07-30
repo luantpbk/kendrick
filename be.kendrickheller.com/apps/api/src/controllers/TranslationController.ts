@@ -94,4 +94,17 @@ export class TranslationController {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
     }
+
+    public static async translateHtml(req: Request, res: Response) {
+        try {
+            const { text, from, langs } = req.body;
+            if (!text || !from || !Array.isArray(langs)) {
+                return res.status(400).json(new ErrorResponseDto(undefined, 'Invalid request body'));
+            }
+            const results = await TranslationService.translateHtml(text, from, langs);
+            res.json(results);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
 }
