@@ -23,53 +23,54 @@ export const prisma = basePrisma.$extends({
                 const hasUpdatedBy = model && modelHasField(model, 'updatedBy');
                 const hasUpdatedAt = model && modelHasField(model, 'updatedAt');
 
-                args = args || {};
+                let anyArgs = args as any;
+                anyArgs = anyArgs || {};
 
                 if (['findMany', 'findFirst', 'findUnique', 'count', 'aggregate', 'groupBy'].includes(operation)) {
                     if (hasDeleteFlg) {
-                        args.where = { ...args.where, deleteFlg: 0 };
+                        anyArgs.where = { ...anyArgs.where, deleteFlg: 0 };
                     }
                 }
 
                 if (operation === 'create') {
-                    args.data = args.data || {};
-                    if (hasDeleteFlg) args.data.deleteFlg = 0;
-                    if (hasCreatedAt && args.data.createdAt === undefined) args.data.createdAt = new Date();
-                    if (hasCreatedBy && args.data.createdBy === undefined) args.data.createdBy = loginName;
+                    anyArgs.data = anyArgs.data || {};
+                    if (hasDeleteFlg) anyArgs.data.deleteFlg = 0;
+                    if (hasCreatedAt && anyArgs.data.createdAt === undefined) anyArgs.data.createdAt = new Date();
+                    if (hasCreatedBy && anyArgs.data.createdBy === undefined) anyArgs.data.createdBy = loginName;
                 }
                 
                 if (operation === 'createMany') {
-                    args.data = args.data || {};
-                    if (Array.isArray(args.data)) {
-                        args.data.forEach(item => {
+                    anyArgs.data = anyArgs.data || {};
+                    if (Array.isArray(anyArgs.data)) {
+                        anyArgs.data.forEach((item: any) => {
                             if (hasDeleteFlg) item.deleteFlg = 0;
                             if (hasCreatedAt && item.createdAt === undefined) item.createdAt = new Date();
                             if (hasCreatedBy && item.createdBy === undefined) item.createdBy = loginName;
                         });
-                    } else if (args.data) {
-                        if (hasDeleteFlg) args.data.deleteFlg = 0;
-                        if (hasCreatedAt && args.data.createdAt === undefined) args.data.createdAt = new Date();
-                        if (hasCreatedBy && args.data.createdBy === undefined) args.data.createdBy = loginName;
+                    } else if (anyArgs.data) {
+                        if (hasDeleteFlg) anyArgs.data.deleteFlg = 0;
+                        if (hasCreatedAt && anyArgs.data.createdAt === undefined) anyArgs.data.createdAt = new Date();
+                        if (hasCreatedBy && anyArgs.data.createdBy === undefined) anyArgs.data.createdBy = loginName;
                     }
                 }
 
                 if (operation === 'update') {
-                    args.data = args.data || {};
-                    if (hasUpdatedAt && args.data.updatedAt === undefined) args.data.updatedAt = new Date();
-                    if (hasUpdatedBy && args.data.updatedBy === undefined) args.data.updatedBy = loginName;
+                    anyArgs.data = anyArgs.data || {};
+                    if (hasUpdatedAt && anyArgs.data.updatedAt === undefined) anyArgs.data.updatedAt = new Date();
+                    if (hasUpdatedBy && anyArgs.data.updatedBy === undefined) anyArgs.data.updatedBy = loginName;
                 }
                 
                 if (operation === 'updateMany') {
-                    args.data = args.data || {};
-                    if (hasUpdatedAt && args.data.updatedAt === undefined) args.data.updatedAt = new Date();
-                    if (hasUpdatedBy && args.data.updatedBy === undefined) args.data.updatedBy = loginName;
+                    anyArgs.data = anyArgs.data || {};
+                    if (hasUpdatedAt && anyArgs.data.updatedAt === undefined) anyArgs.data.updatedAt = new Date();
+                    if (hasUpdatedBy && anyArgs.data.updatedBy === undefined) anyArgs.data.updatedBy = loginName;
                 }
 
                 if (operation === 'delete') {
                     if (hasDeleteFlg && model) {
                         const modelDelegate = (basePrisma as any)[model.charAt(0).toLowerCase() + model.slice(1)];
                         return modelDelegate.update({
-                            where: args.where,
+                            where: anyArgs.where,
                             data: {
                                 deleteFlg: 1,
                                 ...(hasUpdatedBy ? { updatedBy: loginName } : {}),
@@ -83,7 +84,7 @@ export const prisma = basePrisma.$extends({
                     if (hasDeleteFlg && model) {
                         const modelDelegate = (basePrisma as any)[model.charAt(0).toLowerCase() + model.slice(1)];
                         return modelDelegate.updateMany({
-                            where: args.where,
+                            where: anyArgs.where,
                             data: {
                                 deleteFlg: 1,
                                 ...(hasUpdatedBy ? { updatedBy: loginName } : {}),
@@ -93,7 +94,7 @@ export const prisma = basePrisma.$extends({
                     }
                 }
 
-                return query(args);
+                return query(anyArgs);
             }
         }
     }
