@@ -362,6 +362,7 @@ pgcoreRouter.post('/static-page/image', authMiddleware, requireRole(['ADMIN']), 
 pgcoreRouter.delete('/static-page/image/:fileId', authMiddleware, requireRole(['ADMIN']), StaticPageController.deleteImage);
 pgcoreRouter.get('/static-page/:id', StaticPageController.getById);
 pgcoreRouter.post('/static-page', authMiddleware, requireRole(['ADMIN']), StaticPageController.create);
+pgcoreRouter.put('/static-page', authMiddleware, requireRole(['ADMIN']), StaticPageController.update);
 pgcoreRouter.put('/static-page/:id', authMiddleware, requireRole(['ADMIN']), StaticPageController.update);
 pgcoreRouter.delete('/static-page/:id', authMiddleware, requireRole(['ADMIN']), StaticPageController.delete);
 

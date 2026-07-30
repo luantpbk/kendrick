@@ -85,7 +85,8 @@ export class StaticPageController {
 
     public static async update(req: Request, res: Response) {
         try {
-            const { id } = req.params;
+            const id = req.params.id || req.body.staticPageId;
+            if (!id) return res.status(400).json(new ErrorResponseDto(undefined, 'Missing staticPageId'));
             const item = await StaticPageService.update(Number(id), req.body);
             const itemResponse = JSON.parse(JSON.stringify(item, (key, value) =>
                 typeof value === 'bigint' ? value.toString() : value
