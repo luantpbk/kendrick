@@ -237,8 +237,10 @@ const ProductDetail: React.FC = () => {
               
               return (
                 <div key={`productdetailattribute${index}`} className="product-detail-top-child-container mt-4">
-                  <div className="product-detail-title">{t(config.attributeTitle)}</div>
-                  {config.attribute.attributeType === EnumDataType.HTML ? (
+                  {config.attribute.attributeType == EnumDataType.HTML ? null : (
+                    <div className="product-detail-title">{t(config.attributeTitle)}</div>
+                  )}
+                  {config.attribute.attributeType == EnumDataType.HTML ? (
                     <div dangerouslySetInnerHTML={{ __html: t(val) }} />
                   ) : (
                     <div>{t(val)}</div>
