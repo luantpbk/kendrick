@@ -72,6 +72,8 @@ export class AutoMapper {
                         const parsed = Number(value);
                         if (!isNaN(parsed)) {
                             parsedValue = parsed;
+                        } else {
+                            continue; // Ignore field if invalid number (like J2EE AutoMapper)
                         }
                     }
                 } else if (typeof value === 'boolean') {
@@ -86,7 +88,7 @@ export class AutoMapper {
                         try {
                             parsedValue = BigInt(value);
                         } catch (e) {
-                            // fallback if invalid
+                            continue; // Ignore field if invalid BigInt (like J2EE AutoMapper)
                         }
                     }
                 } else if (typeof value === 'boolean') {
@@ -106,6 +108,8 @@ export class AutoMapper {
                         const date = new Date(value);
                         if (!isNaN(date.getTime())) {
                             parsedValue = date;
+                        } else {
+                            continue; // Ignore field if invalid Date (like J2EE AutoMapper)
                         }
                     }
                 }

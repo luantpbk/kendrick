@@ -164,11 +164,6 @@ const ProductDetails: React.FC<IProductDetails> = (props) => {
           price: price !== undefined && price !== null && price.toString() !== '' ? Number(price) : undefined,
           optionPrice: optionPrice,
         };
-        // Do not send avatar as a URL string to avoid invalid BigInt error in Prisma
-        if (body.avatar && isNaN(Number(body.avatar))) {
-          delete body.avatar;
-        }
-        
         const isAdd = !productId;
         const api = isAdd ? postProduct(body) : putProduct(body);
         api
