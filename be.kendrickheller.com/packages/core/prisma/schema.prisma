@@ -157,14 +157,14 @@ model Product {
   createdBy         String?   @map("created_by") @db.VarChar(255)
   updatedAt         DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
   updatedBy         String?   @map("updated_by") @db.VarChar(255)
-  description2      String?   @db.VarChar(25)
+  description2      String?
   avatar            BigInt?
-  description4      String?   @db.VarChar(512)
-  html1             String?   @db.VarChar(512)
-  html2             String?   @db.VarChar(512)
-  option1           String?   @db.VarChar(512)
-  option3           String?   @db.VarChar(512)
-  option2           String?   @db.VarChar(512)
+  description4      String?
+  html1             String?
+  html2             String?
+  option1           String?
+  option3           String?
+  option2           String?
   introContent      String?   @map("intro_content")
   discountPercent   Int?      @map("discount_percent")
   isHiddenSerial    Boolean?  @map("is_hidden_serial")
