@@ -138,7 +138,7 @@ const ProductDetail: React.FC = () => {
     if (product) {
       getProductCategoryById(product.productCategoryId.toString()).then((data) => setProductCategory(data));
       getListConfig(product.productCategoryId).then((configRes) => {
-        setDescriptions(configRes.filter(c => c.isShowProductSerialDetail == EnumBoolean.true && c.attribute.attributeType == EnumDataType.Text));
+        setDescriptions(configRes.filter(c => c.isShowProductSerialDetail == EnumBoolean.true && (c.attribute.attributeType == EnumDataType.Text || c.attribute.attributeType == EnumDataType.HTML)));
         const nOptions = [];
         const nSelectedOption = {};
         configRes.filter(c => c.isShowProductSerialDetail == EnumBoolean.true && c.attribute.attributeType == EnumDataType.Option)
@@ -232,12 +232,17 @@ const ProductDetail: React.FC = () => {
             })}
 
             {descriptions.map((config: CategoryAttributeType, index: number) => {
+              const val = eval(`product?.${config.attributeName}??''`);
+              if (!val) return null;
+              
               return (
-                <div key={`productdetailattribute${index}`}>
-                  <div>{t(config.attributeTitle)}</div>
-                  {product ? (
-                    <div>{t(eval(`product?.${config.attributeName}??''`))}</div>
-                  ) : null}
+                <div key={`productdetailattribute${index}`} className="product-detail-top-child-container mt-4">
+                  <div className="product-detail-title">{t(config.attributeTitle)}</div>
+                  {config.attribute.attributeType === EnumDataType.HTML ? (
+                    <div dangerouslySetInnerHTML={{ __html: t(val) }} />
+                  ) : (
+                    <div>{t(val)}</div>
+                  )}
                 </div>
               );
             })}
@@ -296,15 +301,6 @@ const ProductDetail: React.FC = () => {
 
             <div className="product-detail-intro">
               {t("Status")}:&nbsp; <span style={{ color: '#2b80dd', fontWeight: 700 }}>{t("In stock")}</span>
-            </div>
-            <div className="product-detail-top-child-container mt-4">
-              {product?.html1 ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: product.html1,
-                  }}
-                />
-              ) : null}
             </div>
             {/* <div className="product-detail-top-child-container mt-4">
               {bodyCommit ? (
