@@ -235,15 +235,26 @@ const ProductDetail: React.FC = () => {
               const val = eval(`product?.${config.attributeName}??''`);
               if (!val) return null;
               
+              let displayVal = val;
+              try {
+                const parsed = JSON.parse(val);
+                if (typeof parsed === 'object' && parsed !== null) {
+                  displayVal = parsed[i18n.language] || parsed['en'] || parsed['vi'] || val;
+                }
+              } catch (e) {
+                // Not JSON, use t() directly
+                displayVal = t(val);
+              }
+
               return (
                 <div key={`productdetailattribute${index}`} className="product-detail-top-child-container mt-4">
                   {config.attribute.attributeType == EnumDataType.HTML ? null : (
                     <div className="product-detail-title">{t(config.attributeTitle)}</div>
                   )}
                   {config.attribute.attributeType == EnumDataType.HTML ? (
-                    <div dangerouslySetInnerHTML={{ __html: t(val) }} />
+                    <div dangerouslySetInnerHTML={{ __html: displayVal }} />
                   ) : (
-                    <div>{t(val)}</div>
+                    <div>{displayVal}</div>
                   )}
                 </div>
               );
