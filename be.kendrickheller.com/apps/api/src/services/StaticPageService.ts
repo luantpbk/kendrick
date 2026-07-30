@@ -2,12 +2,7 @@ import { prisma } from '@kendrickheller/core';
 
 export class StaticPageService {
     public static async getAll() {
-        const whereClause: any = {
-            deleteFlg: 0
-        };
-
         const data = await prisma.staticPage.findMany({
-            where: whereClause,
             orderBy: { createdAt: 'desc' }
         });
 
@@ -31,7 +26,6 @@ export class StaticPageService {
         if (sanitizedData.staticPageId === null || sanitizedData.staticPageId === undefined) {
             delete sanitizedData.staticPageId;
         }
-        sanitizedData.deleteFlg = 0;
         if (sanitizedData.displayOrder !== undefined && sanitizedData.displayOrder !== null) {
             sanitizedData.displayOrder = Number(sanitizedData.displayOrder);
         }
@@ -48,9 +42,8 @@ export class StaticPageService {
     }
 
     public static async delete(id: number) {
-        return prisma.staticPage.update({
-            where: { staticPageId: BigInt(id) },
-            data: { deleteFlg: 1 }
+        return prisma.staticPage.delete({
+            where: { staticPageId: BigInt(id) }
         });
     }
 }

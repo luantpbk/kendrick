@@ -52,8 +52,11 @@ import { StaticPageController } from './controllers/StaticPageController';
 import { TranslationController } from './controllers/TranslationController';
 import { UserCustomerTypeController } from './controllers/UserCustomerTypeController';
 
+import { contextMiddleware } from './middlewares/contextMiddleware';
+
 export const app = express();
 app.use(cors());
+app.use(contextMiddleware);
 
 // Strip trailing semicolon from content-type to fix frontend useFetch bug
 app.use((req, res, next) => {

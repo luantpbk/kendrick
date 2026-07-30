@@ -12,3 +12,4 @@ export * from './util/DateUtil';
 export * from './util/RandomString';
 
 export * from './db/prisma';
+export * from './context/RequestContext';
