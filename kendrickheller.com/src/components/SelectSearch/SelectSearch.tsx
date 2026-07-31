@@ -19,7 +19,7 @@ interface ISelectSearch {
 
 const SelectSearch = (props: ISelectSearch) => {
 
-  const { leftIcon, leftAction, value, placeholder, errorMessage, data, valueType, titleType, onChange, validator } = props;
+  const { leftIcon, leftAction, value, placeholder, errorMessage, data = [], valueType, titleType, onChange, validator } = props;
   const [keyword, setKeyword] = useState<string>();
   const [isShowOption, setShowOption] = useState(false);
   const [parrentWidth, setParrentWidth] = useState(0);
@@ -29,14 +29,16 @@ const SelectSearch = (props: ISelectSearch) => {
   const first = useRef(true);
 
   useEffect(() => {
-    const nOptions = !keywordDebounce ? data : data.filter(item => titleType ? eval(`item.${titleType}`).toString().toLowerCase().includes(keywordDebounce.toLowerCase()) : item.toString().toLowerCase().includes(keywordDebounce.toLowerCase()));
-    setOptions([...nOptions]);
+    const safeData = Array.isArray(data) ? data : [];
+    const nOptions = !keywordDebounce ? safeData : safeData.filter(item => titleType ? eval(`item.${titleType}`).toString().toLowerCase().includes(keywordDebounce.toLowerCase()) : item.toString().toLowerCase().includes(keywordDebounce.toLowerCase()));
+    setOptions(nOptions ? [...nOptions] : []);
 
   }, [data, keywordDebounce, titleType])
 
 
   useEffect(() => {
-    const selected = data.find(item => valueType ? eval(`item.${valueType}`) == value : item == value);
+    const safeData = Array.isArray(data) ? data : [];
+    const selected = safeData.find(item => valueType ? eval(`item.${valueType}`) == value : item == value);
     const initKeyword = titleType && selected ? eval(`selected.${titleType}`) : selected;
     setKeyword(initKeyword);
   }, [data, titleType, value, valueType]);
