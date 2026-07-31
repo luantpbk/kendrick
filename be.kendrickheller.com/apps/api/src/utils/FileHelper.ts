@@ -1,4 +1,7 @@
 import { prisma } from '@kendrickheller/core';
+import * as path from 'path';
+import * as fs from 'fs';
+import sharp from 'sharp';
 import { EnumFileTypeMap } from '../common/EnumFileType';
 import { EnumImageTypeMap } from '../common/EnumImageType';
 
@@ -57,5 +60,21 @@ export class FileHelper {
             }
         });
         return files.map(FileHelper.mapToFileDto).filter(f => f !== null);
+    }
+
+    public static async createThumb(sourcePath: string, thumbPath: string) {
+        try {
+            const thumbDir = path.dirname(thumbPath);
+            if (!fs.existsSync(thumbDir)) {
+                fs.mkdirSync(thumbDir, { recursive: true });
+            }
+            await sharp(sourcePath)
+                .resize(512, null, { withoutEnlargement: true })
+                .toFile(thumbPath);
+            return true;
+        } catch (error) {
+            console.error('Error generating thumbnail:', error);
+            return false;
+        }
     }
 }
