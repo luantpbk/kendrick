@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGetImages, useAddImage, useRegisterExistingImage } from 'src/api/fileApi';
+import { useGetImages, useAddImage, useRegisterExistingImage, useCheckImageUsage, useDeleteImage } from 'src/api/fileApi';
 import { ImageType } from 'src/api/models';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import Loading from '../Loading';
@@ -21,6 +21,8 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
   const getImages = useGetImages();
   const addImage = useAddImage();
   const registerExistingImage = useRegisterExistingImage();
+  const checkImageUsage = useCheckImageUsage();
+  const deleteImage = useDeleteImage();
   const addPopup = useAddPopup();
 
   const fetchImages = async () => {
@@ -85,6 +87,36 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
     }
   };
 
+  const handleDelete = async (e: React.MouseEvent, img: ImageType) => {
+    e.stopPropagation();
+    if (img.fileId === -1) {
+      addPopup({ error: { message: 'Không thể xóa ảnh chưa đăng ký', title: 'Lỗi' } });
+      return;
+    }
+
+    try {
+      const usages = await checkImageUsage(img.fileId);
+      
+      let confirmMsg = 'Bạn có chắc chắn muốn xóa vĩnh viễn ảnh này? Thao tác này không thể hoàn tác.';
+      if (usages && usages.length > 0) {
+        confirmMsg = `CẢNH BÁO: Ảnh này đang được sử dụng tại các vị trí sau:\n- ${usages.join('\n- ')}\n\nBạn vẫn muốn bắt buộc xóa?`;
+      }
+
+      if (window.confirm(confirmMsg)) {
+        const success = await deleteImage(img.fileId);
+        if (success) {
+          addPopup({ txn: { success: true, summary: 'Xóa ảnh thành công!' } });
+          setImages(images.filter(i => i.fileId !== img.fileId));
+          if (selectedImage?.fileId === img.fileId) {
+            setSelectedImage(null);
+          }
+        }
+      }
+    } catch (error) {
+      addPopup({ error: { message: 'Xóa ảnh thất bại', title: 'Lỗi' } });
+    }
+  };
+
   return (
     <div className="image-library-modal" onClick={(e) => e.stopPropagation()}>
       <div className="image-library-header">
@@ -119,6 +151,15 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
                 onClick={() => setSelectedImage(img)}
               >
                 <img src={img.thumbUrl || img.fileUrl} alt={img.fileName} title={img.fileName} />
+                
+                <div 
+                  className="delete-icon" 
+                  onClick={(e) => handleDelete(e, img)}
+                  title="Xóa ảnh"
+                >
+                  <span className="material-icons" style={{ fontSize: '18px' }}>delete</span>
+                </div>
+
                 {isSelected && (
                   <div className="selected-icon">
                     <span className="material-icons" style={{ fontSize: '16px' }}>check</span>

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { prisma } from '@kendrickheller/core';
+import { ErrorResponseDto, prisma } from '@kendrickheller/core';
+import { FileHelper } from '../utils/FileHelper';
 import { ProductSerialService } from '../services/ProductSerialService';
 
 export class ProductSerialController {
@@ -143,19 +144,60 @@ export class ProductSerialController {
 
     public static async uploadAvatar(req: Request, res: Response) {
         try {
-            if (!req.file) return res.status(400).json({ errorMessage: 'No file uploaded' });
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
+            if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));
+            
+            const serialId = req.params.id ? Number(req.params.id) : 0;
+            const file = await prisma.file.create({
+                data: {
+                    fileName: req.file.originalname,
+                    systemName: req.file.filename,
+                    fileTypeId: 1,
+                    objectType: 3, // ProductSerialImage
+                    objectId: serialId,
+                    deleteFlg: 0
+                }
+            });
+
+            if (serialId > 0) {
+                await prisma.productSerial.update({
+                    where: { productSerialId: serialId },
+                    data: { avatar: BigInt(file.fileId) }
+                });
+            }
+
+            const dto = FileHelper.mapToFileDto(file);
+            res.json({ 
+                ...dto,
+                url: dto?.fileUrl
+            });
         } catch (error: any) {
-            res.status(500).json({ errorMessage: error.message });
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
     }
 
     public static async addImage(req: Request, res: Response) {
         try {
-            if (!req.file) return res.status(400).json({ errorMessage: 'No file uploaded' });
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
+            if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));
+            
+            const serialId = req.params.id ? Number(req.params.id) : 0;
+            const file = await prisma.file.create({
+                data: {
+                    fileName: req.file.originalname,
+                    systemName: req.file.filename,
+                    fileTypeId: 1,
+                    objectType: 3, // ProductSerialImage
+                    objectId: serialId,
+                    deleteFlg: 0
+                }
+            });
+
+            const dto = FileHelper.mapToFileDto(file);
+            res.json({ 
+                ...dto,
+                url: dto?.fileUrl
+            });
         } catch (error: any) {
-            res.status(500).json({ errorMessage: error.message });
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
     }
 

@@ -36,4 +36,27 @@ export class FileController {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
     }
+
+    public static async checkImageUsage(req: Request, res: Response) {
+        try {
+            const fileId = Number(req.params.id);
+            if (!fileId) return res.status(400).json(new ErrorResponseDto(undefined, 'Invalid file ID'));
+            const usages = await FileService.checkImageUsage(fileId);
+            res.json(usages);
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
+
+    public static async deleteImage(req: Request, res: Response) {
+        try {
+            const fileId = Number(req.params.id);
+            if (!fileId) return res.status(400).json(new ErrorResponseDto(undefined, 'Invalid file ID'));
+            const result = await FileService.deleteImage(fileId);
+            if (result) res.json(true);
+            else res.status(404).json(new ErrorResponseDto(undefined, 'File not found'));
+        } catch (error: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, error.message));
+        }
+    }
 }

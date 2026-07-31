@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ProductCategoryService } from '../services/ProductCategoryService';
-import { ErrorResponseDto } from '@kendrickheller/core';
+import { ErrorResponseDto, prisma } from '@kendrickheller/core';
+import { FileHelper } from '../utils/FileHelper';
 
 export class ProductCategoryController {
     public static async getAttributes(req: Request, res: Response) {
@@ -116,7 +117,31 @@ export class ProductCategoryController {
     public static async uploadAvatar(req: Request, res: Response) {
         try {
             if (!req.file) return res.status(400).json(new ErrorResponseDto(undefined, 'No file uploaded'));
-            res.json({ fileId: Date.now().toString(), fileName: req.file.filename, url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${req.file.filename}` });
+            
+            const categoryId = req.params.id ? Number(req.params.id) : 0;
+            const file = await prisma.file.create({
+                data: {
+                    fileName: req.file.originalname,
+                    systemName: req.file.filename,
+                    fileTypeId: 1,
+                    objectType: 1, // ProductCategory
+                    objectId: categoryId,
+                    deleteFlg: 0
+                }
+            });
+
+            if (categoryId > 0) {
+                await prisma.productCategory.update({
+                    where: { productCategoryId: categoryId },
+                    data: { avatar: BigInt(file.fileId) }
+                });
+            }
+
+            const dto = FileHelper.mapToFileDto(file);
+            res.json({ 
+                ...dto,
+                url: dto?.fileUrl
+            });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }

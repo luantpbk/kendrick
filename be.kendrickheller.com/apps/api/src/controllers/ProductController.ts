@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ProductService } from '../services/ProductService';
 import { ErrorResponseDto, prisma } from '@kendrickheller/core';
+import { FileHelper } from '../utils/FileHelper';
 
 export class ProductController {
     public static async getProducts(req: Request, res: Response) {
@@ -160,12 +161,10 @@ export class ProductController {
                 });
             }
 
+            const dto = FileHelper.mapToFileDto(file);
             res.json({ 
-                fileId: Number(file.fileId), 
-                fileName: file.fileName, 
-                fileUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
-                thumbUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
-                url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}` 
+                ...dto,
+                url: dto?.fileUrl
             });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
@@ -187,12 +186,10 @@ export class ProductController {
                 }
             });
 
+            const dto = FileHelper.mapToFileDto(file);
             res.json({ 
-                fileId: Number(file.fileId), 
-                fileName: file.fileName, 
-                fileUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
-                thumbUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}`,
-                url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${file.systemName}` 
+                ...dto,
+                url: dto?.fileUrl
             });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
@@ -218,12 +215,10 @@ export class ProductController {
                 }
             });
 
+            const dto = FileHelper.mapToFileDto(newFile);
             res.json({ 
-                fileId: Number(newFile.fileId), 
-                fileName: newFile.fileName, 
-                fileUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${newFile.systemName}`,
-                thumbUrl: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${newFile.systemName}`,
-                url: `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${newFile.systemName}` 
+                ...dto,
+                url: dto?.fileUrl
             });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));

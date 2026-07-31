@@ -73,4 +73,16 @@ export const useDeleteImage = () => {
     [fetch],
   );
 };
+export const useCheckImageUsage = () => {
+  const fetch = useFetch();
+  return useCallback(
+    (fileId: number) => {
+      return fetch({
+        url: `pgcore/rest-api/file/image/${fileId}/usage`,
+        method: 'get',
+      }) as Promise<string[]>;
+    },
+    [fetch],
+  );
+};
 //End of File

@@ -143,4 +143,115 @@ export class FileService {
             url: dto?.fileUrl
         };
     }
+
+    public static async checkImageUsage(fileId: number) {
+        const file = await prisma.file.findUnique({ where: { fileId: BigInt(fileId) } });
+        if (!file || !file.systemName) return [];
+
+        const usages: string[] = [];
+        const systemName = file.systemName;
+
+        // Check if attached directly to another entity
+        const attachedFiles = await prisma.file.findMany({
+            where: {
+                systemName: systemName,
+                fileId: { not: BigInt(fileId) },
+                deleteFlg: 0
+            }
+        });
+        if (attachedFiles.length > 0) {
+            usages.push(`Đang được chọn làm ảnh đính kèm (có ${attachedFiles.length} bản sao đang được dùng)`);
+        }
+
+        // Check Product text fields
+        const products = await prisma.product.findMany({
+            where: {
+                deleteFlg: 0,
+                OR: [
+                    { html1: { contains: systemName } },
+                    { html2: { contains: systemName } },
+                    { description1: { contains: systemName } },
+                    { description2: { contains: systemName } },
+                    { description3: { contains: systemName } },
+                    { description4: { contains: systemName } },
+                ]
+            },
+            select: { productName: true }
+        });
+        if (products.length > 0) {
+            usages.push(`Sản phẩm: ${products.map(p => p.productName).join(', ')}`);
+        }
+
+        // Check News text fields
+        const news = await prisma.news.findMany({
+            where: {
+                deleteFlg: 0,
+                newValue: { contains: systemName }
+            },
+            select: { newTitle: true }
+        });
+        if (news.length > 0) {
+            usages.push(`Tin tức: ${news.map(n => n.newTitle).join(', ')}`);
+        }
+
+        // Check StaticPage
+        const pages = await prisma.staticPage.findMany({
+            where: {
+                deleteFlg: 0,
+                OR: [
+                    { vi: { contains: systemName } },
+                    { en: { contains: systemName } }
+                ]
+            },
+            select: { staticPageTitle: true }
+        });
+        if (pages.length > 0) {
+            usages.push(`Trang tĩnh: ${pages.map(p => p.staticPageTitle).join(', ')}`);
+        }
+
+        // Check Translation
+        const translations = await prisma.translation.findMany({
+            where: {
+                deleteFlg: 0,
+                OR: [
+                    { vi: { contains: systemName } },
+                    { en: { contains: systemName } },
+                    { fr: { contains: systemName } }
+                ]
+            },
+            select: { code: true }
+        });
+        if (translations.length > 0) {
+            usages.push(`Bản dịch: ${translations.map(t => t.code).join(', ')}`);
+        }
+
+        return usages;
+    }
+
+    public static async deleteImage(fileId: number) {
+        const file = await prisma.file.findUnique({ where: { fileId: BigInt(fileId) } });
+        if (!file) return false;
+
+        // 1. Mark as deleted in DB
+        await prisma.file.update({
+            where: { fileId: BigInt(fileId) },
+            data: { deleteFlg: 1 }
+        });
+
+        // 2. Delete physical files
+        const uploadsDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
+        if (file.systemName) {
+            const imgPath = path.join(uploadsDir, 'images', file.systemName);
+            const thumbPath = path.join(uploadsDir, 'images', 'thumb', file.systemName);
+
+            if (fs.existsSync(imgPath)) {
+                fs.unlinkSync(imgPath);
+            }
+            if (fs.existsSync(thumbPath)) {
+                fs.unlinkSync(thumbPath);
+            }
+        }
+
+        return true;
+    }
 }

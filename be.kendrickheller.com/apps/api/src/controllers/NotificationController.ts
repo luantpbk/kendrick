@@ -59,7 +59,7 @@ export class NotificationController {
 
     public static async getBadge(req: Request, res: Response) {
         try {
-            res.json({ count: 0 });
+            res.json(0);
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -67,7 +67,10 @@ export class NotificationController {
 
     public static async getMyNotifications(req: Request, res: Response) {
         try {
-            res.json({ count: 0, items: [] });
+            res.json({ 
+                data: { count: 0, items: [] }, 
+                badge: 0 
+            });
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }

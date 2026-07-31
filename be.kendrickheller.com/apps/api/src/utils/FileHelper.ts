@@ -9,21 +9,24 @@ export class FileHelper {
     public static mapToFileDto(file: any) {
         if (!file || !file.systemName) return null;
         
-        if (file.systemName.startsWith('file-')) {
-            const localUrl = `${FILE_URL}/${file.systemName}`;
-            return {
-                ...file,
-                fileId: Number(file.fileId),
-                fileUrl: localUrl,
-                thumbUrl: localUrl
-            };
-        }
-        
         const fileTypeSubPath = EnumFileTypeMap[file.fileTypeId] || 'other';
-        const imageTypeSubPath = EnumImageTypeMap[file.objectType] || 'other';
         
-        const fileUrl = `${FILE_URL}/${fileTypeSubPath}/${imageTypeSubPath}/${file.systemName}`;
-        const thumbUrl = `${FILE_URL}/${fileTypeSubPath}/${imageTypeSubPath}/${THUMB_FILE_FOLDER_NAME}/${file.systemName}`;
+        let fileUrl = '';
+        let thumbUrl = '';
+
+        if (file.fileTypeId === 1) {
+            // Flatten image directory structure
+            fileUrl = `${FILE_URL}/${fileTypeSubPath}/${file.systemName}`;
+            thumbUrl = `${FILE_URL}/${fileTypeSubPath}/${THUMB_FILE_FOLDER_NAME}/${file.systemName}`;
+        } else if (file.systemName.startsWith('file-')) {
+            const localUrl = `${FILE_URL}/${file.systemName}`;
+            fileUrl = localUrl;
+            thumbUrl = localUrl;
+        } else {
+            const imageTypeSubPath = EnumImageTypeMap[file.objectType] || 'other';
+            fileUrl = `${FILE_URL}/${fileTypeSubPath}/${imageTypeSubPath}/${file.systemName}`;
+            thumbUrl = `${FILE_URL}/${fileTypeSubPath}/${imageTypeSubPath}/${THUMB_FILE_FOLDER_NAME}/${file.systemName}`;
+        }
         
         return {
             ...file,

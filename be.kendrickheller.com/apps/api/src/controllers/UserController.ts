@@ -6,7 +6,7 @@ export class UserController {
     public static async findAll(req: Request, res: Response) {
         try {
             const users = await UserService.findAll();
-            res.json(users);
+            res.send(JSON.stringify(users, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -25,7 +25,7 @@ export class UserController {
         try {
             const { id } = req.params;
             const user = await UserService.update(Number(id), req.body);
-            res.json(user);
+            res.send(JSON.stringify(user, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -36,7 +36,7 @@ export class UserController {
             const { id } = req.params;
             const user = await UserService.getUserById(Number(id));
             if (!user) return res.status(404).json(new ErrorResponseDto(undefined, 'User not found'));
-            res.json(user);
+            res.send(JSON.stringify(user, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -48,7 +48,7 @@ export class UserController {
             const user = (req as any).user;
             if (!user || !user.userId) return res.status(401).json(new ErrorResponseDto(undefined, 'Unauthorized'));
             const userInfo = await UserService.getUserById(Number(user.userId));
-            res.json(userInfo);
+            res.send(JSON.stringify(userInfo, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -87,7 +87,7 @@ export class UserController {
             const pSize = size ? Number(size) : 20;
             const pPage = page ? Number(page) : 0;
             const users = await UserService.search(keyword as string, pSize, pPage);
-            res.json(users);
+            res.send(JSON.stringify(users, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -99,7 +99,7 @@ export class UserController {
             const pLimit = limit ? Number(limit) : 20;
             const pOffset = offset ? Number(offset) : 0;
             const users = await UserService.search(undefined, pLimit, pOffset);
-            res.json(users.items);
+            res.send(JSON.stringify(users.items, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -109,7 +109,7 @@ export class UserController {
         try {
             const { email } = req.body;
             const user = await UserService.searchByEmail(email);
-            res.json(user);
+            res.send(JSON.stringify(user, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -119,7 +119,7 @@ export class UserController {
         try {
             const { loginName } = req.params;
             const user = await UserService.searchLoginName(loginName);
-            res.json(user);
+            res.send(JSON.stringify(user, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -164,7 +164,7 @@ export class UserController {
             const user = (req as any).user;
             if (!user || !user.userId) return res.status(401).json(new ErrorResponseDto(undefined, 'Unauthorized'));
             const updated = await UserService.update(Number(user.userId), req.body);
-            res.json(updated);
+            res.send(JSON.stringify(updated, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -174,7 +174,7 @@ export class UserController {
         try {
             const { id } = req.params;
             const roles = await UserService.getRoles(Number(id));
-            res.json(roles);
+            res.send(JSON.stringify(roles, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -204,7 +204,7 @@ export class UserController {
         try {
             const { id } = req.params;
             const roleFunctions = await UserService.getRoleFunctions(Number(id));
-            res.json(roleFunctions);
+            res.send(JSON.stringify(roleFunctions, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -214,7 +214,7 @@ export class UserController {
         try {
             const { id } = req.params;
             const functions = await UserService.getFunctions(Number(id));
-            res.json(functions);
+            res.send(JSON.stringify(functions, (key, value) => typeof value === 'bigint' ? value.toString() : value));
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
