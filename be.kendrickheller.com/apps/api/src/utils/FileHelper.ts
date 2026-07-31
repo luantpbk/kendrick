@@ -19,7 +19,7 @@ export class FileHelper {
             fileUrl = `${FILE_URL}/${fileTypeSubPath}/${file.systemName}`;
             thumbUrl = `${FILE_URL}/${fileTypeSubPath}/${THUMB_FILE_FOLDER_NAME}/${file.systemName}`;
         } else if (file.systemName.startsWith('file-')) {
-            const localUrl = `${FILE_URL}/${file.systemName}`;
+            const localUrl = `${FILE_URL}/images/${file.systemName}`;
             fileUrl = localUrl;
             thumbUrl = localUrl;
         } else {

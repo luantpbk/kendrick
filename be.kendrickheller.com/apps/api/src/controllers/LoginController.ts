@@ -6,9 +6,7 @@ export class LoginController {
     public static async login(req: Request, res: Response) {
         try {
             const tokenResponse = await LoginService.login(req.body);
-            res.send(JSON.stringify(tokenResponse, (key, value) => 
-                typeof value === 'bigint' ? value.toString() : value
-            ));
+            res.json(tokenResponse);
         } catch (error: any) {
             res.status(401).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -21,9 +19,7 @@ export class LoginController {
                 return res.status(400).json(new ErrorResponseDto(undefined, 'refreshToken is required'));
             }
             const tokenResponse = await LoginService.renewToken(refreshToken);
-            res.send(JSON.stringify(tokenResponse, (key, value) => 
-                typeof value === 'bigint' ? value.toString() : value
-            ));
+            res.json(tokenResponse);
         } catch (error: any) {
             res.status(401).json(new ErrorResponseDto(undefined, error.message));
         }

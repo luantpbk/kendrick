@@ -79,9 +79,7 @@ export class ReceiverInfoController {
             const user = (req as any).user;
             if (!user || !user.userId) return res.status(401).json(new ErrorResponseDto(undefined, 'Unauthorized'));
             const result = await ReceiverInfoService.getReceiverInfos(undefined, 100, 0, user.userId);
-            res.send(JSON.stringify(result.items, (key, value) =>
-                typeof value === 'bigint' ? value.toString() : value
-            ));
+            res.json(result.items);
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
@@ -91,9 +89,7 @@ export class ReceiverInfoController {
         try {
             const { id } = req.params;
             const item = await ReceiverInfoService.getReceiverInfoById(Number(id));
-            res.send(JSON.stringify(item, (key, value) =>
-                typeof value === 'bigint' ? value.toString() : value
-            ));
+            res.json(item);
         } catch (error: any) {
             res.status(500).json(new ErrorResponseDto(undefined, error.message));
         }
