@@ -124,7 +124,7 @@ const Notification: React.FC = () => {
             onClick={() => onCheck(value.notificationTemplateKey, value.notificationData, value.notificationId)} >
             <div className="noti-avt">
               {value.avataUrl ? (
-                <img src={value.avataUrl} alt="avt" />
+                <img loading="lazy" src={value.avataUrl} alt="avt" />
               ) : (
                 <div className="noti-avt-null">avt</div>
               )}

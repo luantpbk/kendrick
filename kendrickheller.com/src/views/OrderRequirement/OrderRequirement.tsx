@@ -73,7 +73,7 @@ const OrderRequirement: React.FC = () => {
           </div>}
           {!loadingFlag && orders.length == 0 &&
             <div className="text-center" style={{ margin: "auto" }}>
-              <img src={Images.empty_list} width="200" height="200" />
+              <img loading="lazy" src={Images.empty_list} width="200" height="200" />
               <div><label>{t("Your order is empty")}</label></div>
               <div><i>{t("Wishing you all the best!")}</i></div>
             </div>}

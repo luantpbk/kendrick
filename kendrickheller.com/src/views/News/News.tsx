@@ -91,7 +91,7 @@ const News: React.FC = () => {
                 title={item.newTitle}
               >
                 <div className='new-item-header'>
-                  <img className="new-avatar" src={item.newAvatar} />
+                  <img loading="lazy" className="new-avatar" src={item.newAvatar} />
                   <div className="news-item-title">{item.newTitle}</div>
                 </div>
                 <div className="news-item-des">

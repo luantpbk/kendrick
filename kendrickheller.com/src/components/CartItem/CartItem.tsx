@@ -94,7 +94,7 @@ const CartItem: React.FC<ICartItem> = (props) => {
   //Main
   return (
     <div className='cartitem-container'>
-      <img className='cartitem-image' src={avatar ?? Images.noimage} />
+      <img loading="lazy" className='cartitem-image' src={avatar ?? Images.noimage} />
       <div className='cartitem-content'>
         <div className='cartitem-name'><label title={productName}>{productName}</label> <label className='cart-price' title={number2money(price)}>{number2money(price)}</label></div>
         <div className='cartitem-option'>

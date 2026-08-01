@@ -33,7 +33,7 @@ const CompanyImage: React.FC = () => {
         {images.map((companyImage: ImageType, index: number) => {
           return (
             <div className="company-image-child" key={`companyimage${index}`}>
-              <img src={companyImage.fileUrl} onClick={() => {
+              <img loading="lazy" src={companyImage.fileUrl} onClick={() => {
                 fullsizeModal.handlePresent({
                   images: images,
                   index: index,

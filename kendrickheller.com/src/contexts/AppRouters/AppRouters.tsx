@@ -1,23 +1,24 @@
+import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import Login from "src/views/AuthScreen/Login/Login";
-import Checkouts from "src/views/Checkouts/Checkouts";
-import Home from "src/views/Home/Home";
-import News from "src/views/News/News";
-import OrderRequirement from "src/views/OrderRequirement/OrderRequirement";
-import OrderRequirementDetail from "src/views/OrderRequirement/OrderRequirementDetail/OrderRequirementDetail";
-import ProductCategory from "src/views/ProductCategory/ProductCategory";
-import ProductDetail from "src/views/ProductDetail/ProductDetail";
-import StaticPage from "src/views/StaticPage/StaticPage";
-import Tracking from "src/views/Tracking/Tracking";
-import Notification from 'src/views/Notification/Notification';
 import Header from "src/components/Header/Header";
 import CompanyImage from "src/components/CompanyImage/CompanyImage";
 import ChatConsultation from "src/components/ChatConsultation/ChatConsultation";
 import Footer from "src/components/Footer/Footer";
-import { useEffect, useState } from "react";
 import Chat from "src/components/Chat/Chat";
+
+const Login = React.lazy(() => import("src/views/AuthScreen/Login/Login"));
+const Checkouts = React.lazy(() => import("src/views/Checkouts/Checkouts"));
+const Home = React.lazy(() => import("src/views/Home/Home"));
+const News = React.lazy(() => import("src/views/News/News"));
+const OrderRequirement = React.lazy(() => import("src/views/OrderRequirement/OrderRequirement"));
+const OrderRequirementDetail = React.lazy(() => import("src/views/OrderRequirement/OrderRequirementDetail/OrderRequirementDetail"));
+const ProductCategory = React.lazy(() => import("src/views/ProductCategory/ProductCategory"));
+const ProductDetail = React.lazy(() => import("src/views/ProductDetail/ProductDetail"));
+const StaticPage = React.lazy(() => import("src/views/StaticPage/StaticPage"));
+const Tracking = React.lazy(() => import("src/views/Tracking/Tracking"));
+const Notification = React.lazy(() => import('src/views/Notification/Notification'));
+const NewDetail = React.lazy(() => import("src/views/News/NewDetail/NewDetail"));
 import useProfile from "src/hooks/useProfile";
-import NewDetail from "src/views/News/NewDetail/NewDetail";
 import styled from "styled-components";
 
 const AppRouters: React.FC = () => {
@@ -48,20 +49,22 @@ const AppRouters: React.FC = () => {
     <>
       {!isAuth && <Header />}
       <PageContent>
-        <Routes>
-          <Route path="/auth-screen" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/product-category" element={<ProductCategory />} />
-          <Route path="/product-detail/:productId" element={<ProductDetail />} />
-          <Route path="/checkout" element={<Checkouts />} />
-          <Route path="/notification" element={<Notification />} />
-          <Route path="/order-requirement" element={<OrderRequirement />} />
-          <Route path="/order-requirement/:orderRequirementId" element={<OrderRequirementDetail />} />
-          <Route path="/static-page/:key" element={<StaticPage />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/news/:id" element={<NewDetail />} />
-          <Route path="/tracking" element={<Tracking />} />
-        </Routes>
+        <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}>Loading...</div>}>
+          <Routes>
+            <Route path="/auth-screen" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/product-category" element={<ProductCategory />} />
+            <Route path="/product-detail/:productId" element={<ProductDetail />} />
+            <Route path="/checkout" element={<Checkouts />} />
+            <Route path="/notification" element={<Notification />} />
+            <Route path="/order-requirement" element={<OrderRequirement />} />
+            <Route path="/order-requirement/:orderRequirementId" element={<OrderRequirementDetail />} />
+            <Route path="/static-page/:key" element={<StaticPage />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/news/:id" element={<NewDetail />} />
+            <Route path="/tracking" element={<Tracking />} />
+          </Routes>
+        </Suspense>
 
         {consultationAvailable ? <ChatConsultation /> : null}
         {!isAuth && <Chat setConsultationAvailable={setConsultationAvailable} />}

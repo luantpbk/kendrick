@@ -222,7 +222,7 @@ const ProductDetail: React.FC = () => {
                             setSelecetedOption(nSelecetedOption);
                           }}
                         >
-                          {img ? <><img src={img.thumbUrl} /><span>{t(value)}</span></> : <label>{t(value)}</label>}
+                          {img ? <><img loading="lazy" src={img.thumbUrl} /><span>{t(value)}</span></> : <label>{t(value)}</label>}
                         </div>
                       );
                     })}

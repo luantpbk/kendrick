@@ -113,7 +113,7 @@ const Tracking: React.FC = () => {
             392773302,392447363)
           </div>
         )}
-        <img className="tracking_no-code_img" src={Images.tracking} alt="tracking" />
+        <img loading="lazy" className="tracking_no-code_img" src={Images.tracking} alt="tracking" />
       </div>
     </div>
   );
