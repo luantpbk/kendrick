@@ -113,7 +113,8 @@ const Banner: React.FC<IBanner> = (props) => {
               return (
                 <img
                   key={`banner-image${index}`}
-                  loading="lazy"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  {...(index === 0 ? { fetchpriority: "high" } : {})}
                   className="banner-image"
                   src={image.fileUrl}
                   title={image.fileName}

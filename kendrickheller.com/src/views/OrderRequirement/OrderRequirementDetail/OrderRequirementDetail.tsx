@@ -24,7 +24,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import ButtonComponent from 'src/components/ButtonComponent/ButtonComponent';
 import useLogo from 'src/hooks/useLogo';
 import Loading from 'src/components/Loading';
-import { PayPalButtons } from '@paypal/react-paypal-js';
+import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { useTranslation } from 'react-i18next';
 
 const OrderRequirementDetail: React.FC = () => {
@@ -278,7 +278,7 @@ const OrderRequirementDetail: React.FC = () => {
                 </div>
               ) : null}
             </div>
-            {data?.progressStatus == EnumOrderRequirementProgressStatus.Unpaid ? <PayPalButtons
+            {data?.progressStatus == EnumOrderRequirementProgressStatus.Unpaid ? <PayPalScriptProvider options={{ "clientId": "AR90PNiFGlhmBPxydMb1jtjPLrWkzGEXTTQJo6_8WQGKUYQPIRQFLFvk5DH-gVpYQKFaJVp7LW53ifvG", "locale": "en_US", "currency": "USD" }}><PayPalButtons
               className='paypal-container'
 
               style={{
@@ -323,7 +323,7 @@ const OrderRequirementDetail: React.FC = () => {
                   });
                 }
               }}
-            /> : null}
+            /> </PayPalScriptProvider> : null}
 
             <div className="cart-oder-title">4. {t("Talk to support")}</div>
 
