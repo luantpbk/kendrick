@@ -69,6 +69,7 @@ const Products: React.FC<IProducts> = (props) => {
             product={item}
             configs={configs[item.productCategoryId]}
             isHorizontally={isHorizontally}
+            isPriority={index < 4}
           />
         );
       })}

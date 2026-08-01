@@ -17,6 +17,7 @@ interface IProductPcComponent {
   product: ProductType;
   isHorizontally?: boolean;
   configs: CategoryAttributeType[];
+  isPriority?: boolean;
 }
 
 enum EnumBoolean {
@@ -27,7 +28,7 @@ enum EnumBoolean {
 const ProductPcComponent: React.FC<IProductPcComponent> = (props) => {
   //Value
   const navigate = useNavigate();
-  const { product, isHorizontally, configs } = props;
+  const { product, isHorizontally, configs, isPriority } = props;
   const cart = useGetCart();
   const { t, i18n } = useTranslation();
   //State
@@ -127,7 +128,7 @@ const ProductPcComponent: React.FC<IProductPcComponent> = (props) => {
   return (
     <div className={`product-pc-cpn-container ${isHorizontally ? 'horizontally' : 'resize'}`}>
       <div className={`product-pc-cpn-img ${isHorizontally ? 'horizontally' : 'resize'}`} onClick={onCLickProduct}>
-        <img loading="lazy" src={product.thumbAvatar ?? Images.noimage} alt="avatar" />
+        <img loading={isPriority ? "eager" : "lazy"} {...(isPriority ? { fetchpriority: "high" } as any : {})} src={product.thumbAvatar ?? Images.noimage} alt="avatar" />
       </div>
       <div className="product-pc-cpn-des">
         <div className="product-pc-cpn-des-top" onClick={onCLickProduct}>
