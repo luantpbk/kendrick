@@ -111,14 +111,18 @@ const Banner: React.FC<IBanner> = (props) => {
           {listBanner.length > 0
             ? listBanner.map((image: ImageType, index: number) => {
               return (
-                <img
-                  key={`banner-image${index}`}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  {...(index === 0 ? { fetchpriority: "high" } : {})}
-                  className="banner-image"
-                  src={image.fileUrl}
-                  title={image.fileName}
-                />
+                <picture key={`banner-image${index}`} className="banner-picture">
+                  <source media="(max-width: 768px)" srcSet={image.thumbUrl || image.fileUrl} />
+                  <source media="(min-width: 769px)" srcSet={image.fileUrl} />
+                  <img
+                    loading={index === 0 ? "eager" : "lazy"}
+                    {...(index === 0 ? { fetchpriority: "high" } as any : {})}
+                    className="banner-image"
+                    src={image.fileUrl}
+                    title={image.fileName}
+                    alt={image.fileName}
+                  />
+                </picture>
               );
             })
             : null}
