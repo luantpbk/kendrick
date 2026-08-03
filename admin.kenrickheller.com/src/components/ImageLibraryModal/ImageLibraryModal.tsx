@@ -17,6 +17,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(40);
 
   const getImages = useGetImages();
   const addImage = useAddImage();
@@ -42,6 +43,13 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
   useEffect(() => {
     fetchImages();
   }, []);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop <= e.currentTarget.clientHeight + 300;
+    if (bottom && visibleCount < images.length) {
+      setVisibleCount(prev => prev + 40);
+    }
+  };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -138,7 +146,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
         </div>
       </div>
       
-      <div className="image-library-content">
+      <div className="image-library-content" onScroll={handleScroll}>
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%', gridColumn: '1 / -1', padding: '40px' }}>
             <Loading />
@@ -148,7 +156,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
             Chưa có hình ảnh nào trong thư viện.
           </div>
         ) : (
-          images.map((img, index) => {
+          images.slice(0, visibleCount).map((img, index) => {
             const isSelected = selectedImage?.fileId === -1 
                 ? (selectedImage as any)?.systemName === (img as any).systemName 
                 : selectedImage?.fileId === img.fileId;
@@ -158,7 +166,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
                 className={`library-image-item ${isSelected ? 'selected' : ''}`}
                 onClick={() => setSelectedImage(img)}
               >
-                <img src={img.thumbUrl || img.fileUrl} alt={img.fileName} title={img.fileName} />
+                <img src={img.thumbUrl || img.fileUrl} alt={img.fileName} title={img.fileName} loading="lazy" />
                 
                 <div 
                   className="delete-icon" 
