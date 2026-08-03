@@ -61,16 +61,22 @@ export class FileService {
                         url: dto.fileUrl
                     });
                 }
-            } else {
                 // Not in DB, virtual File
-                const fileUrl = `${process.env.FILE_URL || 'https://rs.kendrickheller.com'}/${relativePath}`;
+                const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
+                const fileUrl = `${baseUrl}/${relativePath}`;
+                
+                // Assuming relativePath is like 'images/123.jpg'
+                // We want to insert 'thumb/' before the filename: 'images/thumb/123.jpg'
+                const dir = path.dirname(relativePath);
+                const fileThumbUrl = `${baseUrl}/${dir}/thumb/${basename}`;
+
                 result.push({
                     fileId: -1, 
                     fileTypeId: 1,
                     fileName: basename,
                     systemName: relativePath, 
                     fileUrl: fileUrl,
-                    thumbUrl: fileUrl,
+                    thumbUrl: fileThumbUrl,
                     url: fileUrl
                 });
             }

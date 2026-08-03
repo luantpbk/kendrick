@@ -24,7 +24,7 @@ export class FileHelper {
         } else if (file.systemName.startsWith('file-')) {
             const localUrl = `${FILE_URL}/images/${file.systemName}`;
             fileUrl = localUrl;
-            thumbUrl = localUrl;
+            thumbUrl = `${FILE_URL}/images/${THUMB_FILE_FOLDER_NAME}/${file.systemName}`;
         } else {
             const imageTypeSubPath = EnumImageTypeMap[file.objectType] || 'other';
             fileUrl = `${FILE_URL}/${fileTypeSubPath}/${imageTypeSubPath}/${file.systemName}`;
