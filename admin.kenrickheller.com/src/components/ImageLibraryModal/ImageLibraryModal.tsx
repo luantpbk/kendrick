@@ -89,25 +89,33 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
 
   const handleDelete = async (e: React.MouseEvent, img: ImageType) => {
     e.stopPropagation();
-    if (img.fileId === -1) {
-      addPopup({ error: { message: 'Không thể xóa ảnh chưa đăng ký', title: 'Lỗi' } });
-      return;
-    }
 
     try {
-      const usages = await checkImageUsage(img.fileId);
-      
       let confirmMsg = 'Bạn có chắc chắn muốn xóa vĩnh viễn ảnh này? Thao tác này không thể hoàn tác.';
-      if (usages && usages.length > 0) {
-        confirmMsg = `CẢNH BÁO: Ảnh này đang được sử dụng tại các vị trí sau:\n- ${usages.join('\n- ')}\n\nBạn vẫn muốn bắt buộc xóa?`;
+      let usages: string[] = [];
+
+      if (img.fileId !== -1) {
+        usages = await checkImageUsage(img.fileId);
+        if (usages && usages.length > 0) {
+          confirmMsg = `CẢNH BÁO: Ảnh này đang được sử dụng tại các vị trí sau:\n- ${usages.join('\n- ')}\n\nBạn vẫn muốn bắt buộc xóa?`;
+        }
       }
 
       if (window.confirm(confirmMsg)) {
-        const success = await deleteImage(img.fileId);
+        const success = await deleteImage(img.fileId, (img as any).systemName);
         if (success) {
           addPopup({ txn: { success: true, summary: 'Xóa ảnh thành công!' } });
-          setImages(images.filter(i => i.fileId !== img.fileId));
-          if (selectedImage?.fileId === img.fileId) {
+          setImages(images.filter(i => {
+            if (img.fileId === -1) {
+              return (i as any).systemName !== (img as any).systemName;
+            }
+            return i.fileId !== img.fileId;
+          }));
+          
+          const isSelected = selectedImage?.fileId === -1 
+              ? (selectedImage as any)?.systemName === (img as any).systemName 
+              : selectedImage?.fileId === img.fileId;
+          if (isSelected) {
             setSelectedImage(null);
           }
         }

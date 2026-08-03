@@ -64,9 +64,13 @@ export const useRegisterExistingImage = () => {
 export const useDeleteImage = () => {
   const fetch = useFetch();
   return useCallback(
-    (fileId: number) => {
+    (fileId: number, systemName?: string) => {
+      let url = `pgcore/rest-api/file/image/${fileId}`;
+      if (systemName) {
+        url += `?systemName=${encodeURIComponent(systemName)}`;
+      }
       return fetch({
-        url: `pgcore/rest-api/file/image/${fileId}`,
+        url,
         method: 'delete',
       }) as Promise<boolean>;
     },

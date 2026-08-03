@@ -51,8 +51,10 @@ export class FileController {
     public static async deleteImage(req: Request, res: Response) {
         try {
             const fileId = Number(req.params.id);
-            if (!fileId) return res.status(400).json(new ErrorResponseDto(undefined, 'Invalid file ID'));
-            const result = await FileService.deleteImage(fileId);
+            const systemName = req.query.systemName as string;
+
+            if (isNaN(fileId)) return res.status(400).json(new ErrorResponseDto(undefined, 'Invalid file ID'));
+            const result = await FileService.deleteImage(fileId, systemName);
             if (result) res.json(true);
             else res.status(404).json(new ErrorResponseDto(undefined, 'File not found'));
         } catch (error: any) {

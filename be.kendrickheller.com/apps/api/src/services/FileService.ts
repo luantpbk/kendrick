@@ -228,7 +228,24 @@ export class FileService {
         return usages;
     }
 
-    public static async deleteImage(fileId: number) {
+    public static async deleteImage(fileId: number, systemName?: string) {
+        if (fileId === -1 && systemName) {
+            const cleanSystemName = systemName.replace(/^(\.\.[\/\\])+/, '');
+            if (cleanSystemName.includes('..')) return false;
+
+            const uploadsDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
+            const imgPath = path.join(uploadsDir, cleanSystemName);
+            const thumbPath = path.join(uploadsDir, 'images', 'thumb', path.basename(cleanSystemName));
+
+            if (fs.existsSync(imgPath)) {
+                fs.unlinkSync(imgPath);
+            }
+            if (fs.existsSync(thumbPath)) {
+                fs.unlinkSync(thumbPath);
+            }
+            return true;
+        }
+
         const file = await prisma.file.findUnique({ where: { fileId: BigInt(fileId) } });
         if (!file) return false;
 
