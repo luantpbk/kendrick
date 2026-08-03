@@ -346,7 +346,7 @@ const OrderRequirementDetail: React.FC = () => {
                       <div className={`my-note-item`} key={`noteitem${index}`}>
                         {note.noteContent}
                       </div> : <div className={`note-item`} key={`noteitem${index}`}>
-                        <img loading="lazy" className="note-avatar" src={note.avataUrl ?? logo} alt="avatar" title='note.fullName' />
+                        <img loading="lazy" className="note-avatar" src={note.avataUrl ?? logo} alt="avatar" title={note.fullName} />
                         <div className="note-detail">{note.noteContent}</div>
                       </div>
                     );

@@ -141,7 +141,8 @@ const ProductBanner: React.FC<IBanner> = (props) => {
               key={`product-slide-thumb${index}`}
               className="product-slide-thumb slide-resize"
               src={image?.thumbUrl}
-              title={image?.fileName}
+              title="Product Image Thumbnail"
+              alt="Product Image Thumbnail"
               onClick={() => {
                 setBannerIndex(index);
               }}
@@ -159,7 +160,8 @@ const ProductBanner: React.FC<IBanner> = (props) => {
                 key={`product-slide-image${index}`}
                 className="product-slide-image slide-resize"
                 src={image?.fileUrl}
-                title={image?.fileName}
+                title="Product Image"
+                alt="Product Image"
                 onClick={() => {
                   fullsizeModal.handlePresent({
                     images: listBanner,

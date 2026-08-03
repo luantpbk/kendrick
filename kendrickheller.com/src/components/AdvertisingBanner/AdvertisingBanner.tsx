@@ -38,7 +38,8 @@ const AdvertisingBanner: React.FC<IBanner> = (props) => {
                     key={`banner-image${index}`}
                     className="banner-image-ad"
                     src={image.fileUrl}
-                    title={image.fileName}
+                    title="Advertising Banner"
+                    alt="Advertising Banner"
                   />
                 );
               })

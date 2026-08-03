@@ -119,8 +119,8 @@ const Banner: React.FC<IBanner> = (props) => {
                     {...(index === 0 ? { fetchpriority: "high" } as any : {})}
                     className="banner-image"
                     src={image.fileUrl}
-                    title={image.fileName}
-                    alt={image.fileName}
+                    title="Banner Image"
+                    alt="Banner Image"
                   />
                 </picture>
               );

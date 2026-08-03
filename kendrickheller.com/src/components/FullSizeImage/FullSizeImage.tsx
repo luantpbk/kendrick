@@ -46,7 +46,7 @@ const FullSizeImage: React.FC<IFullSizeImage> = (props) => {
       className={`fullsize-image-container`}
       onLeftAction={() => setIndex(index - 1 >= 0 ? index - 1 : images.length - 1)}
       onRightAction={() => setIndex(index + 1 < images.length ? index + 1 : 0)}>
-      <img className="fullsize-image" src={images[index]?.fileUrl} alt={images[index]?.fileName} />
+      <img className="fullsize-image" src={images[index]?.fileUrl} alt="Full Size Image" title="Full Size Image" />
       {images.length > 1 && <div className="btn-nav-image back" onClick={() => setIndex(index - 1 >= 0 ? index - 1 : images.length - 1)}>
         <i className="fas fa-chevron-left" />
       </div>}
@@ -60,7 +60,7 @@ const FullSizeImage: React.FC<IFullSizeImage> = (props) => {
             <div
               key={`image-dot${indx}`}
               className={`image-dot ${indx == index ? 'show' : ''}`}
-              title={image?.fileName}
+              title={`Image ${indx + 1}`}
               onClick={() => setIndex(indx)}
             />
           );
