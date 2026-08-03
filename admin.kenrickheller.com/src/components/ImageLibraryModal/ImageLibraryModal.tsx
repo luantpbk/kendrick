@@ -11,13 +11,80 @@ interface ImageLibraryModalProps {
   onSelect: (image: ImageType) => void;
 }
 
+let sharedObserver: IntersectionObserver | null = null;
+const observerCallbacks = new Map<Element, (isVisible: boolean) => void>();
+
+const getSharedObserver = () => {
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const callback = observerCallbacks.get(entry.target);
+        if (callback) {
+          callback(entry.isIntersecting);
+        }
+      });
+    }, { rootMargin: '300px' });
+  }
+  return sharedObserver;
+};
+
+interface VirtualImageItemProps {
+  img: ImageType;
+  isSelected: boolean;
+  onSelect: (img: ImageType) => void;
+  onDelete: (e: React.MouseEvent, img: ImageType) => void;
+  index: number;
+}
+
+const VirtualImageItem = ({ img, isSelected, onSelect, onDelete, index }: VirtualImageItemProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (el) {
+      observerCallbacks.set(el, setIsVisible);
+      getSharedObserver().observe(el);
+      return () => {
+        observerCallbacks.delete(el);
+        if (sharedObserver) {
+          sharedObserver.unobserve(el);
+        }
+      };
+    }
+  }, []);
+
+  return (
+    <div 
+      ref={ref}
+      className={`library-image-item ${isSelected ? 'selected' : ''}`}
+      onClick={() => onSelect(img)}
+    >
+      {isVisible && <img src={img.thumbUrl || img.fileUrl} alt={img.fileName} title={img.fileName} />}
+      
+      <div 
+        className="delete-icon" 
+        onClick={(e) => onDelete(e, img)}
+        title="Xóa ảnh"
+      >
+        <span className="material-icons" style={{ fontSize: '18px' }}>delete</span>
+      </div>
+
+      {isSelected && (
+        <div className="selected-icon">
+          <span className="material-icons" style={{ fontSize: '16px' }}>check</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const ImageLibraryModal = (props: ImageLibraryModalProps) => {
   const { onDismiss, onSelect } = props;
   const [images, setImages] = useState<ImageType[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isRegistering, setIsRegistering] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(40);
 
   const getImages = useGetImages();
   const addImage = useAddImage();
@@ -43,13 +110,6 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
   useEffect(() => {
     fetchImages();
   }, []);
-
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop <= e.currentTarget.clientHeight + 300;
-    if (bottom && visibleCount < images.length) {
-      setVisibleCount(prev => prev + 40);
-    }
-  };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -146,7 +206,7 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
         </div>
       </div>
       
-      <div className="image-library-content" onScroll={handleScroll}>
+      <div className="image-library-content">
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%', gridColumn: '1 / -1', padding: '40px' }}>
             <Loading />
@@ -156,32 +216,19 @@ const ImageLibraryModal = (props: ImageLibraryModalProps) => {
             Chưa có hình ảnh nào trong thư viện.
           </div>
         ) : (
-          images.slice(0, visibleCount).map((img, index) => {
+          images.map((img, index) => {
             const isSelected = selectedImage?.fileId === -1 
                 ? (selectedImage as any)?.systemName === (img as any).systemName 
                 : selectedImage?.fileId === img.fileId;
             return (
-              <div 
-                key={img.fileId === -1 ? `virt-${index}` : img.fileId} 
-                className={`library-image-item ${isSelected ? 'selected' : ''}`}
-                onClick={() => setSelectedImage(img)}
-              >
-                <img src={img.thumbUrl || img.fileUrl} alt={img.fileName} title={img.fileName} loading="lazy" />
-                
-                <div 
-                  className="delete-icon" 
-                  onClick={(e) => handleDelete(e, img)}
-                  title="Xóa ảnh"
-                >
-                  <span className="material-icons" style={{ fontSize: '18px' }}>delete</span>
-                </div>
-
-                {isSelected && (
-                  <div className="selected-icon">
-                    <span className="material-icons" style={{ fontSize: '16px' }}>check</span>
-                  </div>
-                )}
-              </div>
+              <VirtualImageItem
+                key={img.fileId === -1 ? `virt-${index}` : img.fileId}
+                img={img}
+                isSelected={isSelected}
+                onSelect={setSelectedImage}
+                onDelete={handleDelete}
+                index={index}
+              />
             );
           })
         )}
