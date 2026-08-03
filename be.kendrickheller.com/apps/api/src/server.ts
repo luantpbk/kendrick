@@ -309,6 +309,7 @@ pgcoreRouter.get('/file/image', authMiddleware, requireRole(['ADMIN']), FileCont
 pgcoreRouter.post('/file/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, FileController.uploadImage);
 pgcoreRouter.post('/file/image/register-existing', authMiddleware, requireRole(['ADMIN']), FileController.registerExistingImage);
 pgcoreRouter.get('/file/image/:id/usage', authMiddleware, requireRole(['ADMIN']), FileController.checkImageUsage);
+pgcoreRouter.delete('/file/image/-1', authMiddleware, requireRole(['ADMIN']), FileController.deleteImage);
 pgcoreRouter.delete('/file/image/:id', authMiddleware, requireRole(['ADMIN']), FileController.deleteImage);
 
 pgcoreRouter.get('/parameter', ParameterController.getParameters);
