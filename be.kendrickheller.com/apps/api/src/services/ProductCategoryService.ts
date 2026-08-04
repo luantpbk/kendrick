@@ -9,19 +9,22 @@ export class ProductCategoryService {
         
         const categoryIds = categories.map(c => c.productCategoryId);
         const realmIds = categories.map(c => c.productRealmId).filter(id => id != null);
+        const avatarIds = categories.map(c => c.avatar).filter(id => id != null);
 
-        const [files, realms] = await Promise.all([
+        const [files, realms, avatarFiles] = await Promise.all([
             FileHelper.getFilesForObjects(EnumImageType.ProductCategoryImage, categoryIds),
-            prisma.productRealm.findMany({ where: { productRealmId: { in: realmIds } } })
+            prisma.productRealm.findMany({ where: { productRealmId: { in: realmIds } } }),
+            prisma.file.findMany({ where: { fileId: { in: avatarIds } } })
         ]);
         
+        const avatarFileDtos = avatarFiles.map(FileHelper.mapToFileDto).filter(f => f !== null);
+
         return categories.map(c => {
             const cId = Number(c.productCategoryId);
             const categoryFiles = files.filter(f => Number(f.objectId) === cId);
             
-            // J2EE uses ProductCategoryImage logic or similar to attach avatar.
-            // Some might not have explicit `avatar` field on table, but use first image.
-            const avatarFile = categoryFiles.length > 0 ? categoryFiles[0] : null;
+            const explicitAvatarFile = c.avatar ? avatarFileDtos.find(f => Number(f?.fileId) === Number(c.avatar)) : null;
+            const avatarFile = explicitAvatarFile || (categoryFiles.length > 0 ? categoryFiles[0] : null);
 
             const realm = realms.find(r => Number(r.productRealmId) === Number(c.productRealmId));
 

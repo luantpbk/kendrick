@@ -138,13 +138,16 @@ const StyledAvatarWrapper = styled.div`
   align-items: center;
   flex-direction: row;
   margin-bottom: 10px;
+  width: max-content;
+  margin: 0 auto 10px auto;
 `;
 
 const StyledUpload = styled.label`
   color: #348eed;
   position: absolute;
   bottom: 0px;
-  transform: translate(250%, 40%);
+  right: 40px;
+  transform: translate(50%, 50%);
   cursor: pointer;
   background: white;
   border-radius: 50%;
@@ -156,7 +159,8 @@ const StyledLibraryUpload = styled.div`
   color: #348eed;
   position: absolute;
   bottom: 0px;
-  transform: translate(400%, 40%);
+  right: 0px;
+  transform: translate(50%, 50%);
   cursor: pointer;
   background: white;
   border-radius: 50%;
