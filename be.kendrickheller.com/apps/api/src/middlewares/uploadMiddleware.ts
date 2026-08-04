@@ -37,41 +37,35 @@ export const processImage = async (req: any, res: any, next: any) => {
     try {
         const sourcePath = req.file.path;
         const filename = req.file.filename;
-        const tempOriginalPath = sourcePath + '.tmp';
+        const originalExt = path.extname(filename);
+        const webpFilename = filename.replace(originalExt, '.webp');
+        const finalWebpPath = path.join(path.dirname(sourcePath), webpFilename);
+        const tempOriginalPath = sourcePath + '.webp.tmp';
         
-        // 1. Optimize original image
+        // 1. Optimize original image to WebP
         const image = sharp(sourcePath);
-        const metadata = await image.metadata();
         
-        let originalInstance = image.resize(1920, null, { withoutEnlargement: true });
-        if (metadata.format === 'jpeg') {
-            originalInstance = originalInstance.jpeg({ quality: 80, mozjpeg: true });
-        } else if (metadata.format === 'png') {
-            originalInstance = originalInstance.png({ quality: 80, compressionLevel: 9, palette: true });
-        } else if (metadata.format === 'webp') {
-            originalInstance = originalInstance.webp({ quality: 80 });
-        }
+        let originalInstance = image.resize(1920, null, { withoutEnlargement: true }).webp({ quality: 80 });
         await originalInstance.toFile(tempOriginalPath);
         
-        // Overwrite original with optimized version
+        // Clean up original file and move temp to final WebP path
         fs.unlinkSync(sourcePath);
-        fs.renameSync(tempOriginalPath, sourcePath);
+        fs.renameSync(tempOriginalPath, finalWebpPath);
+
+        // Update req.file so subsequent controllers use the .webp file!
+        req.file.filename = webpFilename;
+        req.file.path = finalWebpPath;
+        req.file.mimetype = 'image/webp';
+        req.file.originalname = req.file.originalname.replace(originalExt, '.webp');
 
         // 2. Generate thumb
         const thumbDir = path.join(UPLOAD_DIR, 'images', 'thumb');
         if (!fs.existsSync(thumbDir)) {
             fs.mkdirSync(thumbDir, { recursive: true });
         }
-        const thumbPath = path.join(thumbDir, filename);
+        const thumbPath = path.join(thumbDir, webpFilename);
         
-        let thumbInstance = sharp(sourcePath).resize(512, null, { withoutEnlargement: true });
-        if (metadata.format === 'jpeg') {
-            thumbInstance = thumbInstance.jpeg({ quality: 75, mozjpeg: true });
-        } else if (metadata.format === 'png') {
-            thumbInstance = thumbInstance.png({ quality: 75, compressionLevel: 9, palette: true });
-        } else if (metadata.format === 'webp') {
-            thumbInstance = thumbInstance.webp({ quality: 75 });
-        }
+        let thumbInstance = sharp(finalWebpPath).resize(512, null, { withoutEnlargement: true }).webp({ quality: 75 });
         await thumbInstance.toFile(thumbPath);
         
     } catch (error) {
