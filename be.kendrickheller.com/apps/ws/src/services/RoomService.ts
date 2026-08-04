@@ -54,7 +54,7 @@ export class RoomService {
             };
         }));
         
-        return { total: Number(total), data: populatedRooms };
+        return { count: Number(total), items: populatedRooms };
     }
 
     public static async getBadge(userId: number): Promise<number> {

@@ -22,7 +22,7 @@ export class MessageService {
             userId: Number(m.userId)
         }));
         
-        return { total: Number(total), data: mapped };
+        return { count: Number(total), items: mapped };
     }
 
     public static async getLastestMessages(roomIds: string[]) {
