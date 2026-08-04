@@ -36,6 +36,8 @@ const AdvertisingBanner: React.FC<IBanner> = (props) => {
                 return (
                   <img
                     key={`banner-image${index}`}
+                    width="1920"
+                    height="900"
                     className="banner-image-ad"
                     src={image.fileUrl}
                     title="Advertising Banner"

@@ -115,6 +115,8 @@ const Banner: React.FC<IBanner> = (props) => {
                   <source media="(max-width: 768px)" srcSet={image.thumbUrl || image.fileUrl} />
                   <source media="(min-width: 769px)" srcSet={image.fileUrl} />
                   <img
+                    width="1920"
+                    height="900"
                     loading={index === 0 ? "eager" : "lazy"}
                     {...(index === 0 ? { fetchpriority: "high" } as any : {})}
                     className="banner-image"

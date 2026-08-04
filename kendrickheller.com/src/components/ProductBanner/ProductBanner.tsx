@@ -139,6 +139,8 @@ const ProductBanner: React.FC<IBanner> = (props) => {
           return (
             <img
               key={`product-slide-thumb${index}`}
+              width="100"
+              height="150"
               className="product-slide-thumb slide-resize"
               src={image?.thumbUrl}
               title="Product Image Thumbnail"
@@ -158,6 +160,8 @@ const ProductBanner: React.FC<IBanner> = (props) => {
             return (
               <img
                 key={`product-slide-image${index}`}
+                width="800"
+                height="1200"
                 className="product-slide-image slide-resize"
                 src={image?.fileUrl}
                 title="Product Image"

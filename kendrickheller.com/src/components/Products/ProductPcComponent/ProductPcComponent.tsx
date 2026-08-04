@@ -128,7 +128,7 @@ const ProductPcComponent: React.FC<IProductPcComponent> = (props) => {
   return (
     <div className={`product-pc-cpn-container ${isHorizontally ? 'horizontally' : 'resize'}`}>
       <div className={`product-pc-cpn-img ${isHorizontally ? 'horizontally' : 'resize'}`} onClick={onCLickProduct}>
-        <img loading={isPriority ? "eager" : "lazy"} {...(isPriority ? { fetchpriority: "high" } as any : {})} src={product.thumbAvatar ?? Images.noimage} alt="avatar" />
+        <img width="260" height="390" loading={isPriority ? "eager" : "lazy"} {...(isPriority ? { fetchpriority: "high" } as any : {})} src={product.thumbAvatar ?? Images.noimage} alt="avatar" />
       </div>
       <div className="product-pc-cpn-des">
         <div className="product-pc-cpn-des-top" onClick={onCLickProduct}>
