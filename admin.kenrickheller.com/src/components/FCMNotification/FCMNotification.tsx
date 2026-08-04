@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './FCMNotification.css';
 
 import { onMessageListener } from '../../firebase';
@@ -10,6 +10,7 @@ import { useNavigate  } from 'react-router-dom';
 import { useReadNotificationById } from 'src/api/notificationApi';
 import { getNotificationUrl } from 'src/utils/notificationUtils';
 import { EnumNotiTemplateKey } from 'src/api/models';
+import { useConfiguration } from 'src/contexts/ConfigProvider/ConfigProvider';
 
 interface IFCMNotification {
   title: string;
@@ -47,6 +48,39 @@ const FCMNotification: React.FC = () => {
   const reloadNotificationFlg = useReloadNotification();
   const readNotificationById = useReadNotificationById();
   const notifyChat = useNotifyChat();
+  const { backendWs } = useConfiguration();
+
+  useEffect(() => {
+    let ws: WebSocket;
+    let reconnectTimer: NodeJS.Timeout;
+
+    const connectWS = () => {
+      ws = new WebSocket(`${backendWs}/admin-notifications`);
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'CHAT_NOTIFICATION' && msg.roomId) {
+             notifyChat(msg.roomId);
+          }
+        } catch (e) {
+          console.error('Invalid admin-notification message', e);
+        }
+      };
+      ws.onclose = () => {
+        // Reconnect after 5 seconds
+        reconnectTimer = setTimeout(connectWS, 5000);
+      };
+    };
+
+    if (backendWs) {
+      connectWS();
+    }
+
+    return () => {
+      if (ws) ws.close();
+      if (reconnectTimer) clearTimeout(reconnectTimer);
+    };
+  }, [backendWs, notifyChat]);
 
   const removeNotification = (messageId: string) => {
     if (messageId in fcmData) {

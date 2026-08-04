@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 import { prisma } from '@kendrickheller/core';
 import { Constants } from '../common/constants';
 import { EnumChatStatus, EnumMessageType, EnumMessageDataType } from '../common/enums';
+import { NotificationSocket } from './NotificationSocket';
 
 export interface ExtendedWebSocket extends WebSocket {
     userId?: number;
@@ -145,8 +146,8 @@ export class ChatSocket {
                     data: { status: EnumChatStatus.WAIT }
                 });
 
-                // In J2EE, NotificationCrossService.notifyChat is called here
-                // We'll leave a TODO or trigger an internal event
+                // Push notification to Admin WebSocket
+                NotificationSocket.notifyChat(roomId);
                 console.log(`Push notification to user ${unavailableId} for room ${roomId}`);
             }
 

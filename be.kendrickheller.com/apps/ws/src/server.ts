@@ -22,6 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/room', roomRouter);
 app.use('/message', messageRouter);
 
+import { NotificationSocket } from './sockets/NotificationSocket';
+
 // Upgrade HTTP to WS
 server.on('upgrade', (request, socket, head) => {
     const url = new URL(request.url!, `http://${request.headers.host}`);
@@ -33,6 +35,10 @@ server.on('upgrade', (request, socket, head) => {
     } else if (url.pathname === '/community-room') {
         wss.handleUpgrade(request, socket, head, (ws) => {
             CommunitySocket.handleConnection(ws as any, request);
+        });
+    } else if (url.pathname === '/admin-notifications') {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            NotificationSocket.handleConnection(ws as any, request);
         });
     } else {
         socket.destroy();
