@@ -1,6 +1,7 @@
 .banner-wrapper {
   width: 100%;
   position: relative;
+  aspect-ratio: 4 / 1;
 }
 .banner-container {
   width: 100%;

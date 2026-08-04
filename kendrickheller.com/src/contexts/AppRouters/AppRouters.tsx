@@ -1,10 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Header from "src/components/Header/Header";
-import CompanyImage from "src/components/CompanyImage/CompanyImage";
-import ChatConsultation from "src/components/ChatConsultation/ChatConsultation";
-import Footer from "src/components/Footer/Footer";
-import Chat from "src/components/Chat/Chat";
+
+const CompanyImage = React.lazy(() => import("src/components/CompanyImage/CompanyImage"));
+const ChatConsultation = React.lazy(() => import("src/components/ChatConsultation/ChatConsultation"));
+const Footer = React.lazy(() => import("src/components/Footer/Footer"));
+const Chat = React.lazy(() => import("src/components/Chat/Chat"));
 
 const Login = React.lazy(() => import("src/views/AuthScreen/Login/Login"));
 const Checkouts = React.lazy(() => import("src/views/Checkouts/Checkouts"));
