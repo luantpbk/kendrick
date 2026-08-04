@@ -12,7 +12,7 @@ import {
 import { useGetProductRealm } from 'src/api/productRealmApi';
 import styled from 'styled-components';
 import Avatar from 'src/components/Avatar';
-import { ProductCategoryType } from 'src/api/models';
+import { ProductCategoryType, ImageType } from 'src/api/models';
 import ButtonComponent from 'src/components/ButtonComponent/ButtonComponent';
 
 interface IEditCategoryView {
