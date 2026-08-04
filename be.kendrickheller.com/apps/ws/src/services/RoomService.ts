@@ -143,4 +143,37 @@ export class RoomService {
             roomUsers: roomUsersPopulated
         };
     }
+
+    public static async getConsulationRoom(loginId: number) {
+        const myRooms = await prisma.roomUser.findMany({
+            where: { userId: BigInt(loginId) },
+            select: { roomId: true }
+        });
+        const myRoomIds = myRooms.map(r => r.roomId);
+        
+        const consultationRoom = await prisma.room.findFirst({
+            where: {
+                roomId: { in: myRoomIds },
+                roomType: 3 // EnumRoomType.Consulation
+            }
+        });
+        
+        if (consultationRoom) {
+            return this.getRoomById(String(consultationRoom.roomId));
+        }
+        
+        const room = await prisma.room.create({
+            data: {
+                roomType: 3,
+                deleteFlg: 0,
+                createdAt: new Date()
+            }
+        });
+        
+        await prisma.roomUser.create({
+            data: { roomId: room.roomId, userId: BigInt(loginId), status: EnumChatStatus.READ }
+        });
+        
+        return this.getRoomById(String(room.roomId));
+    }
 }

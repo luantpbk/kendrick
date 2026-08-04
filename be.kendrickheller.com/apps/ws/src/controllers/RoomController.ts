@@ -55,4 +55,14 @@ export class RoomController {
             res.status(500).json(new ErrorResponseDto(undefined, e.message));
         }
     }
+
+    public static async getConsulationRoom(req: any, res: Response) {
+        try {
+            const userId = req.user.userId;
+            const room = await RoomService.getConsulationRoom(userId);
+            res.json(room);
+        } catch (e: any) {
+            res.status(500).json(new ErrorResponseDto(undefined, e.message));
+        }
+    }
 }
