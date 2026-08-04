@@ -61,6 +61,7 @@ export class FileService {
                         url: dto.fileUrl
                     });
                 }
+            } else {
                 // Not in DB, virtual File
                 const baseUrl = process.env.FILE_URL || 'https://rs.kendrickheller.com';
                 const fileUrl = `${baseUrl}/${relativePath}`;

@@ -156,7 +156,7 @@ const StyledLibraryUpload = styled.div`
   color: #348eed;
   position: absolute;
   bottom: 0px;
-  transform: translate(650%, 40%);
+  transform: translate(400%, 40%);
   cursor: pointer;
   background: white;
   border-radius: 50%;
