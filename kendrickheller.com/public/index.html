@@ -28,6 +28,13 @@
                 link.fetchPriority = 'high';
                 link.href = bannerUrl;
                 document.head.appendChild(link);
+
+                // Inject directly into skeleton to eliminate Element Render Delay
+                var skeletonBanner = document.querySelector('.skeleton-banner');
+                if (skeletonBanner) {
+                  skeletonBanner.innerHTML = '<img src="' + bannerUrl + '" style="width: 100%; height: 100%; object-fit: cover;" alt="Banner Image" fetchpriority="high" />';
+                  skeletonBanner.classList.remove('skeleton-anim');
+                }
               }
             }
           })
