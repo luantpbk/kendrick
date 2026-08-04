@@ -11,7 +11,7 @@ import * as swaggerDocument from '../swagger.json';
 import { LoginController } from './controllers/LoginController';
 import { authMiddleware } from './middlewares/authMiddleware';
 import { requireRole } from './middlewares/requirePermission';
-import { uploadMiddleware, generateThumb } from './middlewares/uploadMiddleware';
+import { uploadMiddleware, processImage } from './middlewares/uploadMiddleware';
 import { idmRouter } from './routes/idmRoutes';
 import { TrackingController } from './controllers/TrackingController';
 import { CommonInformationController } from './controllers/CommonInformationController';
@@ -107,7 +107,7 @@ pgcoreRouter.get('/product-category/attribute', ProductCategoryController.getAtt
 pgcoreRouter.post('/product-category/config', ProductCategoryController.getCategoryAttributesByIds);
 pgcoreRouter.get('/product-category/:id/config', ProductCategoryController.getCategoryDisplayOption);
 pgcoreRouter.put('/product-category/:id/config', authMiddleware, requireRole(['ADMIN']), ProductCategoryController.updateCategoryDisplayOption);
-pgcoreRouter.post('/product-category/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, ProductCategoryController.uploadAvatar);
+pgcoreRouter.post('/product-category/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, ProductCategoryController.uploadAvatar);
 pgcoreRouter.get('/product-category/:id', ProductCategoryController.getCategoryById);
 pgcoreRouter.post('/product-category', authMiddleware, requireRole(['ADMIN']), ProductCategoryController.createCategory);
 pgcoreRouter.put('/product-category/:id', authMiddleware, requireRole(['ADMIN']), ProductCategoryController.updateCategory);
@@ -123,8 +123,8 @@ pgcoreRouter.delete('/product/:id', authMiddleware, requireRole(['ADMIN']), Prod
 pgcoreRouter.get('/product/:id/gift', ProductController.getProductGifts);
 pgcoreRouter.put('/product/:id/gift', authMiddleware, requireRole(['ADMIN']), ProductController.updateProductGifts);
 pgcoreRouter.post('/product/:toId/copy-gift/:fromId', authMiddleware, requireRole(['ADMIN']), ProductController.copyProductGifts);
-pgcoreRouter.post('/product/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, ProductController.uploadAvatar);
-pgcoreRouter.post('/product/image/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, ProductController.addImage);
+pgcoreRouter.post('/product/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, ProductController.uploadAvatar);
+pgcoreRouter.post('/product/image/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, ProductController.addImage);
 pgcoreRouter.post('/product/image-from-library/:id', authMiddleware, requireRole(['ADMIN']), ProductController.addImageFromLibrary);
 pgcoreRouter.delete('/product/:id/image/:fileId', authMiddleware, requireRole(['ADMIN']), ProductController.deleteImage);
 
@@ -132,9 +132,9 @@ pgcoreRouter.delete('/product/:id/image/:fileId', authMiddleware, requireRole(['
 pgcoreRouter.get('/product-serial', ProductSerialController.getProductSerials);
 pgcoreRouter.get('/product-serial/file/export', ProductSerialController.export);
 pgcoreRouter.get('/product-serial/file/import-template', ProductSerialController.exportTemplate);
-pgcoreRouter.post('/product-serial/import', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, ProductSerialController.importExcel);
-pgcoreRouter.post('/product-serial/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, ProductSerialController.uploadAvatar);
-pgcoreRouter.post('/product-serial/image/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, ProductSerialController.addImage);
+pgcoreRouter.post('/product-serial/import', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, ProductSerialController.importExcel);
+pgcoreRouter.post('/product-serial/avatar/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, ProductSerialController.uploadAvatar);
+pgcoreRouter.post('/product-serial/image/:id', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, ProductSerialController.addImage);
 pgcoreRouter.delete('/product-serial/:id/image/:fileId', authMiddleware, requireRole(['ADMIN']), ProductSerialController.deleteImage);
 pgcoreRouter.get('/product-serial/product/:id', ProductSerialController.getProductSerialsByProduct);
 pgcoreRouter.get('/product-serial/me', authMiddleware, ProductSerialController.getMyProductSerials);
@@ -258,7 +258,7 @@ pgcoreRouter.delete('/logo/:id', authMiddleware, requireRole(['ADMIN']), LogoCon
 
 // News
 pgcoreRouter.get('/news', NewsController.getNews);
-pgcoreRouter.post('/news/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, NewsController.uploadImage);
+pgcoreRouter.post('/news/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, NewsController.uploadImage);
 pgcoreRouter.delete('/news/image/:fileId', authMiddleware, requireRole(['ADMIN']), NewsController.deleteImage);
 pgcoreRouter.get('/news/:newsId/comment', NewsController.getComments);
 pgcoreRouter.get('/news/parent/:commentId/comment', NewsController.getChildComments);
@@ -306,7 +306,7 @@ pgcoreRouter.delete('/order-requirement/:id', authMiddleware, requireRole(['ADMI
 
 // Parameter
 pgcoreRouter.get('/file/image', authMiddleware, requireRole(['ADMIN']), FileController.getImages);
-pgcoreRouter.post('/file/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, FileController.uploadImage);
+pgcoreRouter.post('/file/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, FileController.uploadImage);
 pgcoreRouter.post('/file/image/register-existing', authMiddleware, requireRole(['ADMIN']), FileController.registerExistingImage);
 pgcoreRouter.get('/file/image/:id/usage', authMiddleware, requireRole(['ADMIN']), FileController.checkImageUsage);
 pgcoreRouter.delete('/file/image/:id', authMiddleware, requireRole(['ADMIN']), FileController.deleteImage);
@@ -361,7 +361,7 @@ pgcoreRouter.delete('/service/:id', authMiddleware, requireRole(['ADMIN']), Serv
 // StaticPage
 pgcoreRouter.get('/static-page', StaticPageController.getAll);
 pgcoreRouter.get('/static-page/key/:key', StaticPageController.getByKey);
-pgcoreRouter.post('/static-page/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), generateThumb, StaticPageController.uploadImage);
+pgcoreRouter.post('/static-page/image', authMiddleware, requireRole(['ADMIN']), uploadMiddleware.single('file'), processImage, StaticPageController.uploadImage);
 pgcoreRouter.delete('/static-page/image/:fileId', authMiddleware, requireRole(['ADMIN']), StaticPageController.deleteImage);
 pgcoreRouter.get('/static-page/:id', StaticPageController.getById);
 pgcoreRouter.post('/static-page', authMiddleware, requireRole(['ADMIN']), StaticPageController.create);

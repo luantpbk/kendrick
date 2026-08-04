@@ -29,31 +29,54 @@ const storage = multer.diskStorage({
 
 export const uploadMiddleware = multer({ storage });
 
-export const generateThumb = async (req: any, res: any, next: any) => {
-    if (!req.file) {
+export const processImage = async (req: any, res: any, next: any) => {
+    if (!req.file || !req.file.mimetype.startsWith('image/')) {
         return next();
     }
     
-    // Only generate thumb for images
-    if (req.file.mimetype.startsWith('image/')) {
-        try {
-            const sourcePath = req.file.path;
-            const filename = req.file.filename;
-            // The images are saved in UPLOAD_DIR/images
-            // Thumbnails go to UPLOAD_DIR/images/thumb
-            const thumbDir = path.join(UPLOAD_DIR, 'images', 'thumb');
-            if (!fs.existsSync(thumbDir)) {
-                fs.mkdirSync(thumbDir, { recursive: true });
-            }
-            const thumbPath = path.join(thumbDir, filename);
-            await sharp(sourcePath)
-                .resize(512, null, { withoutEnlargement: true })
-                .toFile(thumbPath);
-            
-            // Optionally, we can also set req.file.thumbPath = thumbPath
-        } catch (error) {
-            console.error('Error generating thumb in middleware:', error);
+    try {
+        const sourcePath = req.file.path;
+        const filename = req.file.filename;
+        const tempOriginalPath = sourcePath + '.tmp';
+        
+        // 1. Optimize original image
+        const image = sharp(sourcePath);
+        const metadata = await image.metadata();
+        
+        let originalInstance = image.resize(1920, null, { withoutEnlargement: true });
+        if (metadata.format === 'jpeg') {
+            originalInstance = originalInstance.jpeg({ quality: 80, mozjpeg: true });
+        } else if (metadata.format === 'png') {
+            originalInstance = originalInstance.png({ quality: 80, compressionLevel: 9, palette: true });
+        } else if (metadata.format === 'webp') {
+            originalInstance = originalInstance.webp({ quality: 80 });
         }
+        await originalInstance.toFile(tempOriginalPath);
+        
+        // Overwrite original with optimized version
+        fs.unlinkSync(sourcePath);
+        fs.renameSync(tempOriginalPath, sourcePath);
+
+        // 2. Generate thumb
+        const thumbDir = path.join(UPLOAD_DIR, 'images', 'thumb');
+        if (!fs.existsSync(thumbDir)) {
+            fs.mkdirSync(thumbDir, { recursive: true });
+        }
+        const thumbPath = path.join(thumbDir, filename);
+        
+        let thumbInstance = sharp(sourcePath).resize(512, null, { withoutEnlargement: true });
+        if (metadata.format === 'jpeg') {
+            thumbInstance = thumbInstance.jpeg({ quality: 75, mozjpeg: true });
+        } else if (metadata.format === 'png') {
+            thumbInstance = thumbInstance.png({ quality: 75, compressionLevel: 9, palette: true });
+        } else if (metadata.format === 'webp') {
+            thumbInstance = thumbInstance.webp({ quality: 75 });
+        }
+        await thumbInstance.toFile(thumbPath);
+        
+    } catch (error) {
+        console.error('Error processing image in middleware:', error);
     }
+    
     next();
 };
