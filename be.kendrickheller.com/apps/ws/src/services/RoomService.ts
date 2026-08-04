@@ -159,6 +159,7 @@ export class RoomService {
         });
         
         if (consultationRoom) {
+            await this.ensureAdminsInRoom(consultationRoom.roomId, loginId);
             return this.getRoomById(String(consultationRoom.roomId));
         }
         
@@ -174,6 +175,32 @@ export class RoomService {
             data: { roomId: room.roomId, userId: BigInt(loginId), status: EnumChatStatus.READ }
         });
         
+        await this.ensureAdminsInRoom(room.roomId, loginId);
+        
         return this.getRoomById(String(room.roomId));
+    }
+
+    private static async ensureAdminsInRoom(roomId: bigint, loginId: number) {
+        const adminRole = await prisma.role.findFirst({
+            where: { roleName: 'ADMIN' }
+        });
+        if (!adminRole) return;
+
+        const adminUserRoles = await prisma.userRole.findMany({
+            where: { roleId: adminRole.roleId }
+        });
+
+        const existingRoomUsers = await prisma.roomUser.findMany({
+            where: { roomId }
+        });
+        const existingUserIds = new Set(existingRoomUsers.map(u => String(u.userId)));
+
+        for (const ur of adminUserRoles) {
+            if (ur.userId !== BigInt(loginId) && !existingUserIds.has(String(ur.userId))) {
+                await prisma.roomUser.create({
+                    data: { roomId, userId: ur.userId, status: EnumChatStatus.READ }
+                });
+            }
+        }
     }
 }
