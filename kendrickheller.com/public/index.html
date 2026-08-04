@@ -61,7 +61,14 @@
         .skeleton-anim { animation: pulse 1.5s infinite; }
       </style>
       <div class="skeleton-header-top"></div>
-      <div class="skeleton-header-mid"><div class="skeleton-logo skeleton-anim"></div></div>
+      <div class="skeleton-header-mid">
+        <div class="skeleton-logo skeleton-anim">
+          <svg width="180" height="42" xmlns="http://www.w3.org/2000/svg">
+            <rect width="180" height="42" fill="#eaeaea"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#999">Loading...</text>
+          </svg>
+        </div>
+      </div>
       <div class="skeleton-banner skeleton-anim"></div>
       <div class="skeleton-categories">
         <div class="skeleton-cat skeleton-anim"></div>
