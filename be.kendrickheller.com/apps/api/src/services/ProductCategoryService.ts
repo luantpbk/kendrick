@@ -64,17 +64,19 @@ export class ProductCategoryService {
 
     public static async createCategory(data: any) {
         const sanitized = AutoMapper.mapToPrisma('ProductCategory', data, true);
-        return prisma.productCategory.create({
+        const result = await prisma.productCategory.create({
             data: sanitized
         });
+        return this.getCategoryById(Number(result.productCategoryId));
     }
 
     public static async updateCategory(id: number, data: any) {
         const sanitized = AutoMapper.mapToPrisma('ProductCategory', data, false);
-        return prisma.productCategory.update({
+        await prisma.productCategory.update({
             where: { productCategoryId: id },
             data: sanitized
         });
+        return this.getCategoryById(id);
     }
 
     public static async deleteCategory(id: number) {

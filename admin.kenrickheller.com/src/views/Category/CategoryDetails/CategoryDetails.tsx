@@ -35,6 +35,7 @@ const CategoryDetails: React.FC<IEditCategoryView> = (props) => {
   const [avatar, setAvatar] = useState<string>();
   const [avatarFile, setAvatarFile] = useState<File>();
   const [thumbAvatar, setThumbAvatar] = useState<string>();
+  const [avatarId, setAvatarId] = useState<number>();
   //End of state
 
   const getRealm = useGetProductRealm();
@@ -51,9 +52,16 @@ const CategoryDetails: React.FC<IEditCategoryView> = (props) => {
     postProductCategoryAvatar(formData, productCategoryId).then((data) => {
       setAvatar(data.fileUrl);
       setThumbAvatar(data.thumbUrl);
+      setAvatarId(data.fileId);
       resolve(data);
     }).catch((error) => reject(error));
   });
+
+  const onChooseFromLibrary = (image: ImageType) => {
+    setAvatar(image.fileUrl);
+    setThumbAvatar(image.thumbUrl || image.fileUrl);
+    setAvatarId(image.fileId);
+  };
 
   const onChangeAvatar = (file: File) => {
     if (file) {
@@ -125,8 +133,8 @@ const CategoryDetails: React.FC<IEditCategoryView> = (props) => {
   const onSave = useCallback(() => {
     const isAdd = !productCategoryId;
     const api = isAdd? 
-      postCategory(selectionRealm, code, name, displayOrder) : 
-      putProductCategory(productCategoryId, selectionRealm, code, name, displayOrder);
+      postCategory(selectionRealm, code, name, displayOrder, avatarId) : 
+      putProductCategory(productCategoryId, selectionRealm, code, name, displayOrder, avatarId);
     api.then((res) => {
       setProductCategoryId(res.productCategoryId);
       setDisable(true);
@@ -149,7 +157,7 @@ const CategoryDetails: React.FC<IEditCategoryView> = (props) => {
       },
     }));
 
-  }, [productCategoryId, selectionRealm, code, name, displayOrder, postCategory, putProductCategory, uploadAvatar, addPopup]);
+  }, [productCategoryId, selectionRealm, code, name, displayOrder, avatarId, postCategory, putProductCategory, uploadAvatar, addPopup]);
 
 
   //Main
@@ -159,6 +167,7 @@ const CategoryDetails: React.FC<IEditCategoryView> = (props) => {
         change={onChangeAvatar} 
         thumbAvatar={thumbAvatar} 
         avatar={avatar}
+        onChooseFromLibrary={onChooseFromLibrary}
       />
       <div className='category-row'>
         <SelectBoxComponent

@@ -49,6 +49,7 @@ export const usePostProductCategory = () => {
       productCategoryCode: string,
       productCategoryName: string,
       displayOrder?: number,
+      avatar?: number,
     ) => {
       return fetch({
         url: 'pgcore/rest-api/product-category',
@@ -58,6 +59,7 @@ export const usePostProductCategory = () => {
           productCategoryCode,
           productCategoryName,
           displayOrder,
+          avatar,
         },
       }) as Promise<ProductCategoryType>;
     },
@@ -74,6 +76,7 @@ export const usePutProductCategory = () => {
       productCategoryCode: string,
       productCategoryName: string,
       displayOrder: number,
+      avatar?: number,
     ) => {
       return fetch({
         url: `pgcore/rest-api/product-category/${productCategoryId}`,
@@ -84,6 +87,7 @@ export const usePutProductCategory = () => {
           productCategoryCode,
           productCategoryName,
           displayOrder,
+          avatar,
         },
       }) as Promise<ProductCategoryType>;
     },
