@@ -28,7 +28,27 @@
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <style>
+        .skeleton-header-top { background: black; height: 30px; width: 100%; }
+        .skeleton-header-mid { background: white; height: 68px; width: 100%; display: flex; align-items: center; justify-content: center; box-shadow: grey 0px 0px 6px 1px; position: relative; z-index: 2; }
+        .skeleton-logo { width: 180px; height: 42px; background: #f0f0f0; border-radius: 4px; }
+        .skeleton-banner { width: 100%; aspect-ratio: 4/1; background: #f0f0f0; }
+        .skeleton-categories { display: flex; justify-content: center; gap: 10px; padding: 10px; min-height: 120px; overflow: hidden; }
+        .skeleton-cat { width: 75px; height: 75px; border-radius: 50%; background: #f0f0f0; flex-shrink: 0; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .skeleton-anim { animation: pulse 1.5s infinite; }
+      </style>
+      <div class="skeleton-header-top"></div>
+      <div class="skeleton-header-mid"><div class="skeleton-logo skeleton-anim"></div></div>
+      <div class="skeleton-banner skeleton-anim"></div>
+      <div class="skeleton-categories">
+        <div class="skeleton-cat skeleton-anim"></div>
+        <div class="skeleton-cat skeleton-anim"></div>
+        <div class="skeleton-cat skeleton-anim"></div>
+        <div class="skeleton-cat skeleton-anim"></div>
+      </div>
+    </div>
     <script src="%PUBLIC_URL%/jquery/jquery-3.6.0.min.js" defer></script>
     <script src="%PUBLIC_URL%/bootstrap-4.3.1-dist/js/bootstrap.min.js" defer></script>
   </body>
