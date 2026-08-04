@@ -13,6 +13,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="%PUBLIC_URL%/bootstrap-4.3.1-dist/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        fetch('/api/pgcore/rest-api/banner')
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.length > 0) {
+              var isMobile = window.innerWidth <= 768;
+              var bannerUrl = isMobile && data[0].thumbUrl ? data[0].thumbUrl : data[0].fileUrl;
+              if (bannerUrl) {
+                var link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.fetchPriority = 'high';
+                link.href = bannerUrl;
+                document.head.appendChild(link);
+              }
+            }
+          })
+          .catch(e => {});
+      })();
+    </script>
     <title>KENDRICK HELLER</title>
     <meta
       name="keywords"
