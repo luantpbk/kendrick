@@ -38,7 +38,7 @@ const FeaturedNews: React.FC = () => {
               title={item.newTitle}
             >
               <div className='feature-new-item-header'>
-                <img loading="lazy" className="feature-new-avatar" src={item.newAvatar} />
+                <img width="500" height="300" loading="lazy" className="feature-new-avatar" src={item.newAvatar} alt="news" />
                 <div className="featured-news-item-title">{item.newTitle}</div>
               </div>
               <div className="featured-news-item-des">

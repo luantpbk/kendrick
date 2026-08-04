@@ -6,41 +6,42 @@
   background-color: white;
   box-shadow: grey 0px 0px 6px 1px;
   overflow-y: auto;
+  width: min(90vw, max(380px, 50vw), 500px);
 }
 
 @-webkit-keyframes showSlide {
   from {
-    width: 0;
+    transform: translateX(100%);
   }
   to {
-    width: min(90vw, max(380px, 50vw), 500px);
+    transform: translateX(0);
   }
 }
 
 @keyframes showSlide {
   from {
-    width: 0;
+    transform: translateX(100%);
   }
   to {
-    width: min(90vw, max(380px, 50vw), 500px);
+    transform: translateX(0);
   }
 }
 
 @-webkit-keyframes hiddenSlide {
   from {
-    width: min(90vw, max(380px, 50vw), 500px);
+    transform: translateX(0);
   }
   to {
-    width: 0;
+    transform: translateX(100%);
   }
 }
 
 @keyframes hiddenSlide {
   from {
-    width: min(90vw, max(380px, 50vw), 500px);
+    transform: translateX(0);
   }
   to {
-    width: 0;
+    transform: translateX(100%);
   }
 }
 

@@ -32,7 +32,7 @@ const Categories: React.FC<ICategories> = (props) => {
               onClick={() => onSelect(item)}
             >
               <div className="category-item-img">
-                {item.thumbAvatar ? <img loading="lazy" src={item.thumbAvatar} alt="avatar" /> : null}
+                {item.thumbAvatar ? <img width="80" height="80" loading="lazy" src={item.thumbAvatar} alt="avatar" /> : null}
               </div>
               <div className="category-item-name">{t(item.productCategoryName)}</div>
             </div>

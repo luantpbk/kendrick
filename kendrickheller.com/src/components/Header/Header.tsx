@@ -131,7 +131,7 @@ const Header: React.FC = () => {
         <div className="logo" onClick={() => {
           window.scrollTo(0, 0);
           navigate('/');
-        }}><img src={logo} /></div>
+        }}><img width="180" height="42" src={logo} alt="logo" /></div>
 
       </div>
       <SlideBar visible={isCartVisible} changeVisible={setCartVisible}>
