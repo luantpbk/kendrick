@@ -27,18 +27,16 @@ const AppRouters: React.FC = () => {
   //State
   const [consultationAvailable, setConsultationAvailable] = useState(true);
   const location = useLocation();
-  const [isAuth, setAuth] = useState(true);
+  const [isAuth, setAuth] = useState(location.pathname.includes("auth-screen"));
   const profile = useProfile();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.pathname.includes("auth-screen")) {
-      setAuth(true);
-      if (profile) navigate('/');
-    } else {
-      setAuth(false);
+    const isAuthRoute = location.pathname.includes("auth-screen");
+    setAuth(isAuthRoute);
+    if (isAuthRoute && profile) {
+      navigate('/');
     }
-
   }, [location, navigate, profile])
 
   useEffect(() => {

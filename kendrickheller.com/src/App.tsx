@@ -12,6 +12,8 @@ import Popups from './components/Popups';
 import i18n from './i18n/i18n';
 import { I18nextProvider } from 'react-i18next';
 
+const NotificationPrompt = React.lazy(() => import('./components/NotificationPrompt'));
+
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -19,6 +21,9 @@ const App: React.FC = () => {
         <I18nextProvider i18n={i18n}>
           <SmartCardProvider>
             <ModalsProvider>
+              <React.Suspense fallback={null}>
+                <NotificationPrompt />
+              </React.Suspense>
               <Popups />
               <BrowserRouter key={'router-base'}>
                 <AppRouters />
