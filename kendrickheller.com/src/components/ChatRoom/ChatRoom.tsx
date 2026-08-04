@@ -86,11 +86,12 @@ enum EnumMessageDataType {
 }
 
 enum EnumMessageType {
-  Exchange = 1,
-  Ping = 2,
-  Online = 3,
+  Ping = 1,
+  Exchange = 2,
+  Error = 3,
   Connect = 4,
   Disconnect = 5,
+  Online = 6,
 }
 
 enum CloseCodes {
