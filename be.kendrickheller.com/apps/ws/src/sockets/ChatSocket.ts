@@ -5,6 +5,7 @@ import { prisma } from '@kendrickheller/core';
 import { Constants } from '../common/constants';
 import { EnumChatStatus, EnumMessageType, EnumMessageDataType } from '../common/enums';
 import { NotificationSocket } from './NotificationSocket';
+import { UserNotificationSocket } from './UserNotificationSocket';
 
 export interface ExtendedWebSocket extends WebSocket {
     userId?: number;
@@ -148,6 +149,9 @@ export class ChatSocket {
 
                 // Push notification to Admin WebSocket
                 NotificationSocket.notifyChat(roomId);
+                
+                // Push notification to User WebSocket
+                UserNotificationSocket.notifyUser(Number(unavailableId), roomId);
                 console.log(`Push notification to user ${unavailableId} for room ${roomId}`);
             }
 

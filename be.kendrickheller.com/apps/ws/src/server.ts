@@ -23,6 +23,7 @@ app.use('/room', roomRouter);
 app.use('/message', messageRouter);
 
 import { NotificationSocket } from './sockets/NotificationSocket';
+import { UserNotificationSocket } from './sockets/UserNotificationSocket';
 
 // Upgrade HTTP to WS
 server.on('upgrade', (request, socket, head) => {
@@ -39,6 +40,10 @@ server.on('upgrade', (request, socket, head) => {
     } else if (url.pathname === '/admin-notifications') {
         wss.handleUpgrade(request, socket, head, (ws) => {
             NotificationSocket.handleConnection(ws as any, request);
+        });
+    } else if (url.pathname === '/user-notifications') {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            UserNotificationSocket.handleConnection(ws as any, request);
         });
     } else {
         socket.destroy();

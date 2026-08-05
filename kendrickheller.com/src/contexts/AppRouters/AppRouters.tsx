@@ -6,6 +6,7 @@ const CompanyImage = React.lazy(() => import("src/components/CompanyImage/Compan
 const ChatConsultation = React.lazy(() => import("src/components/ChatConsultation/ChatConsultation"));
 const Footer = React.lazy(() => import("src/components/Footer/Footer"));
 const Chat = React.lazy(() => import("src/components/Chat/Chat"));
+const UserNotification = React.lazy(() => import("src/components/UserNotification/UserNotification"));
 
 const Login = React.lazy(() => import("src/views/AuthScreen/Login/Login"));
 const Checkouts = React.lazy(() => import("src/views/Checkouts/Checkouts"));
@@ -67,6 +68,7 @@ const AppRouters: React.FC = () => {
 
         {consultationAvailable ? <ChatConsultation /> : null}
         {!isAuth && <Chat setConsultationAvailable={setConsultationAvailable} />}
+        {!isAuth && <UserNotification />}
         {!isAuth && <CompanyImage />}
         {!isAuth && <Footer />}
       </PageContent>
