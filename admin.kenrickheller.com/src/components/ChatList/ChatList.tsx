@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './ChatList.css';
-import { useGetProfileInfo, useNotifyChat } from 'src/state/application/hooks';
+import { useGetProfileInfo, useNotifyChat, useGetNotifyChat } from 'src/state/application/hooks';
 import { EnumChatStatus, MessageType, RoomType } from 'src/api/models';
 import { useGetRooms } from 'src/api/roomApi';
 import { useConfiguration } from 'src/contexts/ConfigProvider/ConfigProvider';
@@ -34,6 +34,7 @@ const ChatList: React.FC<IChatType> = (props) => {
   const getRooms = useGetRooms();
   const getLastestMessages = useGetLastestMessages();
   const notifyChat = useNotifyChat();
+  const notifyChatRoomId = useGetNotifyChat();
   const profile = useGetProfileInfo();
   const { defaultAvatar } = useConfiguration();
 
@@ -47,11 +48,15 @@ const ChatList: React.FC<IChatType> = (props) => {
     getRooms(size, cpage)
       .then((res) => {
         const roomIds = res.items.map((r) => r.roomId);
-        getLastestMessages(roomIds).then((messages) => {
-          Object.assign(messageMap.current, messages);
-          const nList = reset ? res.items : [...roomList, ...res.items];
-          setRoomList(nList);
-        });
+        if (roomIds.length > 0) {
+          getLastestMessages(roomIds).then((messages) => {
+            Object.assign(messageMap.current, messages);
+            const nList = reset ? res.items : [...roomList, ...res.items];
+            setRoomList(nList);
+          }).catch(e => console.log(e));
+        } else {
+          setRoomList([]);
+        }
 
         if (res.items.length < size) {
           setHasMore(false);
@@ -68,7 +73,7 @@ const ChatList: React.FC<IChatType> = (props) => {
   useEffect(() => {
     fetchData(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [notifyChatRoomId]);
 
   //Main
   return (
