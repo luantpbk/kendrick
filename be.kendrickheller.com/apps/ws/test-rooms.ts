@@ -3,14 +3,20 @@ import { prisma } from '@kendrickheller/core';
 
 async function main() {
     console.log("Testing RoomService.getRooms for userId = 1 (Admin)...");
-    const result = await RoomService.getRooms(1, 10, 1);
-    console.log("Result:", JSON.stringify(result, null, 2));
-
-    const latest = await prisma.message.findFirst({
-        where: { roomId: "cc807844-e1fa-4ced-a4a2-3dcc21d47c18", deleteFlg: 0 },
-        orderBy: { createdAt: 'desc' }
+    
+    const roomUsers = await prisma.roomUser.findMany({
+        where: { userId: 1n },
+        select: { roomId: true }
     });
-    console.log("Latest message for test room:", latest);
+    console.log("Room Users for Admin 1:", roomUsers);
+
+    if (roomUsers.length > 0) {
+        const roomIds = roomUsers.map(r => r.roomId);
+        const rooms = await prisma.room.findMany({
+            where: { roomId: { in: roomIds } }
+        });
+        console.log("Rooms found:", rooms);
+    }
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());
