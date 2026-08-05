@@ -180,7 +180,7 @@ export class RoomService {
         return this.getRoomById(String(room.roomId));
     }
 
-    private static async ensureAdminsInRoom(roomId: bigint, loginId: number) {
+    private static async ensureAdminsInRoom(roomId: string, loginId: number) {
         const adminRole = await prisma.role.findFirst({
             where: { roleName: 'ADMIN' }
         });
