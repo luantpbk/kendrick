@@ -66,6 +66,15 @@ app.use((req, res, next) => {
     next();
 });
 
+// Proxy for PGWS (Chat & Realtime) - Must be before express.json
+app.use('/pgws/rest-api', createProxyMiddleware({
+    target: 'http://localhost:3003',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/pgws/rest-api': '', 
+    },
+}));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -397,14 +406,7 @@ app.use('/api', pgcoreRouter);
 app.use('/pgcore/rest-api', pgcoreRouter);
 app.use('/ccore/rest-api', pgcoreRouter);
 
-// Proxy for PGWS (Chat & Realtime)
-app.use('/pgws/rest-api', createProxyMiddleware({
-    target: 'http://localhost:3003',
-    changeOrigin: true,
-    pathRewrite: {
-        '^/pgws/rest-api': '', 
-    },
-}));
+// Proxy for PGWS (Chat & Realtime) - Moved before express.json
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
